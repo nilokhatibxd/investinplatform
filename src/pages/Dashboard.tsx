@@ -842,22 +842,19 @@ const Dashboard = () => {
           <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : ''}`} style={{ animationDelay: '0.1s' }}>
             {/* Suggestion Cards - Above input on mobile */}
             {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && isMobile && (
-              <div className="px-4 pb-2 relative">
+              <div className="px-4 pb-4 relative">
                 <div className="flex gap-2 overflow-x-auto scrollbar-none">
                   {suggestionCards.map((suggestion, index) => (
                     <button
                       key={index}
                       onClick={(e) => e.preventDefault()}
-                      className="flex-shrink-0 border border-gray-300 rounded-2xl px-4 text-left bg-white flex items-center hover:bg-gray-50 transition-colors cursor-pointer"
-                      style={{ width: '38%', height: '80px' }}
+                      className="flex-shrink-0 border border-gray-300 rounded-2xl p-4 text-left bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                      style={{ width: '38%', minHeight: '120px' }}
                     >
-                      <p className="text-sm text-gray-700">{suggestion}</p>
+                      <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
                     </button>
                   ))}
                 </div>
-                {/* Fade overlays */}
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
               </div>
             )}
             
