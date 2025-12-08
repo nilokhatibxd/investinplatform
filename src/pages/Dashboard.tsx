@@ -196,27 +196,53 @@ const Dashboard = () => {
       {isMobile && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
           <div className="flex items-center justify-between p-4">
-            {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-                <Plus className="w-4 h-4 text-white rotate-45" />
+            {/* Logo and Location */}
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
+                <Plus className="w-5 h-5 text-white rotate-45" />
               </div>
-              <div>
-                <p className="text-sm font-semibold text-gray-900">Invest Lebanon</p>
+              <div className="relative group">
+                <button className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
+                  <span>All Locations</span>
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </button>
               </div>
             </div>
             
-            {/* Burger Menu */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10 bg-black rounded-full flex items-center justify-center"
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-white" />
-              ) : (
-                <Menu className="w-5 h-5 text-white" />
-              )}
-            </button>
+            {/* Right Icons */}
+            <div className="flex items-center gap-2">
+              {/* Search */}
+              <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center">
+                <Search className="w-5 h-5 text-gray-600" />
+              </button>
+              
+              {/* Notifications */}
+              <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center relative">
+                <Bell className="w-5 h-5 text-gray-600" />
+                <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></div>
+              </button>
+              
+              {/* Profile */}
+              <button className="w-11 h-11 rounded-full overflow-hidden border-2 border-gray-200">
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
+                  alt="Profile" 
+                  className="w-full h-full object-cover"
+                />
+              </button>
+              
+              {/* Burger Menu */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="w-11 h-11 bg-black rounded-full flex items-center justify-center ml-1"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="w-5 h-5 text-white" />
+                ) : (
+                  <Menu className="w-5 h-5 text-white" />
+                )}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -236,15 +262,12 @@ const Dashboard = () => {
                         card.onClick();
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors text-left"
+                      className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors text-left"
                     >
-                      <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+                      <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
                         <Icon className="w-5 h-5 text-white" />
                       </div>
-                      <div>
-                        <p className="font-medium text-gray-900">{card.title}</p>
-                        <p className="text-xs text-gray-500">{card.description}</p>
-                      </div>
+                      <p className="font-medium text-gray-900 text-base">{card.title}</p>
                     </button>
                   );
                 })}
@@ -258,7 +281,7 @@ const Dashboard = () => {
       {!isMobile && (
         <div className="fixed top-6 left-6 z-50">
           <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
             <Plus className="w-4 h-4 text-white rotate-45" />
           </div>
           <div>
@@ -447,7 +470,7 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${!isMobile ? 'pl-80' : 'pt-16'} flex items-center justify-center min-h-screen`}>
+      <div className={`${!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end'} min-h-screen`}>
         <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {/* Center Stage AI Interface */}
@@ -490,8 +513,8 @@ const Dashboard = () => {
 
 
           {/* Input Interface */}
-          <div className="opacity-0 animate-fadeInUp" style={{ animationDelay: '0.1s' }}>
-            <div className="relative bg-white rounded-2xl border border-gray-200">
+          <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg' : ''}`} style={{ animationDelay: '0.1s' }}>
+            <div className={`relative bg-white rounded-2xl border border-gray-200`}>
               
               {/* Attached Documents inside chatbox */}
               {attachedDocuments.length > 0 && (
@@ -583,9 +606,9 @@ const Dashboard = () => {
                       <div className="group relative">
                         <button 
                           onClick={() => setShowVault(true)}
-                          className="w-8 h-8 bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors"
+                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors`}
                         >
-                          <Shield className="w-4 h-4 text-black" stroke-width="2.5" />
+                          <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
                         </button>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Vault
@@ -595,9 +618,9 @@ const Dashboard = () => {
                       {/* Attachment Icon */}
                       <div className="group relative">
                         <button 
-                          className="w-8 h-8 bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors"
+                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors`}
                         >
-                          <Paperclip className="w-4 h-4 text-black" stroke-width="2.5" />
+                          <Paperclip className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
                         </button>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Attach
@@ -618,12 +641,12 @@ const Dashboard = () => {
                             // Start timer
                           }
                         }}
-                        className="w-10 h-10 bg-gray-100 hover:bg-gray-150 rounded-full flex items-center justify-center transition-colors"
+                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-100 hover:bg-gray-150 rounded-full flex items-center justify-center transition-colors`}
                       >
                         {isRecording ? (
-                          <Circle className="w-4 h-4 text-red-500 fill-red-500" />
+                          <Circle className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-red-500 fill-red-500`} />
                         ) : (
-                          <Mic className="w-4 h-4 text-black" stroke-width="2.5" />
+                          <Mic className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
                         )}
                       </button>
                     </div>
@@ -632,9 +655,9 @@ const Dashboard = () => {
                     <div className="group relative">
                       <button 
                         onClick={() => setShowVideoChat(true)}
-                        className="w-10 h-10 bg-gray-100 hover:bg-gray-150 rounded-full flex items-center justify-center transition-colors"
+                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-100 hover:bg-gray-150 rounded-full flex items-center justify-center transition-colors`}
                       >
-                        <AudioWaveform className="w-4 h-4 text-black" stroke-width="2.5" />
+                        <AudioWaveform className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
                       </button>
                     </div>
                   </div>
