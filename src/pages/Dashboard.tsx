@@ -36,6 +36,22 @@ const Dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Scenario management
+  const [currentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
+  // const [setCurrentScenario] = useState(1); // Will use for scenario switching later
+  const [, setIsLoggedIn] = useState(false);
+  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'system'; content: any; type?: string}>>([
+    {role: 'assistant', content: 'Hi, how can I help you get started today?'}
+  ]);
+  const [, setSelectedSuggestion] = useState<string | null>(null);
+  
+  // Suggestion cards for Scenario 1
+  const suggestionCards = [
+    "I want to start a business in Beirut.",
+    "Compare freezones for my type of business.",
+    "Show opportunities based on market demand."
+  ];
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -196,59 +212,73 @@ const Dashboard = () => {
       {isMobile && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
           <div className="flex items-center justify-between p-4">
-            {/* Logo and Location */}
+            {/* Logo - Always visible */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
                 <Plus className="w-5 h-5 text-white rotate-45" />
               </div>
-              <div className="relative group">
-                <button className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
-                  <span>All Locations</span>
-                  <ChevronRight className="w-4 h-4 rotate-90" />
-                </button>
-              </div>
+              {currentScenario !== 1 && (
+                <div className="relative group">
+                  <button className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
+                    <span>All Locations</span>
+                    <ChevronRight className="w-4 h-4 rotate-90" />
+                  </button>
+                </div>
+              )}
             </div>
             
             {/* Right Icons */}
             <div className="flex items-center gap-2">
-              {/* Search */}
-              <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center">
-                <Search className="w-5 h-5 text-gray-600" />
-              </button>
-              
-              {/* Notifications */}
-              <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center relative">
-                <Bell className="w-5 h-5 text-gray-600" />
-                <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></div>
-              </button>
-              
-              {/* Profile */}
-              <button className="w-11 h-11 rounded-full overflow-hidden border-2 border-gray-200">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
-                  alt="Profile" 
-                  className="w-full h-full object-cover"
-                />
-              </button>
-              
-              {/* Burger Menu */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="w-11 h-11 bg-black rounded-full flex items-center justify-center ml-1"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="w-5 h-5 text-white" />
-                ) : (
-                  <Menu className="w-5 h-5 text-white" />
-                )}
-              </button>
+              {currentScenario === 1 ? (
+                // Scenario 1: Only show Login button
+                <button 
+                  onClick={() => setIsLoggedIn(true)}
+                  className="px-4 py-2 bg-black text-white rounded-full text-sm font-medium"
+                >
+                  Login
+                </button>
+              ) : (
+                <>
+                  {/* Search */}
+                  <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center">
+                    <Search className="w-5 h-5 text-gray-600" />
+                  </button>
+                  
+                  {/* Notifications */}
+                  <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center relative">
+                    <Bell className="w-5 h-5 text-gray-600" />
+                    <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></div>
+                  </button>
+                  
+                  {/* Profile */}
+                  <button className="w-11 h-11 rounded-full overflow-hidden border-2 border-gray-200">
+                    <img 
+                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
+                      alt="Profile" 
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                  
+                  {/* Burger Menu */}
+                  <button
+                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    className="w-11 h-11 bg-black rounded-full flex items-center justify-center ml-1"
+                  >
+                    {isMobileMenuOpen ? (
+                      <X className="w-5 h-5 text-white" />
+                    ) : (
+                      <Menu className="w-5 h-5 text-white" />
+                    )}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
       )}
 
-      {/* Mobile Menu Overlay */}
-      {isMobile && isMobileMenuOpen && (
+      {/* Mobile Menu Overlay - Hidden in Scenario 1 */}
+      {isMobile && isMobileMenuOpen && currentScenario !== 1 && (
         <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="fixed right-0 top-0 h-full w-72 bg-white shadow-xl z-50" onClick={(e) => e.stopPropagation()}>
             <div className="p-6 pt-20">
@@ -277,8 +307,20 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Desktop Company Logo - Top Left */}
-      {!isMobile && (
+      {/* Desktop Header for Scenario 1 */}
+      {!isMobile && currentScenario === 1 && (
+        <div className="fixed top-6 right-6 z-50">
+          <button 
+            onClick={() => setIsLoggedIn(true)}
+            className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+          >
+            Login
+          </button>
+        </div>
+      )}
+
+      {/* Desktop Company Logo - Top Left - Hidden in Scenario 1 */}
+      {!isMobile && currentScenario !== 1 && (
         <div className="fixed top-6 left-6 z-50">
           <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
           <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
@@ -323,8 +365,8 @@ const Dashboard = () => {
       </div>
       )}
 
-      {/* Desktop Floating Icon Navigation */}
-      {!isMobile && (
+      {/* Desktop Floating Icon Navigation - Hidden in Scenario 1 */}
+      {!isMobile && currentScenario !== 1 && (
         <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50">
         <div className="bg-black rounded-full p-3">
           <div className="space-y-3">
@@ -346,8 +388,8 @@ const Dashboard = () => {
       </div>
       )}
 
-      {/* Floating RSS Feeds and Notifications - Desktop Only */}
-      {!isMobile && (
+      {/* Floating RSS Feeds and Notifications - Desktop Only - Hidden in Scenario 1 */}
+      {!isMobile && currentScenario !== 1 && (
       <div className="fixed top-6 right-6 z-40 flex items-center gap-4">
         {/* RSS Feeds */}
         <div className="relative group">
@@ -470,11 +512,52 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end'} min-h-screen`}>
+      <div className={`${currentScenario === 1 ? 'flex items-center justify-center' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end')} min-h-screen`}>
         <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
-          {/* Center Stage AI Interface */}
-          <div className="text-left mb-12">
+          {currentScenario === 1 ? (
+            // Scenario 1: Pre-Investment Chat Interface
+            <div className="w-full">
+              {/* Chat Messages */}
+              <div className="mb-8">
+                {chatMessages.map((message, index) => (
+                  <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+                    <div className={`inline-block max-w-lg ${
+                      message.role === 'user' 
+                        ? 'bg-black text-white rounded-2xl px-4 py-3' 
+                        : 'bg-gray-100 text-gray-900 rounded-2xl px-4 py-3'
+                    }`}>
+                      <p className="text-sm">{message.content}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Suggestion Cards */}
+              {chatMessages.length === 1 && (
+                <div className="mb-6">
+                  <div className={`flex gap-3 ${isMobile ? 'overflow-x-auto scrollbar-none' : 'justify-center flex-wrap'}`}>
+                    {suggestionCards.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setChatMessages([...chatMessages, {role: 'user', content: suggestion}]);
+                          setSelectedSuggestion(suggestion);
+                        }}
+                        className={`${
+                          isMobile ? 'flex-shrink-0 w-72' : 'flex-1 max-w-xs'
+                        } bg-white border border-gray-200 rounded-xl p-4 text-left hover:border-gray-400 transition-colors`}
+                      >
+                        <p className="text-sm text-gray-700">{suggestion}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            // Original content for other scenarios
+            <div className="text-left mb-12">
             <div className="opacity-0 animate-fadeInUp">
               <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-light text-gray-900 leading-tight mb-8`}>
                 Good morning,<br />
@@ -510,14 +593,14 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
+          )}
 
           {/* Input Interface */}
           <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg' : ''}`} style={{ animationDelay: '0.1s' }}>
             <div className={`relative bg-white rounded-2xl border border-gray-200`}>
               
-              {/* Attached Documents inside chatbox */}
-              {attachedDocuments.length > 0 && (
+              {/* Attached Documents inside chatbox - Hidden in Scenario 1 */}
+              {attachedDocuments.length > 0 && currentScenario !== 1 && (
                 <div className="p-4 border-b border-gray-100">
                   <div className="flex gap-2 overflow-x-auto scrollbar-none">
                     {attachedDocuments.map((doc, index) => (
@@ -560,7 +643,8 @@ const Dashboard = () => {
                 />
               </div>
 
-              {/* Bottom Controls Row */}
+              {/* Bottom Controls Row - Simplified for Scenario 1 */}
+              {currentScenario !== 1 && (
               <div className="px-4 pb-4 pt-2 border-t border-gray-100">
                 <div className="flex items-center justify-between">
                   
@@ -663,6 +747,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
+              )}
             </div>
           </div>
 
