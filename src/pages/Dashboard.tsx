@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Users,
   Package,
@@ -17,7 +17,8 @@ import {
   Bell,
   Shield,
   AudioWaveform,
-  Zap
+  Zap,
+  Menu
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -33,6 +34,18 @@ const Dashboard = () => {
   const [attachedDocuments, setAttachedDocuments] = useState<any[]>([]);
   const [selectedFolder, setSelectedFolder] = useState('Business Setup');
   const [showSidebar, setShowSidebar] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Agents/Departments
   const agents = [
@@ -179,9 +192,72 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50/20 to-white">
-      {/* Company Logo - Top Left */}
-      <div className="fixed top-6 left-6 z-50">
-        <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
+      {/* Mobile Header */}
+      {isMobile && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
+          <div className="flex items-center justify-between p-4">
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
+                <Plus className="w-4 h-4 text-white rotate-45" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Invest Lebanon</p>
+              </div>
+            </div>
+            
+            {/* Burger Menu */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="w-10 h-10 bg-black rounded-full flex items-center justify-center"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5 text-white" />
+              ) : (
+                <Menu className="w-5 h-5 text-white" />
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Menu Overlay */}
+      {isMobile && isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="fixed right-0 top-0 h-full w-72 bg-white shadow-xl z-50" onClick={(e) => e.stopPropagation()}>
+            <div className="p-6 pt-20">
+              <div className="space-y-4">
+                {actionCards.map((card) => {
+                  const Icon = card.icon;
+                  return (
+                    <button
+                      key={card.id}
+                      onClick={() => {
+                        card.onClick();
+                        setIsMobileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-gray-100 transition-colors text-left"
+                    >
+                      <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">{card.title}</p>
+                        <p className="text-xs text-gray-500">{card.description}</p>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Company Logo - Top Left */}
+      {!isMobile && (
+        <div className="fixed top-6 left-6 z-50">
+          <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
           <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
             <Plus className="w-4 h-4 text-white rotate-45" />
           </div>
@@ -222,10 +298,11 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      )}
 
-
-      {/* Floating Icon Navigation */}
-      <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50">
+      {/* Desktop Floating Icon Navigation */}
+      {!isMobile && (
+        <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50">
         <div className="bg-black rounded-full p-3">
           <div className="space-y-3">
             {actionCards.map((card) => {
@@ -244,8 +321,10 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      )}
 
-      {/* Floating RSS Feeds and Notifications */}
+      {/* Floating RSS Feeds and Notifications - Desktop Only */}
+      {!isMobile && (
       <div className="fixed top-6 right-6 z-40 flex items-center gap-4">
         {/* RSS Feeds */}
         <div className="relative group">
@@ -365,15 +444,16 @@ const Dashboard = () => {
           </div>
         </button>
       </div>
+      )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className="pl-80 flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-3xl mx-auto px-8">
+      <div className={`${!isMobile ? 'pl-80' : 'pt-16'} flex items-center justify-center min-h-screen`}>
+        <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {/* Center Stage AI Interface */}
           <div className="text-left mb-12">
             <div className="opacity-0 animate-fadeInUp">
-              <h1 className="text-4xl font-light text-gray-900 leading-tight mb-8">
+              <h1 className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-light text-gray-900 leading-tight mb-8`}>
                 Good morning,<br />
                 Ahmed
               </h1>
@@ -566,7 +646,7 @@ const Dashboard = () => {
           {/* Vault Modal */}
           {showVault && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <div className="bg-white rounded-2xl w-full max-w-4xl h-[600px] m-8 overflow-hidden relative">
+              <div className={`bg-white rounded-2xl w-full ${isMobile ? 'h-full' : 'max-w-4xl h-[600px] m-8'} overflow-hidden relative`}>
                 {/* Floating Close Button */}
                 <button 
                   onClick={() => setShowVault(false)}
