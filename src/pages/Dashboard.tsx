@@ -18,7 +18,10 @@ import {
   Shield,
   AudioWaveform,
   Zap,
-  Menu
+  Menu,
+  ThumbsUp,
+  ThumbsDown,
+  MessageSquare
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -42,9 +45,12 @@ const Dashboard = () => {
   // const [setCurrentScenario] = useState(1); // Will use for scenario switching later
   const [, setIsLoggedIn] = useState(false);
   const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'system'; content: any; type?: string}>>([
-    {role: 'assistant', content: 'Hi, how can I help you get started today?'}
+    {role: 'assistant', content: "Welcome. Let's explore what you can build today."}
   ]);
   const [, setSelectedSuggestion] = useState<string | null>(null);
+  const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
+  const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(null);
+  const [showBusinessSidebar, setShowBusinessSidebar] = useState(true);
   
   // Suggestion cards for Scenario 1
   const suggestionCards = [
@@ -212,8 +218,16 @@ const Dashboard = () => {
       {isMobile && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
           <div className="flex items-center justify-between p-4">
-            {/* Logo - Always visible */}
+            {/* Logo and Menu - Always visible */}
             <div className="flex items-center gap-3">
+              {currentScenario === 1 && (
+                <button 
+                  onClick={() => setShowBusinessSidebar(!showBusinessSidebar)}
+                  className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center"
+                >
+                  <Menu className="w-5 h-5 text-white" />
+                </button>
+              )}
               <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
                 <Plus className="w-5 h-5 text-white rotate-45" />
               </div>
@@ -511,23 +525,100 @@ const Dashboard = () => {
       </div>
       )}
 
+      {/* Mobile Overlay for Sidebar */}
+      {currentScenario === 1 && isMobile && showBusinessSidebar && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30"
+          onClick={() => setShowBusinessSidebar(false)}
+        />
+      )}
+
+      {/* ChatGPT-style Sidebar for Scenario 1 */}
+      {currentScenario === 1 && showBusinessSidebar && (
+        <div className={`fixed left-0 top-0 ${isMobile ? 'w-72' : 'w-64'} h-full bg-gray-900 text-white z-40 ${
+          isMobile ? 'transform transition-transform' : ''
+        }`}>
+          <div className="p-4 border-b border-gray-700">
+            <button 
+              onClick={() => setShowBusinessSidebar(!showBusinessSidebar)}
+              className="flex items-center justify-between w-full text-left"
+            >
+              <span className="text-sm font-medium">My Businesses</span>
+              <Plus className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="p-4">
+            {businesses.length === 0 ? (
+              <p className="text-xs text-gray-400">No businesses created yet. Start typing to create one.</p>
+            ) : (
+              <div className="space-y-2">
+                {businesses.map((business) => (
+                  <button
+                    key={business.id}
+                    onClick={() => setSelectedBusinessId(business.id)}
+                    className={`w-full text-left p-3 rounded-lg transition-colors ${
+                      selectedBusinessId === business.id 
+                        ? 'bg-gray-800' 
+                        : 'hover:bg-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <MessageSquare className="w-4 h-4 text-gray-400" />
+                      <span className="text-sm truncate">{business.name}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${currentScenario === 1 ? 'flex items-center justify-center' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end')} min-h-screen`}>
+      <div className={`${currentScenario === 1 ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex items-center justify-center' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end')} min-h-screen`}>
         <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {currentScenario === 1 ? (
             // Scenario 1: Pre-Investment Chat Interface
             <div className="w-full">
-              {/* Chat Messages */}
-              <div className="mb-8">
+              {/* Chat Messages - ChatGPT Style */}
+              <div className="mb-8 space-y-6">
                 {chatMessages.map((message, index) => (
-                  <div key={index} className={`mb-4 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                    <div className={`inline-block max-w-lg ${
-                      message.role === 'user' 
-                        ? 'bg-black text-white rounded-2xl px-4 py-3' 
-                        : 'bg-gray-100 text-gray-900 rounded-2xl px-4 py-3'
-                    }`}>
-                      <p className="text-sm">{message.content}</p>
+                  <div key={index} className="group">
+                    <div className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                      {/* Avatar */}
+                      <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${
+                        message.role === 'user' 
+                          ? 'bg-purple-600' 
+                          : 'bg-gradient-to-br from-emerald-500 to-teal-600'
+                      }`}>
+                        {message.role === 'user' ? (
+                          <span className="text-white text-xs font-medium">Y</span>
+                        ) : (
+                          <Plus className="w-4 h-4 text-white rotate-45" />
+                        )}
+                      </div>
+                      
+                      {/* Message Content */}
+                      <div className={`flex-1 ${message.role === 'user' ? 'text-right' : ''}`}>
+                        <p className={`text-sm leading-relaxed ${
+                          message.role === 'user' ? 'text-gray-800' : 'text-gray-700'
+                        }`}>
+                          {message.content}
+                        </p>
+                        
+                        {/* Thumbs up/down for assistant messages */}
+                        {message.role === 'assistant' && (
+                          <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button className="p-1 hover:bg-gray-100 rounded">
+                              <ThumbsUp className="w-3 h-3 text-gray-400 hover:text-gray-600" />
+                            </button>
+                            <button className="p-1 hover:bg-gray-100 rounded">
+                              <ThumbsDown className="w-3 h-3 text-gray-400 hover:text-gray-600" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -629,7 +720,19 @@ const Dashboard = () => {
                 <textarea
                   placeholder="Ask anything..."
                   value={query}
-                  onChange={(e) => setQuery(e.target.value)}
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                    // Auto-create business on first message in Scenario 1
+                    if (currentScenario === 1 && businesses.length === 0 && e.target.value.length > 0) {
+                      const newBusiness = {
+                        id: Date.now().toString(),
+                        name: e.target.value.slice(0, 30) + '...',
+                        timestamp: new Date()
+                      };
+                      setBusinesses([newBusiness]);
+                      setSelectedBusinessId(newBusiness.id);
+                    }
+                  }}
                   className="w-full h-10 bg-transparent text-gray-900 placeholder-gray-400 text-base leading-relaxed resize-none focus:outline-none overflow-y-auto"
                   style={{
                     maxHeight: '60px',
@@ -643,8 +746,7 @@ const Dashboard = () => {
                 />
               </div>
 
-              {/* Bottom Controls Row - Simplified for Scenario 1 */}
-              {currentScenario !== 1 && (
+              {/* Bottom Controls Row */}
               <div className="px-4 pb-4 pt-2 border-t border-gray-100">
                 <div className="flex items-center justify-between">
                   
@@ -686,18 +788,20 @@ const Dashboard = () => {
                         </div>
                       </div>
                       
-                      {/* Vault Icon */}
-                      <div className="group relative">
-                        <button 
-                          onClick={() => setShowVault(true)}
-                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors`}
-                        >
-                          <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
-                        </button>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-                          Vault
+                      {/* Vault Icon - Hidden in Scenario 1 */}
+                      {currentScenario !== 1 && (
+                        <div className="group relative">
+                          <button 
+                            onClick={() => setShowVault(true)}
+                            className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors`}
+                          >
+                            <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
+                          </button>
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                            Vault
+                          </div>
                         </div>
-                      </div>
+                      )}
                       
                       {/* Attachment Icon */}
                       <div className="group relative">
@@ -747,7 +851,6 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              )}
             </div>
           </div>
 
