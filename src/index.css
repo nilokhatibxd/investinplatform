@@ -16,8 +16,8 @@
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 78 92% 75%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 0 0% 50%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
@@ -90,13 +90,36 @@ textarea::-webkit-scrollbar-thumb:hover {
 /* Animated listening border */
 @keyframes pulse-border {
   0%, 100% {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    box-shadow: 0 0 0 8px rgba(255, 255, 255, 0);
   }
 }
 
 .animate-pulse-border {
   animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Gradient card backgrounds - no shading, just blur */
+.gradient-card {
+  background: transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.gradient-card-hover:hover {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Gradient border that fades - LIGHT THEME */
+.gradient-border {
+  position: relative;
+  border: 1px solid;
+  border-image: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%) 1;
+  background: none !important;
+}
+
+.gradient-border:hover {
+  border-image: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 100%) 1;
 }

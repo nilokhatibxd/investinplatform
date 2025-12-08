@@ -23,7 +23,8 @@ import {
   ThumbsUp,
   ThumbsDown,
   MessageSquare,
-  ChevronLeft
+  ChevronLeft,
+  ArrowUp
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -44,28 +45,56 @@ const Dashboard = () => {
   const [isVideoMuted, setIsVideoMuted] = useState(false);
   
   // Scenario management
-  const [currentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
-  // const [setCurrentScenario] = useState(1); // Will use for scenario switching later
+  const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
   const [, setIsLoggedIn] = useState(false);
-  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'system'; content: any; type?: string}>>([
+  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user'; content: string}>>([
     {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
   ]);
-  const [, setSelectedSuggestion] = useState<string | null>(null);
   const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
   const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(null);
-  const [showBusinessSidebar, setShowBusinessSidebar] = useState(true);
+  const [showBusinessSidebar, setShowBusinessSidebar] = useState(false);
+  const [inputValue, setInputValue] = useState('');
   
-  // Suggestion cards for Scenario 1
-  const suggestionCards = [
-    "I want to start a business in Beirut.",
-    "Compare freezones for my type of business.",
-    "Show opportunities based on market demand."
-  ];
+  // Suggestion cards based on agent type - Pre-Investment questions
+  const suggestionCardsByAgent: Record<string, string[]> = {
+    'PRO': [
+      "Which business sectors are growing fastest in Beirut right now?",
+      "Show areas in Beirut with high customer flow and lower rental pressure.",
+      "What are the quickest sectors to launch in Lebanon today?"
+    ],
+    'HR': [
+      "What roles are most commonly needed for small businesses in Beirut?",
+      "Show typical salary ranges across different sectors.",
+      "How much should I budget monthly for employees in Beirut?"
+    ],
+    'TRADE': [
+      "Which sectors in Lebanon depend heavily on imports?",
+      "What products are easiest to bring into the country today?",
+      "How does the FX rate impact operational expenses?"
+    ],
+    'LICENSE': [
+      "Which activities require licenses in Lebanon?",
+      "Show business categories with the simplest approval processes.",
+      "Where in Beirut is commercial activity easiest to authorize?"
+    ],
+    'TAX': [
+      "What taxes do small businesses in Lebanon typically pay?",
+      "How much should entrepreneurs usually set aside for taxes?",
+      "Which sectors commonly register for VAT?"
+    ]
+  };
+
+  const suggestionCards = suggestionCardsByAgent[selectedAgent] || suggestionCardsByAgent['PRO'];
 
   // Check if mobile on mount and resize
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      // Show sidebar on desktop by default, hide on mobile
+      if (!mobile) {
+        setShowBusinessSidebar(true);
+      }
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -175,7 +204,7 @@ const Dashboard = () => {
       description: 'Manage employee visas, work permits, and immigration services',
       badge: 'URGENT',
       badgeColor: 'bg-orange-500/10 text-orange-700 border-orange-200',
-      gradient: 'from-blue-50 to-indigo-50 border-blue-200',
+      gradient: 'from-gray-50 to-gray-100 border-gray-200',
       highlight: '5 renewals due',
       onClick: () => setActiveFlow('people')
     },
@@ -185,7 +214,7 @@ const Dashboard = () => {
       title: 'Trade & Imports',
       description: 'Handle shipments, customs clearance, and trade documentation',
       badge: 'ACTIVE',
-      badgeColor: 'bg-blue-500/10 text-blue-700 border-blue-200',
+      badgeColor: 'bg-gray-500/10 text-gray-700 border-gray-200',
       gradient: 'from-emerald-50 to-green-50 border-emerald-200',
       highlight: '2 shipments in transit',
       onClick: () => setActiveFlow('trade')
@@ -216,24 +245,28 @@ const Dashboard = () => {
 
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gradient-to-t from-purple-50/30 via-blue-50/20 to-white">
       {/* Mobile Header */}
       {isMobile && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
           <div className="flex items-center justify-between p-4">
             {/* Logo and Menu - Always visible */}
             <div className="flex items-center gap-3">
-              {currentScenario === 1 && (
-                <button 
-                  onClick={() => setShowBusinessSidebar(!showBusinessSidebar)}
-                  className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center"
-                >
-                  <Menu className="w-5 h-5 text-white" />
-                </button>
-              )}
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
-                <Plus className="w-5 h-5 text-white rotate-45" />
-              </div>
+              <button 
+                onClick={() => setShowBusinessSidebar(!showBusinessSidebar)}
+                className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center"
+              >
+                {showBusinessSidebar ? (
+                  <ChevronLeft className="w-5 h-5 text-gray-900" />
+                ) : (
+                  <ChevronRight className="w-5 h-5 text-gray-900" />
+                )}
+              </button>
+              <img 
+                src="/logo.svg" 
+                alt="Invest in Lebanon" 
+                className="h-10 w-auto"
+              />
               {currentScenario !== 1 && (
                 <div className="relative group">
                   <button className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
@@ -246,11 +279,11 @@ const Dashboard = () => {
             
             {/* Right Icons */}
             <div className="flex items-center gap-2">
-              {currentScenario === 1 ? (
-                // Scenario 1: Only show Login button
+              {(currentScenario === 1 || currentScenario === 2) ? (
+                // Scenarios 1 & 2: Only show Login button
                 <button 
                   onClick={() => setIsLoggedIn(true)}
-                  className="px-4 py-2 bg-black text-white rounded-full text-sm font-medium"
+                  className="px-4 py-2 bg-gray-100 text-gray-900 rounded-full text-sm font-medium"
                 >
                   Login
                 </button>
@@ -279,12 +312,12 @@ const Dashboard = () => {
                   {/* Burger Menu */}
                   <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="w-11 h-11 bg-black rounded-full flex items-center justify-center ml-1"
+                    className="w-11 h-11 bg-white rounded-full flex items-center justify-center ml-1"
                   >
                     {isMobileMenuOpen ? (
-                      <X className="w-5 h-5 text-white" />
+                      <X className="w-5 h-5 text-gray-900" />
                     ) : (
-                      <Menu className="w-5 h-5 text-white" />
+                      <Menu className="w-5 h-5 text-gray-900" />
                     )}
                   </button>
                 </>
@@ -296,7 +329,7 @@ const Dashboard = () => {
 
       {/* Mobile Menu Overlay - Hidden in Scenario 1 */}
       {isMobile && isMobileMenuOpen && currentScenario !== 1 && (
-        <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setIsMobileMenuOpen(false)}>
+        <div className="fixed inset-0 bg-white/50 z-40" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="fixed right-0 top-0 h-full w-72 bg-white shadow-xl z-50" onClick={(e) => e.stopPropagation()}>
             <div className="p-6 pt-20">
               <div className="space-y-4">
@@ -312,7 +345,7 @@ const Dashboard = () => {
                       className="w-full flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors text-left"
                     >
                       <div className="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Icon className="w-5 h-5 text-white" />
+                        <Icon className="w-5 h-5 text-gray-900" />
                       </div>
                       <p className="font-medium text-gray-900 text-base">{card.title}</p>
                     </button>
@@ -324,56 +357,42 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Desktop Header for Scenario 1 */}
-      {!isMobile && currentScenario === 1 && (
-        <div className={`fixed top-6 ${showBusinessSidebar ? 'left-72' : 'left-6'} right-6 z-50 flex items-center justify-between transition-all`}>
-          {/* Invest In Lebanon Branding */}
-          <div>
-            <h1 className="text-3xl font-light text-white">
+      {/* Desktop Header for Scenarios 1 and 2 */}
+      {!isMobile && (currentScenario === 1 || currentScenario === 2) && (
+        <div className={`fixed top-6 ${showBusinessSidebar ? 'left-72' : 'left-6'} right-6 z-50 flex items-center justify-between`}>
+          {/* Invest In Lebanon Branding - Left aligned */}
+          <div className="flex items-center gap-3">
+            <img 
+              src="/logo.svg" 
+              alt="Logo" 
+              className="h-8 w-auto"
+            />
+            <h1 className="text-2xl font-semibold text-gray-900" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif' }}>
               Invest In Lebanon
             </h1>
           </div>
           
+          {/* Right side controls */}
           <div className="flex items-center gap-4">
             {/* What's New Icon */}
             <div className="relative group">
-              <button className="w-12 h-12 bg-gray-900 rounded-full border border-gray-700 flex items-center justify-center hover:bg-gray-800 transition-all shadow-sm">
-                <Zap className="w-5 h-5 text-gray-400 group-hover:text-white" />
-                <div className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+              <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
+                <Zap className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
               </button>
               
-              <div className="absolute top-full right-0 mt-2 w-80 bg-gray-900 rounded-2xl shadow-xl border border-gray-700 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-                <div className="p-4 border-b border-gray-800">
+              <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="p-4 border-b border-gray-100">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-semibold text-white">What's New</h3>
-                    <button className="text-xs text-gray-400 hover:text-gray-200 font-medium flex items-center gap-1">
+                    <h3 className="font-semibold text-gray-900">What's New</h3>
+                    <button className="text-xs text-gray-400 hover:text-gray-600 font-medium flex items-center gap-1">
                       View all
                       <ChevronRight className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
-                <div className="max-h-80 overflow-y-auto">
-                  <div className="p-4 text-left hover:bg-gray-800 transition-colors border-b border-gray-800 last:border-0">
-                    <p className="text-sm text-gray-300 leading-relaxed mb-2">New digital investment zones launched in Tripoli and Sidon</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">IDAL</span>
-                      <span className="text-xs text-gray-500">2 hrs ago</span>
-                    </div>
-                  </div>
-                  <div className="p-4 text-left hover:bg-gray-800 transition-colors border-b border-gray-800 last:border-0">
-                    <p className="text-sm text-gray-300 leading-relaxed mb-2">Fast-track visa processing now available for tech startups</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">MOE</span>
-                      <span className="text-xs text-gray-500">Today</span>
-                    </div>
-                  </div>
-                  <div className="p-4 text-left hover:bg-gray-800 transition-colors">
-                    <p className="text-sm text-gray-300 leading-relaxed mb-2">$200M investment fund for renewable energy projects</p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-gray-500">BDD</span>
-                      <span className="text-xs text-gray-500">Yesterday</span>
-                    </div>
-                  </div>
+                <div className="max-h-80 overflow-y-auto p-4">
+                  <p className="text-sm text-gray-500">Updates coming soon...</p>
                 </div>
               </div>
             </div>
@@ -381,7 +400,7 @@ const Dashboard = () => {
             {/* Login Button */}
             <button 
               onClick={() => setIsLoggedIn(true)}
-              className="px-6 py-2 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+              className="px-6 py-2 bg-gray-100 text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
             >
               Login
             </button>
@@ -389,12 +408,12 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Desktop Company Logo - Top Left - Hidden in Scenario 1 */}
-      {!isMobile && currentScenario !== 1 && (
-        <div className="fixed top-6 left-6 z-50">
+      {/* Desktop Company Dropdown - Top Left for logged in scenarios 3-6 */}
+      {!isMobile && currentScenario >= 3 && (
+        <div className="fixed top-6 left-72 z-50">
           <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
-          <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-full flex items-center justify-center">
-            <Plus className="w-4 h-4 text-white rotate-45" />
+          <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+            <Plus className="w-4 h-4 text-gray-900 rotate-45" />
           </div>
           <div>
             <p className="text-sm font-semibold text-gray-900">Right Health Clinic</p>
@@ -435,10 +454,10 @@ const Dashboard = () => {
       </div>
       )}
 
-      {/* Desktop Floating Icon Navigation - Hidden in Scenario 1 */}
-      {!isMobile && currentScenario !== 1 && (
+      {/* Desktop Floating Icon Navigation - Hidden */}
+      {!isMobile && currentScenario === 999 && (
         <div className="fixed left-6 top-1/2 -translate-y-1/2 z-50">
-        <div className="bg-black rounded-full p-3">
+        <div className="bg-white rounded-full p-3">
           <div className="space-y-3">
             {actionCards.map((card) => {
               const Icon = card.icon;
@@ -449,7 +468,7 @@ const Dashboard = () => {
                   className="w-12 h-12 bg-gray-700 hover:bg-gray-600 rounded-full flex items-center justify-center transition-all group"
                   title={card.title}
                 >
-                  <Icon className="w-5 h-5 text-white" />
+                  <Icon className="w-5 h-5 text-gray-900" />
                 </button>
               );
             })}
@@ -458,14 +477,14 @@ const Dashboard = () => {
       </div>
       )}
 
-      {/* Floating RSS Feeds and Notifications - Desktop Only - Hidden in Scenario 1 */}
-      {!isMobile && currentScenario !== 1 && (
+      {/* Floating RSS Feeds and Notifications - Desktop Only - Only for logged in scenarios */}
+      {!isMobile && currentScenario >= 3 && (
       <div className="fixed top-6 right-6 z-40 flex items-center gap-4">
         {/* RSS Feeds */}
         <div className="relative group">
-          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-black transition-all shadow-sm">
-            <Zap className="w-5 h-5 text-gray-400 group-hover:text-white" />
-            <div className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
+            <Zap className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
           </button>
           
           <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
@@ -478,39 +497,23 @@ const Dashboard = () => {
                 </button>
               </div>
             </div>
-            <div className="max-h-80 overflow-y-auto">
-              {feedUpdates.map((update) => (
-                <button
-                  key={update.id}
-                  className="w-full p-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900 leading-relaxed mb-2">{update.title}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-400">{update.abbr}</span>
-                        <span className="text-xs text-gray-500">{update.time}</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400 ml-2 flex-shrink-0 self-center" />
-                  </div>
-                </button>
-              ))}
+            <div className="max-h-80 overflow-y-auto p-4">
+              <p className="text-sm text-gray-500">Updates coming soon...</p>
             </div>
           </div>
         </div>
         
         {/* Search Icon */}
         <div className="relative group">
-          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-black transition-all shadow-sm">
-            <Search className="w-5 h-5 text-gray-400 group-hover:text-white" />
+          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
+            <Search className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
           </button>
         </div>
         
         {/* Notifications */}
         <div className="relative group">
-          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-black transition-all shadow-sm">
-            <Bell className="w-5 h-5 text-gray-400 group-hover:text-white" />
+          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
+            <Bell className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
             <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
           </button>
           
@@ -564,7 +567,7 @@ const Dashboard = () => {
         {/* Dot Grid Menu - Far Right */}
         <button 
           onClick={() => setShowSidebar(true)}
-          className="w-12 h-12 bg-white rounded-full border-2 border-white flex items-center justify-center hover:bg-black transition-all shadow-sm group"
+          className="w-12 h-12 bg-white rounded-full border-2 border-white flex items-center justify-center hover:bg-white transition-all shadow-sm group"
         >
           <div className="grid grid-cols-3 gap-1">
             <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
@@ -582,59 +585,178 @@ const Dashboard = () => {
       )}
 
       {/* Mobile Overlay for Sidebar */}
-      {currentScenario === 1 && isMobile && showBusinessSidebar && (
+      {isMobile && showBusinessSidebar && (
         <div 
-          className="fixed inset-0 bg-black/50 z-30"
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-30"
           onClick={() => setShowBusinessSidebar(false)}
         />
       )}
 
-      {/* ChatGPT-style Sidebar for Scenario 1 */}
-      {currentScenario === 1 && showBusinessSidebar && (
-        <div className={`fixed left-0 top-0 ${isMobile ? 'w-72' : 'w-64'} h-full bg-gray-900 text-white z-40 ${
-          isMobile ? 'transform transition-transform' : ''
+      {/* ChatGPT-style Sidebar */}
+      {showBusinessSidebar && (
+        <div className={`fixed left-0 top-0 ${isMobile ? 'w-72' : 'w-64'} h-full bg-gray-100 text-gray-900 z-40 flex flex-col ${
+          isMobile ? 'shadow-2xl transform transition-transform' : ''
         }`}>
-          <div className="p-4 border-b border-gray-700">
+          <div className="p-4 border-b border-gray-200">
             <div className="flex items-center justify-between w-full">
-              <span className="text-lg font-medium">My Businesses</span>
-              <button className="w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors">
-                <Plus className="w-4 h-4 text-white" />
+              {currentScenario !== 1 && (
+                <img 
+                  src="/logo.svg" 
+                  alt="Invest in Lebanon" 
+                  className="h-8 w-auto"
+                />
+              )}
+              {currentScenario === 1 && <div />}
+              <button 
+                onClick={() => {
+                  // Navigate to first scenario
+                  setChatMessages([{role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}]);
+                  setBusinesses([]);
+                  setSelectedBusinessId(null);
+                  setCurrentScenario(1);
+                }}
+                className="w-10 h-10 bg-white hover:bg-gray-50 border border-gray-200 rounded-full flex items-center justify-center transition-colors"
+              >
+                <Plus className="w-5 h-5 text-gray-700" />
               </button>
             </div>
           </div>
-          <div className="flex-1 flex items-center justify-center p-4">
-            {businesses.length === 0 ? (
-              <p className="text-sm text-gray-400 text-center">No businesses created yet.<br/>Start typing to create one.</p>
-            ) : (
-              <div className="space-y-2">
-                {businesses.map((business) => (
-                  <button
-                    key={business.id}
-                    onClick={() => setSelectedBusinessId(business.id)}
-                    className={`w-full text-left p-3 rounded-lg transition-colors ${
-                      selectedBusinessId === business.id 
-                        ? 'bg-gray-800' 
-                        : 'hover:bg-gray-800'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <MessageSquare className="w-4 h-4 text-gray-400" />
-                      <span className="text-sm truncate">{business.name}</span>
-                    </div>
-                  </button>
-                ))}
+          
+          {/* Scenario Chats */}
+          <div className="p-2 border-b border-gray-200">
+            <div className="space-y-1">
+              {/* Scenario 1: Tech Startup */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(1);
+                  setChatMessages([{role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  currentScenario === 1 
+                    ? 'bg-white border border-gray-300' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 1</span>
+                  <span className="text-xs text-gray-400 ml-2">2:30 PM</span>
+                </div>
+              </button>
+              
+              {/* Scenario 2: Same as Scenario 1 */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(2);
+                  setChatMessages([{role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  currentScenario === 2 
+                    ? 'bg-white border border-gray-300' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 2</span>
+                  <span className="text-xs text-gray-400 ml-2">1:45 PM</span>
+                </div>
+              </button>
+              
+              {/* Scenario 3: Import/Export */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(3);
+                  setChatMessages([{role: 'user', content: "I need to import electronics from China"}, {role: 'assistant', content: "I'll guide you through the import process and customs requirements for electronics."}]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  currentScenario === 3 
+                    ? 'bg-white border border-gray-300' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 3</span>
+                  <span className="text-xs text-gray-400 ml-2">11:20 AM</span>
+                </div>
+              </button>
+              
+              {/* Scenario 4: Manufacturing */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(4);
+                  setChatMessages([{role: 'user', content: "Setting up a textile manufacturing facility"}, {role: 'assistant', content: "Manufacturing in Lebanon offers great opportunities. Let's explore the industrial zones and incentives."}]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  currentScenario === 4 
+                    ? 'bg-white border border-gray-300' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 4</span>
+                  <span className="text-xs text-gray-400 ml-2">Yesterday</span>
+                </div>
+              </button>
+              
+              {/* Scenario 5: Renewable Energy */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(5);
+                  setChatMessages([{role: 'user', content: "Solar energy project in the Bekaa Valley"}, {role: 'assistant', content: "Renewable energy is a priority sector. The Bekaa Valley has excellent solar potential."}]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  currentScenario === 5 
+                    ? 'bg-white border border-gray-300' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 5</span>
+                  <span className="text-xs text-gray-400 ml-2">Yesterday</span>
+                </div>
+              </button>
+              
+              {/* Scenario 6: Tourism & Hotels */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(6);
+                  setChatMessages([{role: 'user', content: "Building a boutique hotel in Byblos"}, {role: 'assistant', content: "Byblos is perfect for boutique hotels! Its historic charm attracts tourists year-round."}]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  currentScenario === 6 
+                    ? 'bg-white border border-gray-300' 
+                    : 'hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 6</span>
+                  <span className="text-xs text-gray-400 ml-2">2 days ago</span>
+                </div>
+              </button>
+            </div>
+          </div>
+          
+          {/* Empty space for additional content */}
+          <div className="flex-1"></div>
+          
+          <div className="p-3 border-t border-gray-200">
+            <div className="text-xs text-gray-500 text-center">
+              <div className="mb-1">Powered by Government of Lebanon</div>
+              <div className="flex items-center justify-center gap-3">
+                <button className="hover:text-gray-700 transition-colors">Terms</button>
+                <span className="text-gray-600">•</span>
+                <button className="hover:text-gray-700 transition-colors">Privacy</button>
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${currentScenario === 1 ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex items-center justify-center bg-black' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end')} min-h-screen`}>
+      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex items-center justify-center bg-white' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} min-h-screen`}>
         <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
-          {currentScenario === 1 ? (
-            // Scenario 1: Pre-Investment Chat Interface
+          {(currentScenario === 1 || currentScenario === 2) ? (
+            // Scenarios 1 & 2: Pre-Investment Chat Interface
             <div className="w-full">
               {/* Chat Messages - ChatGPT Style */}
               <div className="mb-8 space-y-6">
@@ -642,15 +764,15 @@ const Dashboard = () => {
                   <div key={index} className="group">
                     {message.role === 'user' ? (
                       <div className="flex justify-end">
-                        <div className="bg-gray-800 rounded-2xl px-4 py-2.5 max-w-[85%]">
-                          <p className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-light text-gray-200`} style={{lineHeight: '1.2em'}}>
+                        <div className="bg-gray-100 rounded-2xl px-4 py-2.5 max-w-[85%]">
+                          <p className={`${isMobile ? 'text-base' : 'text-base'} text-gray-900`}>
                             {message.content}
                           </p>
                         </div>
                       </div>
                     ) : (
                       <div>
-                        <p className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-light text-gray-200`} style={{lineHeight: '1.2em'}}>
+                        <p className={`${isMobile ? 'text-5xl' : 'text-4xl'} font-light text-gray-900`} style={{lineHeight: isMobile ? '1.1em' : '1.2em'}}>
                           {message.content.split('\n').map((line: string, i: number) => (
                             <span key={i}>
                               {line}
@@ -662,11 +784,11 @@ const Dashboard = () => {
                         {/* Thumbs up/down for assistant messages - not on first message */}
                         {index > 0 && (
                           <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button className="p-1.5 hover:bg-gray-800 rounded">
-                              <ThumbsUp className="w-4 h-4 text-gray-500 hover:text-gray-300" />
+                            <button className="p-1.5 hover:bg-gray-100 rounded">
+                              <ThumbsUp className="w-4 h-4 text-gray-500 hover:text-gray-700" />
                             </button>
-                            <button className="p-1.5 hover:bg-gray-800 rounded">
-                              <ThumbsDown className="w-4 h-4 text-gray-500 hover:text-gray-300" />
+                            <button className="p-1.5 hover:bg-gray-100 rounded">
+                              <ThumbsDown className="w-4 h-4 text-gray-500 hover:text-gray-700" />
                             </button>
                           </div>
                         )}
@@ -675,56 +797,6 @@ const Dashboard = () => {
                   </div>
                 ))}
               </div>
-              
-              {/* Suggestion Cards with Carousel */}
-              {chatMessages.length === 1 && (
-                <div className="mb-6 relative">
-                  <div className="flex items-center gap-2">
-                    {/* Left Arrow */}
-                    <button 
-                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full items-center justify-center flex-shrink-0`}
-                      onClick={() => {
-                        const container = document.getElementById('suggestions-container');
-                        if (container) container.scrollLeft -= 300;
-                      }}
-                    >
-                      <ChevronLeft className="w-4 h-4 text-gray-300" />
-                    </button>
-                    
-                    {/* Cards Container */}
-                    <div 
-                      id="suggestions-container"
-                      className={`flex gap-3 ${isMobile ? 'overflow-x-auto' : 'overflow-hidden'} scrollbar-none scroll-smooth flex-1`}
-                    >
-                      {suggestionCards.map((suggestion, index) => (
-                        <button
-                          key={index}
-                          onClick={() => {
-                            setChatMessages([...chatMessages, {role: 'user', content: suggestion}]);
-                            setSelectedSuggestion(suggestion);
-                          }}
-                          className={`${
-                            isMobile ? 'flex-shrink-0 w-72' : 'flex-shrink-0 w-80'
-                          } bg-gray-900 border border-gray-700 rounded-xl p-4 text-left hover:border-gray-500 transition-colors`}
-                        >
-                          <p className="text-base text-gray-300">{suggestion}</p>
-                        </button>
-                      ))}
-                    </div>
-                    
-                    {/* Right Arrow */}
-                    <button 
-                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full items-center justify-center flex-shrink-0`}
-                      onClick={() => {
-                        const container = document.getElementById('suggestions-container');
-                        if (container) container.scrollLeft += 300;
-                      }}
-                    >
-                      <ChevronRight className="w-4 h-4 text-gray-300" />
-                    </button>
-                  </div>
-                </div>
-              )}
             </div>
           ) : (
             // Original content for other scenarios
@@ -767,8 +839,29 @@ const Dashboard = () => {
           )}
 
           {/* Input Interface */}
-          <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 p-4 bg-black shadow-lg' : ''}`} style={{ animationDelay: '0.1s' }}>
-            <div className={`relative bg-gray-900 rounded-2xl border border-gray-700`}>
+          <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : ''}`} style={{ animationDelay: '0.1s' }}>
+            {/* Suggestion Cards - Above input on mobile */}
+            {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && isMobile && (
+              <div className="px-4 pb-2 relative">
+                <div className="flex gap-2 overflow-x-auto scrollbar-none">
+                  {suggestionCards.map((suggestion, index) => (
+                    <button
+                      key={index}
+                      onClick={(e) => e.preventDefault()}
+                      className="flex-shrink-0 border border-gray-300 rounded-2xl px-4 text-left bg-white flex items-center hover:bg-gray-50 transition-colors cursor-pointer"
+                      style={{ width: '38%', height: '80px' }}
+                    >
+                      <p className="text-sm text-gray-700">{suggestion}</p>
+                    </button>
+                  ))}
+                </div>
+                {/* Fade overlays */}
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none"></div>
+              </div>
+            )}
+            
+            <div className={`relative bg-gray-50 rounded-2xl border border-gray-300 ${isMobile ? 'mx-4 mb-4' : ''}`}>
               
               {/* Attached Documents inside chatbox - Hidden in Scenario 1 */}
               {attachedDocuments.length > 0 && currentScenario !== 1 && (
@@ -796,38 +889,46 @@ const Dashboard = () => {
               )}
 
               {/* Main Input Row */}
-              <div className="p-4">
-                <textarea
-                  placeholder="Ask anything..."
-                  value={query}
-                  onChange={(e) => {
-                    setQuery(e.target.value);
-                    // Auto-create business on first message in Scenario 1
-                    if (currentScenario === 1 && businesses.length === 0 && e.target.value.length > 0) {
-                      const newBusiness = {
-                        id: Date.now().toString(),
-                        name: e.target.value.slice(0, 30) + '...',
-                        timestamp: new Date()
-                      };
-                      setBusinesses([newBusiness]);
-                      setSelectedBusinessId(newBusiness.id);
-                    }
-                  }}
-                  className="w-full h-10 bg-transparent text-gray-200 placeholder-gray-500 text-base leading-relaxed resize-none focus:outline-none overflow-y-auto"
-                  style={{
-                    maxHeight: '60px',
-                    minHeight: '40px'
-                  }}
-                  onInput={(e) => {
-                    const target = e.target as HTMLTextAreaElement;
-                    target.style.height = 'auto';
-                    target.style.height = Math.min(target.scrollHeight, 60) + 'px';
-                  }}
-                />
+              <div className="p-4 relative">
+                <div className="relative overflow-hidden" style={{ maxHeight: '60px' }}>
+                  <textarea
+                    placeholder="Message..."
+                    value={currentScenario === 1 ? inputValue : query}
+                    onChange={(e) => {
+                      if (currentScenario === 1) {
+                        setInputValue(e.target.value);
+                      } else {
+                        setQuery(e.target.value);
+                      }
+                      // Auto-create business on first message in Scenario 1
+                      if (currentScenario === 1 && businesses.length === 0 && e.target.value.length > 0) {
+                        const newBusiness = {
+                          id: Date.now().toString(),
+                          name: 'Chat summary',
+                          timestamp: new Date()
+                        };
+                        setBusinesses([newBusiness]);
+                        setSelectedBusinessId(newBusiness.id);
+                      }
+                    }}
+                    className="w-full h-10 bg-transparent text-gray-900 placeholder-gray-500 text-base leading-relaxed resize-none focus:outline-none overflow-y-auto"
+                    style={{
+                      maxHeight: '60px',
+                      minHeight: '40px'
+                    }}
+                    onInput={(e) => {
+                      const target = e.target as HTMLTextAreaElement;
+                      target.style.height = 'auto';
+                      target.style.height = Math.min(target.scrollHeight, 60) + 'px';
+                    }}
+                  />
+                  {/* Fade overlay for scrolling text */}
+                  <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-b from-gray-50 to-transparent pointer-events-none"></div>
+                </div>
               </div>
 
               {/* Bottom Controls Row */}
-              <div className="px-4 pb-4 pt-2 border-t border-gray-800">
+              <div className="px-4 pb-4 pt-2 border-t border-gray-200">
                 <div className="flex items-center justify-between">
                   
                   {/* Left Side - Recording State or Normal State */}
@@ -842,22 +943,22 @@ const Dashboard = () => {
                     <div className="flex items-center gap-4">
                       {/* PRO Dropdown */}
                       <div className="relative group">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
-                          <span className="text-sm font-medium text-gray-200">
+                        <button className="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-lg transition-all backdrop-blur-sm">
+                          <span className="text-sm font-medium text-gray-700">
                           <span className="text-xs font-normal text-gray-400 mr-1">Agent</span>
                           {agents.find(a => a.id === selectedAgent)?.name || 'PRO'}
                         </span>
                           <ChevronRight className="w-3 h-3 text-gray-400 rotate-90" />
                         </button>
-                        <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 rounded-xl shadow-xl border border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                        <div className="absolute bottom-full left-0 mb-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                           <div className="p-2">
                             {agents.map((agent) => (
                               <button
                                 key={agent.id}
                                 onClick={() => setSelectedAgent(agent.id)}
-                                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+                                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
                               >
-                                <div className="font-medium text-sm text-gray-200">
+                                <div className="font-medium text-sm text-gray-700">
                                   <span className="text-xs font-normal text-gray-400 mr-1">Agent</span>
                                   {agent.name}
                                 </div>
@@ -868,16 +969,16 @@ const Dashboard = () => {
                         </div>
                       </div>
                       
-                      {/* Vault Icon - Hidden in Scenario 1 */}
-                      {currentScenario !== 1 && (
+                      {/* Vault Icon - Hidden in Scenarios 1 and 2 */}
+                      {currentScenario > 2 && (
                         <div className="group relative">
                           <button 
                             onClick={() => setShowVault(true)}
-                            className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-800 hover:bg-gray-700 rounded-md flex items-center justify-center transition-colors`}
+                            className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
                           >
-                            <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
+                            <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                           </button>
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-100 text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                             Vault
                           </div>
                         </div>
@@ -886,57 +987,131 @@ const Dashboard = () => {
                       {/* Attachment Icon */}
                       <div className="group relative">
                         <button 
-                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-800 hover:bg-gray-700 rounded-md flex items-center justify-center transition-colors`}
+                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-transparent hover:bg-white/[0.02] border border-white/10 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
                         >
-                          <Paperclip className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
+                          <Paperclip className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                         </button>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-100 text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Attach
                         </div>
                       </div>
                     </div>
                   )}
 
-                  {/* Right Side - Mic & Waveform */}
+                  {/* Right Side - Send or Mic & Waveform */}
                   <div className="flex items-center gap-3">
-                    {/* Microphone */}
-                    <div className="group relative">
+                    {(currentScenario === 1 ? inputValue.trim() : query.trim()) ? (
+                      /* Send Button - appears when typing */
                       <button 
-                        onClick={() => {
-                          setIsRecording(!isRecording);
-                          if (!isRecording) {
-                            setRecordingTime(0);
-                            // Start timer
+                        onClick={(e) => {
+                          e.preventDefault();
+                          // Handle Scenario 1 response
+                          if (currentScenario === 1 && inputValue.trim()) {
+                            setChatMessages([
+                              ...chatMessages,
+                              {role: 'user', content: inputValue},
+                              {role: 'assistant', content: "I'll help you explore business opportunities in that area."}
+                            ]);
+                            setInputValue('');
                           }
                         }}
-                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors`}
+                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center transition-all`}
                       >
-                        {isRecording ? (
-                          <Circle className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-red-500 fill-red-500`} />
-                        ) : (
-                          <Mic className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
-                        )}
+                        <ArrowUp className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-white`} stroke-width="2" />
                       </button>
-                    </div>
+                    ) : (
+                      <>
+                        {/* Microphone */}
+                        <div className="group relative">
+                          <button 
+                            onClick={() => {
+                              setIsRecording(!isRecording);
+                              if (!isRecording) {
+                                setRecordingTime(0);
+                                // Start timer
+                              }
+                            }}
+                            className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
+                          >
+                            {isRecording ? (
+                              <Circle className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-red-500 fill-red-500`} />
+                            ) : (
+                              <Mic className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
+                            )}
+                          </button>
+                        </div>
 
-                    {/* AI Waveform */}
-                    <div className="group relative">
-                      <button 
-                        onClick={() => setShowVideoChat(true)}
-                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors`}
-                      >
-                        <AudioWaveform className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
-                      </button>
-                    </div>
+                        {/* AI Waveform */}
+                        <div className="group relative">
+                          <button 
+                            onClick={() => setShowVideoChat(true)}
+                            className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
+                          >
+                            <AudioWaveform className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Suggestion Cards with Carousel - Below input for desktop only */}
+          {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && !isMobile && (
+            <div className="mt-6">
+              <div className="flex items-center gap-2">
+                {/* Left Arrow */}
+                <button 
+                  className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full items-center justify-center flex-shrink-0`}
+                  onClick={() => {
+                    const container = document.getElementById('suggestions-container');
+                    if (container) container.scrollLeft -= 300;
+                  }}
+                >
+                  <ChevronLeft className="w-4 h-4 text-gray-600" />
+                </button>
+                
+                {/* Cards Container with fade */}
+                <div className="relative flex-1 overflow-hidden">
+                  <div 
+                    id="suggestions-container"
+                    className={`flex gap-3 overflow-x-auto scrollbar-none scroll-smooth`}
+                  >
+                    {suggestionCards.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        onClick={(e) => e.preventDefault()}
+                        className="flex-shrink-0 border border-gray-300 rounded-2xl px-5 text-left bg-white flex items-center hover:bg-gray-50 transition-colors cursor-pointer"
+                        style={{ width: 'calc(40% - 8px)', height: '100px' }}
+                      >
+                        <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
+                      </button>
+                    ))}
+                  </div>
+                  {/* Fade overlays */}
+                  <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
+                  <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
+                </div>
+                
+                {/* Right Arrow */}
+                <button 
+                  className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full items-center justify-center flex-shrink-0`}
+                  onClick={() => {
+                    const container = document.getElementById('suggestions-container');
+                    if (container) container.scrollLeft += 300;
+                  }}
+                >
+                  <ChevronRight className="w-4 h-4 text-gray-600" />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Vault Modal */}
           {showVault && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50">
               <div className={`bg-white rounded-2xl w-full ${isMobile ? 'h-full' : 'max-w-4xl h-[600px] m-8'} overflow-hidden relative`}>
                 {/* Floating Close Button */}
                 <button 
@@ -968,11 +1143,11 @@ const Dashboard = () => {
                           key={folder}
                           onClick={() => setSelectedFolder(folder)}
                           className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                            selectedFolder === folder ? 'bg-blue-50 border border-blue-200' : 'hover:bg-white'
+                            selectedFolder === folder ? 'bg-gray-100 border border-gray-600' : 'hover:bg-gray-100'
                           }`}
                         >
                           <div className="flex items-center gap-2">
-                            <FileText className="w-4 h-4 text-blue-500" />
+                            <FileText className="w-4 h-4 text-gray-400" />
                             <span className="text-sm font-medium text-gray-700">{folder}</span>
                           </div>
                           <span className="text-xs text-gray-500 ml-6">{documents[folder].length} documents</span>
@@ -995,7 +1170,7 @@ const Dashboard = () => {
                               name="document-selection"
                               checked={selectedDocuments.some(d => d.name === doc.name)}
                               onChange={() => handleDocumentSelect(doc, selectedFolder)}
-                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                              className="w-4 h-4 text-gray-400 bg-gray-700 border-gray-600 focus:ring-gray-500"
                             />
                             <FileText className="w-8 h-8 text-red-500" />
                             <div className="flex-1">
@@ -1014,7 +1189,7 @@ const Dashboard = () => {
                   <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
                     <button 
                       onClick={handleAddDocuments}
-                      className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-sm font-medium shadow-lg transition-all"
+                      className="px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-900 rounded-full text-sm font-medium shadow-lg transition-all"
                     >
                       Add ({selectedDocuments.length})
                     </button>
@@ -1026,13 +1201,13 @@ const Dashboard = () => {
 
           {/* Video Chat Modal */}
           {showVideoChat && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="fixed inset-0 bg-white/50 flex items-center justify-center z-50">
               <div className="bg-white rounded-2xl w-[320px] h-[400px] overflow-hidden relative shadow-2xl">
                 {/* Main Content */}
                 <div className="w-full h-full flex items-center justify-center bg-white">
                   <div className="text-center">
-                    <div className={`w-24 h-24 bg-black rounded-full flex items-center justify-center mb-4 mx-auto ${!isVideoMuted ? 'animate-pulse-border' : ''}`}>
-                      <AudioWaveform className="w-10 h-10 text-white" />
+                    <div className={`w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4 mx-auto ${!isVideoMuted ? 'animate-pulse-border' : ''}`}>
+                      <AudioWaveform className="w-10 h-10 text-gray-900" />
                     </div>
                     <p className="text-gray-900 font-medium text-base">{agents.find(a => a.id === selectedAgent)?.name || 'PRO'}</p>
                     <p className="text-gray-500 text-sm mt-1">Ready to assist</p>
@@ -1065,9 +1240,9 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Bento Grid Sidebar */}
-          {showSidebar && (
-            <div className="fixed inset-0 bg-black/50 flex justify-end z-50">
+          {/* Bento Grid Sidebar - Only for scenarios 1-2 */}
+          {showSidebar && currentScenario <= 2 && (
+            <div className="fixed inset-0 bg-white/50 flex justify-end z-50">
               <div className="w-1/3 bg-gray-50 h-full overflow-y-auto">
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-6">
