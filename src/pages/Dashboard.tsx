@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Users,
   Package,
@@ -47,12 +47,14 @@ const Dashboard = () => {
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
   const [, setIsLoggedIn] = useState(false);
-  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user'; content: string}>>([
+  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas'; content: any}>>([
     {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
   ]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
   const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(null);
   const [showBusinessSidebar, setShowBusinessSidebar] = useState(false);
+  const defaultMessage = "I want to open a specialty coffee shop in Hamra, Beirut";
   const [inputValue, setInputValue] = useState('');
   
   // Suggestion cards based on agent type - Pre-Investment questions
@@ -100,6 +102,18 @@ const Dashboard = () => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+  
+  // Auto-scroll to bottom when new messages appear
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chatMessages]);
+  
+  // Set default message for Scenario 1
+  useEffect(() => {
+    if (currentScenario === 1 && chatMessages.length === 1) {
+      setInputValue(defaultMessage);
+    }
+  }, [currentScenario]);
 
   // Agents/Departments
   const agents = [
@@ -248,7 +262,11 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-t from-purple-50/30 via-blue-50/20 to-white">
       {/* Mobile Header */}
       {isMobile && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
+        <>
+          {/* Fade gradient overlay */}
+          <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/95 to-transparent pointer-events-none"></div>
+          
+          <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
           <div className="flex items-center justify-between p-4">
             {/* Logo and Menu - Always visible */}
             <div className="flex items-center gap-3">
@@ -325,6 +343,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+        </>
       )}
 
       {/* Mobile Menu Overlay - Hidden in Scenario 1 */}
@@ -359,7 +378,11 @@ const Dashboard = () => {
 
       {/* Desktop Header for Scenarios 1 and 2 */}
       {!isMobile && (currentScenario === 1 || currentScenario === 2) && (
-        <div className={`fixed top-6 ${showBusinessSidebar ? 'left-72' : 'left-6'} right-6 z-50 flex items-center justify-between`}>
+        <>
+          {/* Fade gradient overlay for desktop */}
+          <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/90 to-transparent pointer-events-none"></div>
+          
+          <div className={`fixed top-6 ${showBusinessSidebar ? 'left-72' : 'left-6'} right-6 z-50 flex items-center justify-between`}>
           {/* Invest In Lebanon Branding - Left aligned */}
           <div className="flex items-center gap-3">
             <img 
@@ -406,6 +429,7 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
+        </>
       )}
 
       {/* Desktop Company Dropdown - Top Left for logged in scenarios 3-6 */}
@@ -770,6 +794,15 @@ const Dashboard = () => {
                           </p>
                         </div>
                       </div>
+                    ) : message.role === 'canvas' ? (
+                      // Empty Canvas Container
+                      <div className="relative">
+                        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white p-6">
+                          <div className="h-96 bg-gray-50 rounded flex items-center justify-center">
+                            <p className="text-gray-400">Canvas content will appear here</p>
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <div>
                         <p className={`${isMobile ? 'text-5xl' : 'text-4xl'} font-light text-gray-900`} style={{lineHeight: isMobile ? '1.1em' : '1.2em'}}>
@@ -796,6 +829,7 @@ const Dashboard = () => {
                     )}
                   </div>
                 ))}
+                <div ref={messagesEndRef} />
               </div>
             </div>
           ) : (
@@ -1007,7 +1041,7 @@ const Dashboard = () => {
                             setChatMessages([
                               ...chatMessages,
                               {role: 'user', content: inputValue},
-                              {role: 'assistant', content: "I'll help you explore business opportunities in that area."}
+                              {role: 'canvas', content: { location: inputValue }}
                             ]);
                             setInputValue('');
                           }
