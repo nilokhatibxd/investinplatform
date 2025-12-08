@@ -86,3 +86,17 @@ textarea::-webkit-scrollbar-thumb:hover {
 .ticker:hover {
   animation-play-state: paused;
 }
+
+/* Animated listening border */
+@keyframes pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+  }
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}

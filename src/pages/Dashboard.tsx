@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Globe,
   Mic,
+  MicOff,
   Paperclip,
   Search,
   X,
@@ -40,13 +41,14 @@ const Dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
   
   // Scenario management
   const [currentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
   // const [setCurrentScenario] = useState(1); // Will use for scenario switching later
   const [, setIsLoggedIn] = useState(false);
   const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'system'; content: any; type?: string}>>([
-    {role: 'assistant', content: "Welcome. Let's explore what you can build today."}
+    {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
   ]);
   const [, setSelectedSuggestion] = useState<string | null>(null);
   const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
@@ -73,9 +75,9 @@ const Dashboard = () => {
   // Agents/Departments
   const agents = [
     { id: 'PRO', name: 'PRO', description: 'Professional Services & Operations' },
-    { id: 'HR', name: 'HR', description: 'Human Resources & Employee Services' },
+    { id: 'HR', name: 'Human resources', description: 'Human Resources & Employee Services' },
     { id: 'TRADE', name: 'Trade', description: 'Import & Export Expert' },
-    { id: 'LICENSE', name: 'License', description: 'Business Licensing Specialist' },
+    { id: 'LICENSE', name: 'Licensing', description: 'Business Licensing Specialist' },
     { id: 'TAX', name: 'Tax', description: 'Financial Compliance Expert' }
   ];
 
@@ -214,7 +216,7 @@ const Dashboard = () => {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50/20 to-white">
+    <div className="min-h-screen bg-black">
       {/* Mobile Header */}
       {isMobile && (
         <div className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-200/50">
@@ -324,10 +326,10 @@ const Dashboard = () => {
 
       {/* Desktop Header for Scenario 1 */}
       {!isMobile && currentScenario === 1 && (
-        <div className="fixed top-6 left-6 right-6 z-50 flex items-center justify-between">
+        <div className={`fixed top-6 ${showBusinessSidebar ? 'left-72' : 'left-6'} right-6 z-50 flex items-center justify-between transition-all`}>
           {/* Invest In Lebanon Branding */}
           <div>
-            <h1 className="text-3xl font-light text-gray-900">
+            <h1 className="text-3xl font-light text-white">
               Invest In Lebanon
             </h1>
           </div>
@@ -335,7 +337,7 @@ const Dashboard = () => {
           {/* Login Button */}
           <button 
             onClick={() => setIsLoggedIn(true)}
-            className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+            className="px-6 py-2 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
           >
             Login
           </button>
@@ -583,7 +585,7 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${currentScenario === 1 ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex items-center justify-center' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end')} min-h-screen`}>
+      <div className={`${currentScenario === 1 ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex items-center justify-center bg-black' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'pt-20 pb-40 flex flex-col justify-end')} min-h-screen`}>
         <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {currentScenario === 1 ? (
@@ -593,41 +595,38 @@ const Dashboard = () => {
               <div className="mb-8 space-y-6">
                 {chatMessages.map((message, index) => (
                   <div key={index} className="group">
-                    <div className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                      {/* Avatar */}
-                      <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center ${
-                        message.role === 'user' 
-                          ? 'bg-purple-600' 
-                          : 'bg-gradient-to-br from-emerald-500 to-teal-600'
-                      }`}>
-                        {message.role === 'user' ? (
-                          <span className="text-white text-xs font-medium">Y</span>
-                        ) : (
-                          <Plus className="w-4 h-4 text-white rotate-45" />
-                        )}
+                    {message.role === 'user' ? (
+                      <div className="flex justify-end">
+                        <div className="bg-gray-800 rounded-2xl px-4 py-2.5 max-w-[85%]">
+                          <p className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-light text-gray-200`} style={{lineHeight: '1.2em'}}>
+                            {message.content}
+                          </p>
+                        </div>
                       </div>
-                      
-                      {/* Message Content */}
-                      <div className={`flex-1 ${message.role === 'user' ? 'text-right' : ''}`}>
-                        <p className={`text-base leading-relaxed ${
-                          message.role === 'user' ? 'text-gray-800' : 'text-gray-700'
-                        }`}>
-                          {message.content}
+                    ) : (
+                      <div>
+                        <p className={`${isMobile ? 'text-2xl' : 'text-4xl'} font-light text-gray-200`} style={{lineHeight: '1.2em'}}>
+                          {message.content.split('\n').map((line: string, i: number) => (
+                            <span key={i}>
+                              {line}
+                              {i < message.content.split('\n').length - 1 && <br />}
+                            </span>
+                          ))}
                         </p>
                         
-                        {/* Thumbs up/down for assistant messages */}
-                        {message.role === 'assistant' && (
-                          <div className="flex items-center gap-2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button className="p-1 hover:bg-gray-100 rounded">
-                              <ThumbsUp className="w-3 h-3 text-gray-400 hover:text-gray-600" />
+                        {/* Thumbs up/down for assistant messages - not on first message */}
+                        {index > 0 && (
+                          <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button className="p-1.5 hover:bg-gray-800 rounded">
+                              <ThumbsUp className="w-4 h-4 text-gray-500 hover:text-gray-300" />
                             </button>
-                            <button className="p-1 hover:bg-gray-100 rounded">
-                              <ThumbsDown className="w-3 h-3 text-gray-400 hover:text-gray-600" />
+                            <button className="p-1.5 hover:bg-gray-800 rounded">
+                              <ThumbsDown className="w-4 h-4 text-gray-500 hover:text-gray-300" />
                             </button>
                           </div>
                         )}
                       </div>
-                    </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -638,13 +637,13 @@ const Dashboard = () => {
                   <div className="flex items-center gap-2">
                     {/* Left Arrow */}
                     <button 
-                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full items-center justify-center flex-shrink-0`}
+                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full items-center justify-center flex-shrink-0`}
                       onClick={() => {
                         const container = document.getElementById('suggestions-container');
                         if (container) container.scrollLeft -= 300;
                       }}
                     >
-                      <ChevronLeft className="w-4 h-4 text-gray-600" />
+                      <ChevronLeft className="w-4 h-4 text-gray-300" />
                     </button>
                     
                     {/* Cards Container */}
@@ -661,22 +660,22 @@ const Dashboard = () => {
                           }}
                           className={`${
                             isMobile ? 'flex-shrink-0 w-72' : 'flex-shrink-0 w-80'
-                          } bg-white border border-gray-200 rounded-xl p-4 text-left hover:border-gray-400 transition-colors`}
+                          } bg-gray-900 border border-gray-700 rounded-xl p-4 text-left hover:border-gray-500 transition-colors`}
                         >
-                          <p className="text-base text-gray-700">{suggestion}</p>
+                          <p className="text-base text-gray-300">{suggestion}</p>
                         </button>
                       ))}
                     </div>
                     
                     {/* Right Arrow */}
                     <button 
-                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full items-center justify-center flex-shrink-0`}
+                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full items-center justify-center flex-shrink-0`}
                       onClick={() => {
                         const container = document.getElementById('suggestions-container');
                         if (container) container.scrollLeft += 300;
                       }}
                     >
-                      <ChevronRight className="w-4 h-4 text-gray-600" />
+                      <ChevronRight className="w-4 h-4 text-gray-300" />
                     </button>
                   </div>
                 </div>
@@ -723,8 +722,8 @@ const Dashboard = () => {
           )}
 
           {/* Input Interface */}
-          <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg' : ''}`} style={{ animationDelay: '0.1s' }}>
-            <div className={`relative bg-white rounded-2xl border border-gray-200`}>
+          <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 p-4 bg-black shadow-lg' : ''}`} style={{ animationDelay: '0.1s' }}>
+            <div className={`relative bg-gray-900 rounded-2xl border border-gray-700`}>
               
               {/* Attached Documents inside chatbox - Hidden in Scenario 1 */}
               {attachedDocuments.length > 0 && currentScenario !== 1 && (
@@ -769,7 +768,7 @@ const Dashboard = () => {
                       setSelectedBusinessId(newBusiness.id);
                     }
                   }}
-                  className="w-full h-10 bg-transparent text-gray-900 placeholder-gray-400 text-base leading-relaxed resize-none focus:outline-none overflow-y-auto"
+                  className="w-full h-10 bg-transparent text-gray-200 placeholder-gray-500 text-base leading-relaxed resize-none focus:outline-none overflow-y-auto"
                   style={{
                     maxHeight: '60px',
                     minHeight: '40px'
@@ -783,7 +782,7 @@ const Dashboard = () => {
               </div>
 
               {/* Bottom Controls Row */}
-              <div className="px-4 pb-4 pt-2 border-t border-gray-100">
+              <div className="px-4 pb-4 pt-2 border-t border-gray-800">
                 <div className="flex items-center justify-between">
                   
                   {/* Left Side - Recording State or Normal State */}
@@ -798,26 +797,26 @@ const Dashboard = () => {
                     <div className="flex items-center gap-4">
                       {/* PRO Dropdown */}
                       <div className="relative group">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-150 rounded-lg transition-colors">
-                          <span className="text-sm font-medium text-gray-700">
-                          <span className="text-xs font-normal text-gray-500 mr-1">Mode</span>
-                          {selectedAgent}
+                        <button className="flex items-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+                          <span className="text-sm font-medium text-gray-200">
+                          <span className="text-xs font-normal text-gray-400 mr-1">Agent</span>
+                          {agents.find(a => a.id === selectedAgent)?.name || 'PRO'}
                         </span>
-                          <ChevronRight className="w-3 h-3 text-gray-500 rotate-90" />
+                          <ChevronRight className="w-3 h-3 text-gray-400 rotate-90" />
                         </button>
-                        <div className="absolute bottom-full left-0 mb-2 w-64 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
+                        <div className="absolute bottom-full left-0 mb-2 w-64 bg-gray-900 rounded-xl shadow-xl border border-gray-700 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-10">
                           <div className="p-2">
                             {agents.map((agent) => (
                               <button
                                 key={agent.id}
                                 onClick={() => setSelectedAgent(agent.id)}
-                                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                                className="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors"
                               >
-                                <div className="font-medium text-sm text-gray-900">
-                                  <span className="text-xs font-normal text-gray-500 mr-1">Mode</span>
+                                <div className="font-medium text-sm text-gray-200">
+                                  <span className="text-xs font-normal text-gray-400 mr-1">Agent</span>
                                   {agent.name}
                                 </div>
-                                <div className="text-xs text-gray-500">{agent.description}</div>
+                                <div className="text-xs text-gray-400">{agent.description}</div>
                               </button>
                             ))}
                           </div>
@@ -829,9 +828,9 @@ const Dashboard = () => {
                         <div className="group relative">
                           <button 
                             onClick={() => setShowVault(true)}
-                            className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors`}
+                            className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-800 hover:bg-gray-700 rounded-md flex items-center justify-center transition-colors`}
                           >
-                            <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
+                            <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
                           </button>
                           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                             Vault
@@ -842,9 +841,9 @@ const Dashboard = () => {
                       {/* Attachment Icon */}
                       <div className="group relative">
                         <button 
-                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-100 hover:bg-gray-150 rounded-md flex items-center justify-center transition-colors`}
+                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-gray-800 hover:bg-gray-700 rounded-md flex items-center justify-center transition-colors`}
                         >
-                          <Paperclip className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
+                          <Paperclip className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
                         </button>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Attach
@@ -865,12 +864,12 @@ const Dashboard = () => {
                             // Start timer
                           }
                         }}
-                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-100 hover:bg-gray-150 rounded-full flex items-center justify-center transition-colors`}
+                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors`}
                       >
                         {isRecording ? (
                           <Circle className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-red-500 fill-red-500`} />
                         ) : (
-                          <Mic className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
+                          <Mic className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
                         )}
                       </button>
                     </div>
@@ -879,9 +878,9 @@ const Dashboard = () => {
                     <div className="group relative">
                       <button 
                         onClick={() => setShowVideoChat(true)}
-                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-100 hover:bg-gray-150 rounded-full flex items-center justify-center transition-colors`}
+                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors`}
                       >
-                        <AudioWaveform className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-black`} stroke-width="2.5" />
+                        <AudioWaveform className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-300`} stroke-width="2.5" />
                       </button>
                     </div>
                   </div>
@@ -982,21 +981,39 @@ const Dashboard = () => {
 
           {/* Video Chat Modal */}
           {showVideoChat && (
-            <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-              <div className="bg-white rounded-2xl w-96 h-96 overflow-hidden relative">
-                <button 
-                  onClick={() => setShowVideoChat(false)}
-                  className="absolute top-4 right-4 w-8 h-8 bg-black/20 hover:bg-black/40 rounded-full flex items-center justify-center transition-colors z-10"
-                >
-                  <Plus className="w-4 h-4 rotate-45 text-white" />
-                </button>
-                <div className="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-2xl w-[320px] h-[400px] overflow-hidden relative shadow-2xl">
+                {/* Main Content */}
+                <div className="w-full h-full flex items-center justify-center bg-white">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mb-4">
-                      <Globe className="w-10 h-10 text-white" />
+                    <div className={`w-24 h-24 bg-black rounded-full flex items-center justify-center mb-4 mx-auto ${!isVideoMuted ? 'animate-pulse-border' : ''}`}>
+                      <AudioWaveform className="w-10 h-10 text-white" />
                     </div>
-                    <p className="text-white font-medium">AI Assistant</p>
-                    <p className="text-white/80 text-sm">Ready to help with your business</p>
+                    <p className="text-gray-900 font-medium text-base">{agents.find(a => a.id === selectedAgent)?.name || 'PRO'}</p>
+                    <p className="text-gray-500 text-sm mt-1">Ready to assist</p>
+                    
+                    {/* Control Buttons */}
+                    <div className="flex items-center justify-center gap-3 mt-4">
+                      {/* Mute Button */}
+                      <button 
+                        onClick={() => setIsVideoMuted(!isVideoMuted)}
+                        className={`w-10 h-10 ${isVideoMuted ? 'bg-red-100 hover:bg-red-200' : 'bg-gray-100 hover:bg-gray-200'} rounded-full flex items-center justify-center transition-colors`}
+                      >
+                        {isVideoMuted ? (
+                          <MicOff className="w-4 h-4 text-red-600" />
+                        ) : (
+                          <Mic className="w-4 h-4 text-gray-700" />
+                        )}
+                      </button>
+                      
+                      {/* Close Button */}
+                      <button 
+                        onClick={() => setShowVideoChat(false)}
+                        className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                      >
+                        <X className="w-4 h-4 text-gray-700" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
