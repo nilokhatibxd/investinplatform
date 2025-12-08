@@ -334,13 +334,58 @@ const Dashboard = () => {
             </h1>
           </div>
           
-          {/* Login Button */}
-          <button 
-            onClick={() => setIsLoggedIn(true)}
-            className="px-6 py-2 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-          >
-            Login
-          </button>
+          <div className="flex items-center gap-4">
+            {/* What's New Icon */}
+            <div className="relative group">
+              <button className="w-12 h-12 bg-gray-900 rounded-full border border-gray-700 flex items-center justify-center hover:bg-gray-800 transition-all shadow-sm">
+                <Zap className="w-5 h-5 text-gray-400 group-hover:text-white" />
+                <div className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+              </button>
+              
+              <div className="absolute top-full right-0 mt-2 w-80 bg-gray-900 rounded-2xl shadow-xl border border-gray-700 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                <div className="p-4 border-b border-gray-800">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-semibold text-white">What's New</h3>
+                    <button className="text-xs text-gray-400 hover:text-gray-200 font-medium flex items-center gap-1">
+                      View all
+                      <ChevronRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                </div>
+                <div className="max-h-80 overflow-y-auto">
+                  <div className="p-4 text-left hover:bg-gray-800 transition-colors border-b border-gray-800 last:border-0">
+                    <p className="text-sm text-gray-300 leading-relaxed mb-2">New digital investment zones launched in Tripoli and Sidon</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">IDAL</span>
+                      <span className="text-xs text-gray-500">2 hrs ago</span>
+                    </div>
+                  </div>
+                  <div className="p-4 text-left hover:bg-gray-800 transition-colors border-b border-gray-800 last:border-0">
+                    <p className="text-sm text-gray-300 leading-relaxed mb-2">Fast-track visa processing now available for tech startups</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">MOE</span>
+                      <span className="text-xs text-gray-500">Today</span>
+                    </div>
+                  </div>
+                  <div className="p-4 text-left hover:bg-gray-800 transition-colors">
+                    <p className="text-sm text-gray-300 leading-relaxed mb-2">$200M investment fund for renewable energy projects</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500">BDD</span>
+                      <span className="text-xs text-gray-500">Yesterday</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Login Button */}
+            <button 
+              onClick={() => setIsLoggedIn(true)}
+              className="px-6 py-2 bg-white text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+            >
+              Login
+            </button>
+          </div>
         </div>
       )}
 
