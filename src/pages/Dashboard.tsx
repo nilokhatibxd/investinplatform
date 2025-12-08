@@ -21,7 +21,8 @@ import {
   Menu,
   ThumbsUp,
   ThumbsDown,
-  MessageSquare
+  MessageSquare,
+  ChevronLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -323,7 +324,15 @@ const Dashboard = () => {
 
       {/* Desktop Header for Scenario 1 */}
       {!isMobile && currentScenario === 1 && (
-        <div className="fixed top-6 right-6 z-50">
+        <div className="fixed top-6 left-6 right-6 z-50 flex items-center justify-between">
+          {/* Invest In Lebanon Branding */}
+          <div>
+            <h1 className="text-3xl font-light text-gray-900">
+              Invest In Lebanon
+            </h1>
+          </div>
+          
+          {/* Login Button */}
           <button 
             onClick={() => setIsLoggedIn(true)}
             className="px-6 py-2 bg-black text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
@@ -539,17 +548,16 @@ const Dashboard = () => {
           isMobile ? 'transform transition-transform' : ''
         }`}>
           <div className="p-4 border-b border-gray-700">
-            <button 
-              onClick={() => setShowBusinessSidebar(!showBusinessSidebar)}
-              className="flex items-center justify-between w-full text-left"
-            >
-              <span className="text-sm font-medium">My Businesses</span>
-              <Plus className="w-4 h-4" />
-            </button>
+            <div className="flex items-center justify-between w-full">
+              <span className="text-lg font-medium">My Businesses</span>
+              <button className="w-8 h-8 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors">
+                <Plus className="w-4 h-4 text-white" />
+              </button>
+            </div>
           </div>
-          <div className="p-4">
+          <div className="flex-1 flex items-center justify-center p-4">
             {businesses.length === 0 ? (
-              <p className="text-xs text-gray-400">No businesses created yet. Start typing to create one.</p>
+              <p className="text-sm text-gray-400 text-center">No businesses created yet.<br/>Start typing to create one.</p>
             ) : (
               <div className="space-y-2">
                 {businesses.map((business) => (
@@ -601,7 +609,7 @@ const Dashboard = () => {
                       
                       {/* Message Content */}
                       <div className={`flex-1 ${message.role === 'user' ? 'text-right' : ''}`}>
-                        <p className={`text-sm leading-relaxed ${
+                        <p className={`text-base leading-relaxed ${
                           message.role === 'user' ? 'text-gray-800' : 'text-gray-700'
                         }`}>
                           {message.content}
@@ -624,24 +632,52 @@ const Dashboard = () => {
                 ))}
               </div>
               
-              {/* Suggestion Cards */}
+              {/* Suggestion Cards with Carousel */}
               {chatMessages.length === 1 && (
-                <div className="mb-6">
-                  <div className={`flex gap-3 ${isMobile ? 'overflow-x-auto scrollbar-none' : 'justify-center flex-wrap'}`}>
-                    {suggestionCards.map((suggestion, index) => (
-                      <button
-                        key={index}
-                        onClick={() => {
-                          setChatMessages([...chatMessages, {role: 'user', content: suggestion}]);
-                          setSelectedSuggestion(suggestion);
-                        }}
-                        className={`${
-                          isMobile ? 'flex-shrink-0 w-72' : 'flex-1 max-w-xs'
-                        } bg-white border border-gray-200 rounded-xl p-4 text-left hover:border-gray-400 transition-colors`}
-                      >
-                        <p className="text-sm text-gray-700">{suggestion}</p>
-                      </button>
-                    ))}
+                <div className="mb-6 relative">
+                  <div className="flex items-center gap-2">
+                    {/* Left Arrow */}
+                    <button 
+                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full items-center justify-center flex-shrink-0`}
+                      onClick={() => {
+                        const container = document.getElementById('suggestions-container');
+                        if (container) container.scrollLeft -= 300;
+                      }}
+                    >
+                      <ChevronLeft className="w-4 h-4 text-gray-600" />
+                    </button>
+                    
+                    {/* Cards Container */}
+                    <div 
+                      id="suggestions-container"
+                      className={`flex gap-3 ${isMobile ? 'overflow-x-auto' : 'overflow-hidden'} scrollbar-none scroll-smooth flex-1`}
+                    >
+                      {suggestionCards.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          onClick={() => {
+                            setChatMessages([...chatMessages, {role: 'user', content: suggestion}]);
+                            setSelectedSuggestion(suggestion);
+                          }}
+                          className={`${
+                            isMobile ? 'flex-shrink-0 w-72' : 'flex-shrink-0 w-80'
+                          } bg-white border border-gray-200 rounded-xl p-4 text-left hover:border-gray-400 transition-colors`}
+                        >
+                          <p className="text-base text-gray-700">{suggestion}</p>
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* Right Arrow */}
+                    <button 
+                      className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full items-center justify-center flex-shrink-0`}
+                      onClick={() => {
+                        const container = document.getElementById('suggestions-container');
+                        if (container) container.scrollLeft += 300;
+                      }}
+                    >
+                      <ChevronRight className="w-4 h-4 text-gray-600" />
+                    </button>
                   </div>
                 </div>
               )}
