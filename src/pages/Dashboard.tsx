@@ -776,15 +776,15 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex items-center justify-center bg-white' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} min-h-screen`}>
-        <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
+      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex flex-col bg-white' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} min-h-screen`}>
+        <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col justify-end overflow-y-auto' : ''} w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
             <div className="w-full">
               {/* Chat Messages - ChatGPT Style */}
-              <div className="mb-8 space-y-6">
-                {chatMessages.filter((_, index) => chatMessages.length === 1 || index > 0).map((message, index) => (
+              <div className="space-y-6 mb-10">
+                {chatMessages.filter((_, index) => index > 0).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
                       <div className="flex justify-end">
@@ -904,27 +904,75 @@ const Dashboard = () => {
           </div>
           )}
 
-          {/* Input Interface */}
-          <div className={`opacity-0 animate-fadeInUp ${isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : ''}`} style={{ animationDelay: '0.1s' }}>
-            {/* Suggestion Cards - Above input on mobile */}
-            {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && isMobile && (
-              <div className="px-4 pb-4 relative">
-                <div className="flex gap-2 overflow-x-auto scrollbar-none">
-                  {suggestionCards.map((suggestion, index) => (
-                    <button
-                      key={index}
-                      onClick={(e) => e.preventDefault()}
-                      className="flex-shrink-0 border border-gray-300 rounded-2xl p-4 text-left bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                      style={{ width: '38%', minHeight: '120px' }}
-                    >
-                      <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
-                    </button>
-                  ))}
+          {/* Bottom Section - Welcome, Suggestions, Input */}
+          <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1 || currentScenario === 2) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
+            <div className="max-w-3xl mx-auto px-4">
+              {/* Welcome Message */}
+              {chatMessages.length === 1 && (
+                <div className="mb-10 text-center">
+                  <p className={`${isMobile ? 'text-5xl' : 'text-4xl'} font-light text-gray-900`} style={{lineHeight: '1.2em'}}>
+                    {chatMessages[0].content.split('\n').map((line: string, i: number) => (
+                      <span key={i}>
+                        {line}
+                        {i < chatMessages[0].content.split('\n').length - 1 && <br />}
+                      </span>
+                    ))}
+                  </p>
                 </div>
-              </div>
-            )}
-            
-            <div className={`relative bg-gray-50 rounded-2xl border border-gray-300 ${isMobile ? 'mx-4 mb-4' : ''}`}>
+              )}
+              
+              {/* Suggestion Cards */}
+              {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && (
+                <div className="mb-10">
+                  <div className="flex items-center gap-2">
+                    {/* Left Arrow - Desktop only */}
+                    {!isMobile && (
+                      <button 
+                        className="w-8 h-8 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center flex-shrink-0"
+                        onClick={() => {
+                          const container = document.getElementById('suggestions-container');
+                          if (container) container.scrollLeft -= 300;
+                        }}
+                      >
+                        <ChevronLeft className="w-4 h-4 text-gray-600" />
+                      </button>
+                    )}
+                    
+                    {/* Cards Container */}
+                    <div 
+                      id="suggestions-container"
+                      className="flex gap-2 overflow-x-auto scrollbar-none scroll-smooth flex-1"
+                    >
+                      {suggestionCards.map((suggestion, index) => (
+                        <button
+                          key={index}
+                          onClick={(e) => e.preventDefault()}
+                          className="flex-shrink-0 border border-gray-300 rounded-2xl p-4 text-left bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                          style={{ width: isMobile ? '38%' : '32%', minHeight: '80px' }}
+                        >
+                          <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
+                        </button>
+                      ))}
+                    </div>
+                    
+                    {/* Right Arrow - Desktop only */}
+                    {!isMobile && (
+                      <button 
+                        className="w-8 h-8 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center flex-shrink-0"
+                        onClick={() => {
+                          const container = document.getElementById('suggestions-container');
+                          if (container) container.scrollLeft += 300;
+                        }}
+                      >
+                        <ChevronRight className="w-4 h-4 text-gray-600" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+              
+              {/* Input Field */}
+              <div className="relative bg-gray-50 rounded-2xl border border-gray-300">
               
               {/* Attached Documents inside chatbox - Hidden in Scenario 1 */}
               {attachedDocuments.length > 0 && currentScenario !== 1 && (
@@ -1136,57 +1184,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-
-          {/* Suggestion Cards with Carousel - Below input for desktop only */}
-          {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && !isMobile && (
-            <div className="mt-6">
-              <div className="flex items-center gap-2">
-                {/* Left Arrow */}
-                <button 
-                  className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full items-center justify-center flex-shrink-0`}
-                  onClick={() => {
-                    const container = document.getElementById('suggestions-container');
-                    if (container) container.scrollLeft -= 300;
-                  }}
-                >
-                  <ChevronLeft className="w-4 h-4 text-gray-600" />
-                </button>
-                
-                {/* Cards Container with fade */}
-                <div className="relative flex-1 overflow-hidden">
-                  <div 
-                    id="suggestions-container"
-                    className={`flex gap-3 overflow-x-auto scrollbar-none scroll-smooth`}
-                  >
-                    {suggestionCards.map((suggestion, index) => (
-                      <button
-                        key={index}
-                        onClick={(e) => e.preventDefault()}
-                        className="flex-shrink-0 border border-gray-300 rounded-2xl px-5 text-left bg-white flex items-center hover:bg-gray-50 transition-colors cursor-pointer"
-                        style={{ width: 'calc(40% - 8px)', height: '100px' }}
-                      >
-                        <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
-                      </button>
-                    ))}
-                  </div>
-                  {/* Fade overlays */}
-                  <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-                  <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
-                </div>
-                
-                {/* Right Arrow */}
-                <button 
-                  className={`${isMobile ? 'hidden' : 'flex'} w-8 h-8 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full items-center justify-center flex-shrink-0`}
-                  onClick={() => {
-                    const container = document.getElementById('suggestions-container');
-                    if (container) container.scrollLeft += 300;
-                  }}
-                >
-                  <ChevronRight className="w-4 h-4 text-gray-600" />
-                </button>
-              </div>
-            </div>
-          )}
+        </div>
 
           {/* Vault Modal */}
           {showVault && (
