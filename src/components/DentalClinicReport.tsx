@@ -228,26 +228,58 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
 
       <div className="border-t border-gray-200 mb-8"></div>
 
-      {/* Fast-Track Licensing */}
+      {/* Trade Name Suggestions */}
       <div className={sectionSpacing}>
         <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
-          {isMobile ? 'Fast-Track Licensing' : 'Fast-Track Licensing Process'}
+          Available Trade Names in Hamra
+        </h2>
+        <p className="text-xs text-gray-600 mb-3">Pre-verified names available for immediate registration:</p>
+        <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-2 mb-3`}>
+          <button className="text-left bg-white border border-gray-200 rounded-lg p-3 hover:bg-blue-50 hover:border-blue-300 transition-all group">
+            <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600">Hamra Dental Excellence</p>
+            <p className="text-xs text-gray-500">Available • No conflicts</p>
+          </button>
+          <button className="text-left bg-white border border-gray-200 rounded-lg p-3 hover:bg-blue-50 hover:border-blue-300 transition-all group">
+            <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600">Cedar Smile Clinic</p>
+            <p className="text-xs text-gray-500">Available • No conflicts</p>
+          </button>
+          <button className="text-left bg-white border border-gray-200 rounded-lg p-3 hover:bg-blue-50 hover:border-blue-300 transition-all group">
+            <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600">Beirut Modern Dental</p>
+            <p className="text-xs text-gray-500">Available • No conflicts</p>
+          </button>
+          <button className="text-left bg-white border-2 border-dashed border-gray-300 rounded-lg p-3 hover:bg-gray-50 hover:border-gray-400 transition-all">
+            <p className="text-sm font-medium text-gray-600">Choose Your Own Name</p>
+            <p className="text-xs text-gray-400">Verification in 4 hours</p>
+          </button>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-200 mb-8"></div>
+
+      {/* Realistic Licensing Process */}
+      <div className={sectionSpacing}>
+        <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
+          {isMobile ? 'Licensing Timeline' : 'Dental Clinic Licensing Process'}
         </h2>
         
         {isMobile ? (
           // Mobile compact version
           <div className="space-y-2">
             <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
-              <span className="text-xs font-medium">Healthcare Registration</span>
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">24hrs</span>
+              <span className="text-xs font-medium">MoPH License</span>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded">3-5 days</span>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
-              <span className="text-xs font-medium">Business Registration</span>
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">12hrs</span>
+              <span className="text-xs font-medium">Commercial Registration</span>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded">2 days</span>
             </div>
             <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
-              <span className="text-xs font-medium">Final Permits</span>
-              <span className="text-xs bg-gray-100 px-2 py-1 rounded">12hrs</span>
+              <span className="text-xs font-medium">Equipment Import Permits</span>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded">7 days</span>
+            </div>
+            <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+              <span className="text-xs font-medium">Municipal License</span>
+              <span className="text-xs bg-gray-100 px-2 py-1 rounded">1 day</span>
             </div>
           </div>
         ) : (
@@ -260,11 +292,11 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
                     1
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Healthcare Registration</p>
-                    <p className="text-xs text-gray-600 mt-1">Order of Dentists + MoPH License</p>
+                    <p className="text-sm font-medium text-gray-900">Lease Agreement & Location Approval</p>
+                    <p className="text-xs text-gray-600 mt-1">Signed lease + Municipality zoning approval</p>
                   </div>
                 </div>
-                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">24 hours</span>
+                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">2-3 days</span>
               </div>
             </div>
             
@@ -275,11 +307,11 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
                     2
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Business Registration</p>
-                    <p className="text-xs text-gray-600 mt-1">Commercial Registry + Tax ID</p>
+                    <p className="text-sm font-medium text-gray-900">MoPH Healthcare License</p>
+                    <p className="text-xs text-gray-600 mt-1">Clinical practice permit + Syndicate registration</p>
                   </div>
                 </div>
-                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">12 hours</span>
+                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">3-5 days</span>
               </div>
             </div>
             
@@ -290,18 +322,33 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
                     3
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">Final Permits</p>
-                    <p className="text-xs text-gray-600 mt-1">Municipal Permits + NSSF Registration</p>
+                    <p className="text-sm font-medium text-gray-900">Commercial Registration</p>
+                    <p className="text-xs text-gray-600 mt-1">Business Registry + Tax ID + NSSF</p>
                   </div>
                 </div>
-                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">12 hours</span>
+                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">2 days</span>
+              </div>
+            </div>
+            
+            <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
+              <div className="flex items-start justify-between">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
+                    4
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">Equipment & Import Permits</p>
+                    <p className="text-xs text-gray-600 mt-1">Medical device licenses + Customs clearance</p>
+                  </div>
+                </div>
+                <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">7-10 days</span>
               </div>
             </div>
           </div>
         )}
         
         <p className="text-xs text-gray-400 mt-3">
-          {isMobile ? 'Total: 48 hours through Investment Authority' : 'Total time: 48 hours through Investment Development Authority'}
+          {isMobile ? 'Total: 15-20 business days' : 'Total timeline: 15-20 business days (expedited through Investment Authority)'}
         </p>
         
         {/* Pre-Submit Application */}
