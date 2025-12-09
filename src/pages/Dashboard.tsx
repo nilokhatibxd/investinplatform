@@ -800,7 +800,7 @@ const Dashboard = () => {
               <div className="flex-1 overflow-y-auto scrollbar-none flex flex-col">
                 <div className="flex-1 flex flex-col justify-end">
                   <div className="space-y-6 pt-20 pb-10">
-                {chatMessages.filter((message, index) => index > 0 && (!isSplitScreen || message.role !== 'canvas')).map((message, index) => (
+                {chatMessages.filter((message, index) => index > 0).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
                       <div className="flex justify-end">
@@ -818,7 +818,22 @@ const Dashboard = () => {
                         </p>
                       </div>
                     ) : message.role === 'canvas' ? (
-                      // Canvas Container with widgets
+                      // Canvas Container with widgets or button in split-screen
+                      isSplitScreen ? (
+                        // Show as button in split-screen
+                        <div className="flex justify-start">
+                          <button className="bg-white border border-gray-200 rounded-lg px-4 py-3 hover:bg-gray-50 transition-colors text-left">
+                            <div className="flex items-center gap-2">
+                              <FileText className="w-5 h-5 text-gray-600" />
+                              <div>
+                                <p className="text-sm font-medium text-gray-900">Business Analysis Report</p>
+                                <p className="text-xs text-gray-500">Specialty Coffee Shop in Hamra</p>
+                              </div>
+                            </div>
+                          </button>
+                        </div>
+                      ) : (
+                      // Show full canvas when not in split-screen
                       <div className="relative">
                         <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
                           {/* Canvas Header */}
@@ -907,6 +922,7 @@ const Dashboard = () => {
                           </button>
                         </div>
                       </div>
+                      )
                     ) : (
                       <div>
                         <p className={`${isMobile ? 'text-5xl' : 'text-4xl'} font-light text-gray-900`} style={{lineHeight: isMobile ? '1.1em' : '1.2em'}}>
