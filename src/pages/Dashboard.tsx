@@ -2352,17 +2352,17 @@ const Dashboard = () => {
                     <button className="w-full bg-white border border-gray-200 rounded-2xl p-6 mb-3 text-left hover:border-gray-300 hover:shadow-md transition-all group">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <p className="text-lg font-medium text-gray-900 mb-1">Complete permit applications</p>
-                          <p className="text-sm text-gray-500">3 pending submissions</p>
+                          <p className="text-lg font-medium text-gray-900 mb-1">Submit remaining documents</p>
+                          <p className="text-sm text-gray-500">Ministry of Health requirements</p>
                         </div>
                         <ArrowUp className="w-5 h-5 text-gray-400 rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </div>
                       <div className="flex items-center gap-2 mt-4">
                         <div className="px-3 py-1 bg-gray-100 rounded-full">
-                          <span className="text-xs text-gray-600">2:00 PM</span>
+                          <span className="text-xs text-gray-600">Before 5 PM</span>
                         </div>
                         <div className="px-3 py-1 bg-gray-900 text-white rounded-full">
-                          <span className="text-xs">High Priority</span>
+                          <span className="text-xs">Required</span>
                         </div>
                       </div>
                     </button>
@@ -2376,8 +2376,8 @@ const Dashboard = () => {
                       <button className="w-full bg-white border border-gray-100 rounded-xl p-4 hover:border-gray-200 hover:shadow-sm transition-all text-left group">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">Municipality inspection</p>
-                            <p className="text-xs text-gray-400 mt-1">Wednesday • 2:00 PM</p>
+                            <p className="text-sm font-medium text-gray-900">Schedule equipment inspection</p>
+                            <p className="text-xs text-gray-400 mt-1">Contact certified inspector</p>
                           </div>
                           <div className="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-100 transition-colors">
                             <ArrowUp className="w-4 h-4 text-gray-400 rotate-45" />
@@ -2388,8 +2388,8 @@ const Dashboard = () => {
                       <button className="w-full bg-white border border-gray-100 rounded-xl p-4 hover:border-gray-200 hover:shadow-sm transition-all text-left group">
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="text-sm font-medium text-gray-900">Submit sterilization protocols</p>
-                            <p className="text-xs text-gray-400 mt-1">Friday • End of day</p>
+                            <p className="text-sm font-medium text-gray-900">Finalize lease agreement</p>
+                            <p className="text-xs text-gray-400 mt-1">Hamra location • Notary required</p>
                           </div>
                           <div className="w-8 h-8 bg-gray-50 rounded-lg flex items-center justify-center group-hover:bg-gray-100 transition-colors">
                             <ArrowUp className="w-4 h-4 text-gray-400 rotate-45" />
@@ -2406,37 +2406,37 @@ const Dashboard = () => {
                       <button className="text-xs text-gray-600 hover:text-gray-900 font-medium">View all tasks →</button>
                     </div>
                     
-                    {/* Masonry Grid */}
+                    {/* Masonry Grid - Pre-operational tasks */}
                     <div className="grid grid-cols-2 gap-3">
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <FileText className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">Tax Filing</p>
-                        <p className="text-xs text-gray-500">Jan 20, 2025</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">VAT Registration</p>
+                        <p className="text-xs text-gray-500">Before opening</p>
                       </button>
                       
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <Shield className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">License Renewal</p>
-                        <p className="text-xs text-gray-500">Feb 1, 2025</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">Final Permits</p>
+                        <p className="text-xs text-gray-500">Municipality approval</p>
                       </button>
                       
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
-                        <Receipt className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">Q1 Reports</p>
-                        <p className="text-xs text-gray-500">Mar 15, 2025</p>
+                        <Users className="w-5 h-5 text-gray-600 mb-3" />
+                        <p className="text-sm font-medium text-gray-900 mb-1">Staff Onboarding</p>
+                        <p className="text-xs text-gray-500">NSSF registration</p>
                       </button>
                       
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <Building2 className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">Lease Review</p>
-                        <p className="text-xs text-gray-500">Apr 1, 2025</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">Signage Approval</p>
+                        <p className="text-xs text-gray-500">Municipality review</p>
                       </button>
                     </div>
                   </div>
                   
-                  {/* Transaction History */}
+                  {/* Transaction History - Setup Phase */}
                   <div className="mb-6">
-                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Transaction History</p>
+                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Recent Payments</p>
                     
                     <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
                       <button className="w-full p-4 hover:bg-gray-50 transition-colors text-left border-b border-gray-100">
@@ -2446,11 +2446,11 @@ const Dashboard = () => {
                               <ArrowUp className="w-4 h-4 text-white -rotate-45" />
                             </div>
                             <div>
-                              <p className="text-sm font-medium text-gray-900">Permit Application Fee</p>
+                              <p className="text-sm font-medium text-gray-900">Commercial Registration</p>
                               <p className="text-xs text-gray-500">Today • 2:15 PM</p>
                             </div>
                           </div>
-                          <p className="text-sm font-medium text-gray-900">-$60.00</p>
+                          <p className="text-sm font-medium text-gray-900">-$150.00</p>
                         </div>
                       </button>
                       
@@ -2461,11 +2461,11 @@ const Dashboard = () => {
                               <ArrowUp className="w-4 h-4 text-gray-600 rotate-135" />
                             </div>
                             <div>
-                              <p className="text-sm font-medium text-gray-900">Wallet Top Up</p>
+                              <p className="text-sm font-medium text-gray-900">Initial Deposit</p>
                               <p className="text-xs text-gray-500">Yesterday • 9:00 AM</p>
                             </div>
                           </div>
-                          <p className="text-sm font-medium text-green-600">+$500.00</p>
+                          <p className="text-sm font-medium text-green-600">+$2,000.00</p>
                         </div>
                       </button>
                       
@@ -2476,44 +2476,44 @@ const Dashboard = () => {
                               <ArrowUp className="w-4 h-4 text-white -rotate-45" />
                             </div>
                             <div>
-                              <p className="text-sm font-medium text-gray-900">Document Processing</p>
+                              <p className="text-sm font-medium text-gray-900">Notary Services</p>
                               <p className="text-xs text-gray-500">Dec 8 • 3:30 PM</p>
                             </div>
                           </div>
-                          <p className="text-sm font-medium text-gray-900">-$25.00</p>
+                          <p className="text-sm font-medium text-gray-900">-$75.00</p>
                         </div>
                       </button>
                     </div>
                   </div>
                   
-                  {/* Quick Access - Horizontal Slider */}
+                  {/* Quick Access - Pre-operational tools */}
                   <div className="mb-6">
                     <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Quick Access</p>
                     
                     <div className="flex gap-3 overflow-x-auto scrollbar-none pb-2">
                       <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <Users className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">People</p>
+                        <FileCheck className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Permits</p>
                       </button>
                       
                       <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
                         <Shield className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Licensing</p>
-                      </button>
-                      
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <Receipt className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Tax</p>
-                      </button>
-                      
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <Building2 className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Real Estate</p>
+                        <p className="text-xs text-gray-700 font-medium">Compliance</p>
                       </button>
                       
                       <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
                         <FileText className="w-5 h-5 text-gray-600 mb-2" />
                         <p className="text-xs text-gray-700 font-medium">Documents</p>
+                      </button>
+                      
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <Building2 className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Property</p>
+                      </button>
+                      
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <Paperclip className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Contracts</p>
                       </button>
                     </div>
                   </div>
