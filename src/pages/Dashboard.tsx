@@ -48,7 +48,7 @@ const Dashboard = () => {
   
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
-  const [, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas' | 'thinking'; content: any}>>([
     {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
   ]);
@@ -92,7 +92,12 @@ const Dashboard = () => {
     ]
   };
 
-  const suggestionCards = suggestionCardsByAgent[selectedAgent] || suggestionCardsByAgent['PRO'];
+  const suggestionCards = currentScenario === 2 ? [
+    "Show me my business registration status",
+    "What permits do I still need to obtain?",
+    "Track my application progress",
+    "Schedule an appointment with an advisor"
+  ] : suggestionCardsByAgent[selectedAgent] || suggestionCardsByAgent['PRO'];
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -384,8 +389,8 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Desktop Header for Scenarios 1 and 2 */}
-      {!isMobile && !isSplitScreen && (currentScenario === 1) && (
+      {/* Desktop Header for Scenario 1 only */}
+      {!isMobile && !isSplitScreen && currentScenario === 1 && (
         <>
           {/* Fade gradient overlay for desktop */}
           <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/90 to-transparent pointer-events-none"></div>
@@ -430,7 +435,13 @@ const Dashboard = () => {
             
             {/* Login Button */}
             <button 
-              onClick={() => setIsLoggedIn(true)}
+              onClick={() => {
+                setCurrentScenario(2);
+                setIsLoggedIn(true);
+                setChatMessages([
+                  {role: 'assistant', content: "Welcome back! How can I help you today with your business?"}
+                ]);
+              }}
               className="px-6 py-2 bg-gray-100 text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
             >
               Login
@@ -440,8 +451,8 @@ const Dashboard = () => {
         </>
       )}
 
-      {/* Desktop Company Dropdown - Top Left for logged in scenarios 3-6 */}
-      {!isMobile && currentScenario >= 3 && (
+      {/* Desktop Company Dropdown - Top Left for logged in scenarios 2-6 */}
+      {!isMobile && currentScenario >= 2 && (
         <div className="fixed top-6 left-72 z-50">
           <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
@@ -510,7 +521,7 @@ const Dashboard = () => {
       )}
 
       {/* Floating RSS Feeds and Notifications - Desktop Only - Only for logged in scenarios */}
-      {!isMobile && currentScenario >= 3 && (
+      {!isMobile && currentScenario >= 2 && (
       <div className="fixed top-6 right-6 z-40 flex items-center gap-4">
         {/* RSS Feeds */}
         <div className="relative group">
@@ -675,15 +686,26 @@ const Dashboard = () => {
                 </div>
               </button>
               
-              {/* Scenario 2: Renewable Energy - Coming Soon */}
-              <div
-                className="w-full text-left p-3 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed"
+              {/* Scenario 2: Logged In State */}
+              <button
+                onClick={() => {
+                  setCurrentScenario(2);
+                  setIsLoggedIn(true);
+                  setChatMessages([
+                    {role: 'assistant', content: "Welcome back! How can I help you today with your business?"}
+                  ]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-all ${
+                  currentScenario === 2 
+                    ? 'bg-blue-50 ring-2 ring-blue-500' 
+                    : 'bg-white hover:bg-gray-50 border border-gray-200'
+                }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500 truncate flex-1">Scenario 2</span>
-                  <span className="text-xs text-gray-400 ml-2">Coming soon!</span>
+                  <span className="text-sm text-gray-700 truncate flex-1">Scenario 2: Logged In</span>
+                  {currentScenario === 2 && <span className="text-xs text-blue-600 ml-2">Active</span>}
                 </div>
-              </div>
+              </button>
               
               {/* Scenario 3: Tourism & Hotels - Coming Soon */}
               <div
@@ -714,10 +736,10 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage or Split Screen */}
-      <div className={`${(currentScenario === 1) ? (!isMobile && showBusinessSidebar && !isSplitScreen ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
-        <div className={`${(currentScenario === 1) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col overflow-hidden' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'}`}>
+      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar && !isSplitScreen ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
+        <div className={`${(currentScenario === 1 || currentScenario === 2) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col overflow-hidden' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'}`}>
           
-          {(currentScenario === 1) ? (
+          {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
             <>
               {/* Header for split screen */}
@@ -898,7 +920,7 @@ const Dashboard = () => {
           )}
 
           {/* Bottom Section - Welcome, Suggestions, Input */}
-          <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
+          <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1 || currentScenario === 2) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
             <div className="max-w-3xl mx-auto px-4">
               {/* Welcome Message */}
               {chatMessages.length === 1 && (
@@ -915,7 +937,7 @@ const Dashboard = () => {
               )}
               
               {/* Suggestion Cards */}
-              {(currentScenario === 1) && chatMessages.length === 1 && (
+              {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && (
                 <div className="mb-10">
                   <div className="flex items-center gap-2">
                     {/* Left Arrow - Desktop only */}
