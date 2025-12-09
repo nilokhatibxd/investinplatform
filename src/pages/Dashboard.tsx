@@ -775,41 +775,143 @@ const Dashboard = () => {
                                 <X className="w-5 h-5 text-gray-600" />
                               </button>
                             </div>
-                            <div className="p-4">
-                              <div className="space-y-4">
-                                {/* Government Exclusive Data - Mobile View */}
-                                <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-4">
-                                  <p className="text-sm font-medium text-gray-900 mb-2">📍 Hamra District Intelligence</p>
-                                  <div className="grid grid-cols-2 gap-3 text-xs">
-                                    <div>
-                                      <p className="text-gray-500">Dentists</p>
-                                      <p className="font-bold">65 registered</p>
-                                    </div>
-                                    <div>
-                                      <p className="text-gray-500">Service Gap</p>
-                                      <p className="font-bold text-orange-600">45% unmet</p>
+                            <div className="p-4 overflow-y-auto">
+                              <div className="max-w-3xl mx-auto">
+                                {/* Mobile Report Content - Same as Desktop */}
+                                <div className="mb-6">
+                                  <p className="text-xs text-gray-400 mb-2">{new Date().toLocaleDateString()}</p>
+                                  <h1 className="text-xl font-light text-gray-900">Private Dental Clinic in Hamra District</h1>
+                                </div>
+
+                                {/* Summary */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Summary</h2>
+                                  <div className="bg-blue-50 border-l-4 border-blue-500 p-3">
+                                    <p className="text-xs text-gray-800 leading-relaxed">
+                                      Hamra is a university district with 12,000 students and residential families totaling 32,000 residents. Government data shows only 30 operational dental clinics serving the area, resulting in a 45% service gap. With 17,600 NSSF-insured residents and average wait times of 3 weeks, the district represents an underserved market for dental services.
+                                    </p>
+                                  </div>
+                                </div>
+
+                                {/* Location Map - Simplified for Mobile */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Location & Competition</h2>
+                                  <div className="bg-gray-100 rounded-lg h-40 flex items-center justify-center border border-gray-200 relative">
+                                    <MapPin className="w-8 h-8 text-gray-400" />
+                                    <div className="absolute top-2 left-2 bg-white rounded p-2 text-xs">
+                                      <p className="font-medium">Hamra • 30 clinics</p>
                                     </div>
                                   </div>
                                 </div>
-                                
-                                <div className="grid grid-cols-3 gap-2">
-                                  <div className="bg-red-50 border border-red-200 rounded-lg p-2">
-                                    <p className="text-xs font-medium text-red-800">Demand</p>
-                                    <p className="text-xs text-red-600">85% caries</p>
-                                  </div>
-                                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2">
-                                    <p className="text-xs font-medium text-yellow-800">Density</p>
-                                    <p className="text-xs text-yellow-600">20.3/10k</p>
-                                  </div>
-                                  <div className="bg-green-50 border border-green-200 rounded-lg p-2">
-                                    <p className="text-xs font-medium text-green-800">Insurance</p>
-                                    <p className="text-xs text-green-600">55%</p>
+
+                                {/* Local Population Data */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Local Population Data</h2>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <p className="text-lg font-light text-gray-900">7,200</p>
+                                      <p className="text-xs text-gray-600">Families</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <p className="text-lg font-light text-gray-900">5,760</p>
+                                      <p className="text-xs text-gray-600">Children</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <p className="text-lg font-light text-gray-900">12,000</p>
+                                      <p className="text-xs text-gray-600">Students</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <p className="text-lg font-light text-gray-900">3,840</p>
+                                      <p className="text-xs text-gray-600">Elderly</p>
+                                    </div>
                                   </div>
                                 </div>
-                                
-                                <div className="bg-purple-50 rounded-lg p-3">
-                                  <p className="text-xs font-medium text-gray-900 mb-1">Gov Intelligence</p>
-                                  <p className="text-xs text-gray-700">Fast-track licensing: 48hrs • Tax exemption: 5 years</p>
+
+                                {/* Population Health Profile */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Population Health Profile</h2>
+                                  <div className="grid grid-cols-2 gap-2">
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <div className="flex items-center justify-between">
+                                        <p className="text-lg font-light text-gray-900">85%</p>
+                                        <span className="text-xs text-red-600">↑ 7%</span>
+                                      </div>
+                                      <p className="text-xs text-gray-600">Children caries</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <div className="flex items-center justify-between">
+                                        <p className="text-lg font-light text-gray-900">92%</p>
+                                        <span className="text-xs text-orange-600">↑ 12%</span>
+                                      </div>
+                                      <p className="text-xs text-gray-600">Adult periodontal</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <div className="flex items-center justify-between">
+                                        <p className="text-lg font-light text-gray-900">2</p>
+                                        <span className="text-xs text-purple-600">↓ 85%</span>
+                                      </div>
+                                      <p className="text-xs text-gray-600">Pediatric specialists</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2">
+                                      <div className="flex items-center justify-between">
+                                        <p className="text-lg font-light text-gray-900">0</p>
+                                        <span className="text-xs text-gray-500">—</span>
+                                      </div>
+                                      <p className="text-xs text-gray-600">Geriatric specialists</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Investment Analysis */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Investment Analysis</h2>
+                                  <p className="text-xs text-gray-600 mb-2">Based on 12 recent clinic openings:</p>
+                                  <div className="grid grid-cols-3 gap-2">
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2 text-center">
+                                      <DollarSign className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+                                      <p className="text-sm font-light">$100-150K</p>
+                                      <p className="text-xs text-gray-600">Capital</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2 text-center">
+                                      <Maximize className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+                                      <p className="text-sm font-light">80-120m²</p>
+                                      <p className="text-xs text-gray-600">Space</p>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-2 text-center">
+                                      <Home className="w-5 h-5 text-gray-400 mx-auto mb-1" />
+                                      <p className="text-sm font-light">$800-1.8K</p>
+                                      <p className="text-xs text-gray-600">Rent</p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Fast-Track Process */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Fast-Track Licensing</h2>
+                                  <div className="space-y-2">
+                                    <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+                                      <span className="text-xs font-medium">Healthcare Registration</span>
+                                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">24hrs</span>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+                                      <span className="text-xs font-medium">Business Registration</span>
+                                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">12hrs</span>
+                                    </div>
+                                    <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+                                      <span className="text-xs font-medium">Final Permits</span>
+                                      <span className="text-xs bg-gray-100 px-2 py-1 rounded">12hrs</span>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="space-y-2 mb-8">
+                                  <button className="w-full bg-gray-900 text-white py-3 rounded-full text-sm font-medium">
+                                    Start Your Clinic in Hamra
+                                  </button>
+                                  <button className="w-full bg-white text-gray-900 py-3 rounded-full border-2 border-gray-900 text-sm font-medium">
+                                    Explore More Locations
+                                  </button>
                                 </div>
                               </div>
                             </div>
