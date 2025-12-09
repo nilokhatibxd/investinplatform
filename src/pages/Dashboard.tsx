@@ -24,7 +24,9 @@ import {
   ThumbsDown,
   MessageSquare,
   ChevronLeft,
-  ArrowUp
+  ArrowUp,
+  Download,
+  Expand
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -806,7 +808,20 @@ const Dashboard = () => {
                     ) : message.role === 'canvas' ? (
                       // Canvas Container with widgets
                       <div className="relative">
-                        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white p-6">
+                        <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
+                          {/* Canvas Header */}
+                          <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
+                            <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
+                            <div className="flex items-center gap-2">
+                              <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
+                                <Download className="w-4 h-4 text-gray-600" />
+                              </button>
+                              <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
+                                <Expand className="w-4 h-4 text-gray-600" />
+                              </button>
+                            </div>
+                          </div>
+                          <div className="p-6">
                           <div className="space-y-4">
                             {/* Widget 1 - Map */}
                             <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
@@ -863,6 +878,7 @@ const Dashboard = () => {
                                 <li>Identify potential local partners or investors</li>
                               </ul>
                             </div>
+                          </div>
                           </div>
                         </div>
                       </div>
