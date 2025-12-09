@@ -674,41 +674,25 @@ const Dashboard = () => {
                 </div>
               </button>
               
-              {/* Scenario 2: Renewable Energy */}
-              <button
-                onClick={() => {
-                  setCurrentScenario(2);
-                  setChatMessages([{role: 'user', content: "Solar energy project in the Bekaa Valley"}, {role: 'assistant', content: "Renewable energy is a priority sector. The Bekaa Valley has excellent solar potential."}]);
-                }}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
-                  currentScenario === 2 
-                    ? 'bg-white border border-gray-300' 
-                    : 'hover:bg-gray-50'
-                }`}
+              {/* Scenario 2: Renewable Energy - Coming Soon */}
+              <div
+                className="w-full text-left p-3 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 2</span>
-                  <span className="text-xs text-gray-400 ml-2">Yesterday</span>
+                  <span className="text-sm text-gray-500 truncate flex-1">Scenario 2</span>
+                  <span className="text-xs text-gray-400 ml-2">Coming soon!</span>
                 </div>
-              </button>
+              </div>
               
-              {/* Scenario 3: Tourism & Hotels */}
-              <button
-                onClick={() => {
-                  setCurrentScenario(3);
-                  setChatMessages([{role: 'user', content: "Building a boutique hotel in Byblos"}, {role: 'assistant', content: "Byblos is perfect for boutique hotels! Its historic charm attracts tourists year-round."}]);
-                }}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
-                  currentScenario === 3 
-                    ? 'bg-white border border-gray-300' 
-                    : 'hover:bg-gray-50'
-                }`}
+              {/* Scenario 3: Tourism & Hotels - Coming Soon */}
+              <div
+                className="w-full text-left p-3 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 3</span>
-                  <span className="text-xs text-gray-400 ml-2">2 days ago</span>
+                  <span className="text-sm text-gray-500 truncate flex-1">Scenario 3</span>
+                  <span className="text-xs text-gray-400 ml-2">Coming soon!</span>
                 </div>
-              </button>
+              </div>
             </div>
           </div>
           
