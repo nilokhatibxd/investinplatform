@@ -779,8 +779,8 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage or Split Screen */}
-      <div className={`${isSplitScreen && !isMobile ? 'flex' : ''} ${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex flex-col bg-white overflow-hidden' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
-        <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col overflow-hidden' : ''} w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
+      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
+        <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col overflow-hidden' : ''} ${isSplitScreen ? 'w-full' : 'w-full max-w-3xl mx-auto'} ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
