@@ -55,7 +55,7 @@ const Dashboard = () => {
   const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
   const [, setSelectedBusinessId] = useState<string | null>(null);
   const [showBusinessSidebar, setShowBusinessSidebar] = useState(false);
-  const defaultMessage = "I want to open a private dental clinic in Hamra, Beirut";
+  const defaultMessage = "I want to open a private dental clinic in Hamra";
   const [inputValue, setInputValue] = useState('');
   
   // Check if canvas is showing on mobile
