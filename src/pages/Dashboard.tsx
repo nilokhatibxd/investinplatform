@@ -60,6 +60,10 @@ const Dashboard = () => {
   const defaultMessage = "I want to open a specialty coffee shop in Hamra, Beirut";
   const [inputValue, setInputValue] = useState('');
   
+  // Check if canvas is showing on mobile
+  const hasCanvasMessage = chatMessages.some(msg => msg.role === 'canvas');
+  const isCanvasFullscreen = isMobile && hasCanvasMessage && chatMessages.length > 1;
+  
   // Suggestion cards based on agent type - Pre-Investment questions
   const suggestionCardsByAgent: Record<string, string[]> = {
     'PRO': [
@@ -263,8 +267,8 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-t from-purple-50/30 via-blue-50/20 to-white">
-      {/* Mobile Header */}
-      {isMobile && (
+      {/* Mobile Header - Hide when canvas is fullscreen */}
+      {isMobile && !isCanvasFullscreen && (
         <>
           {/* Fade gradient overlay */}
           <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/95 to-transparent pointer-events-none"></div>
@@ -349,8 +353,8 @@ const Dashboard = () => {
         </>
       )}
 
-      {/* Mobile Menu Overlay - Hidden in Scenario 1 */}
-      {isMobile && isMobileMenuOpen && currentScenario !== 1 && (
+      {/* Mobile Menu Overlay - Hidden in Scenario 1 and when canvas is fullscreen */}
+      {isMobile && isMobileMenuOpen && currentScenario !== 1 && !isCanvasFullscreen && (
         <div className="fixed inset-0 bg-white/50 z-40" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="fixed right-0 top-0 h-full w-72 bg-white shadow-xl z-50" onClick={(e) => e.stopPropagation()}>
             <div className="p-6 pt-20">
@@ -611,16 +615,16 @@ const Dashboard = () => {
       </div>
       )}
 
-      {/* Mobile Overlay for Sidebar */}
-      {isMobile && showBusinessSidebar && (
+      {/* Mobile Overlay for Sidebar - Hide when canvas is fullscreen */}
+      {isMobile && showBusinessSidebar && !isCanvasFullscreen && (
         <div 
           className="fixed inset-0 bg-black/50 backdrop-blur-sm z-30"
           onClick={() => setShowBusinessSidebar(false)}
         />
       )}
 
-      {/* ChatGPT-style Sidebar */}
-      {showBusinessSidebar && !isSplitScreen && (
+      {/* ChatGPT-style Sidebar - Hide when canvas is fullscreen on mobile */}
+      {showBusinessSidebar && !isSplitScreen && !isCanvasFullscreen && (
         <div className={`fixed left-0 top-0 ${isMobile ? 'w-72' : 'w-64'} h-full bg-gray-100 text-gray-900 z-40 flex flex-col ${
           isMobile ? 'shadow-2xl transform transition-transform' : ''
         }`}>
@@ -765,8 +769,55 @@ const Dashboard = () => {
                         </p>
                       </div>
                     ) : message.role === 'canvas' ? (
-                      // Canvas Container with widgets or button in split-screen
-                      isSplitScreen ? (
+                      // Canvas Container - fullscreen on mobile
+                      isCanvasFullscreen ? (
+                        // Mobile fullscreen canvas
+                        <div className="fixed inset-0 z-50 bg-white overflow-y-auto">
+                          <div className="min-h-screen">
+                            {/* Mobile Canvas Header */}
+                            <div className="sticky top-0 z-10 flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
+                              <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded transition-colors"
+                                onClick={() => {
+                                  // Remove canvas message to exit fullscreen
+                                  setChatMessages(prev => prev.filter(msg => msg.role !== 'canvas'));
+                                }}
+                              >
+                                <X className="w-5 h-5 text-gray-600" />
+                              </button>
+                            </div>
+                            <div className="p-4">
+                              <div className="space-y-4">
+                                {/* All the canvas content */}
+                                <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
+                                  <p className="text-gray-600">📍 Hamra, Beirut</p>
+                                </div>
+                                
+                                <div className="grid grid-cols-3 gap-3">
+                                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                                    <p className="text-sm font-medium text-green-800">High Traffic</p>
+                                    <p className="text-xs text-green-600">2,500+ daily</p>
+                                  </div>
+                                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                                    <p className="text-sm font-medium text-yellow-800">Competition</p>
+                                    <p className="text-xs text-yellow-600">5 nearby</p>
+                                  </div>
+                                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                    <p className="text-sm font-medium text-blue-800">Growth</p>
+                                    <p className="text-xs text-blue-600">30% yearly</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="bg-gray-50 rounded-lg p-4">
+                                  <p className="text-sm font-medium text-gray-900 mb-2">Recommendation</p>
+                                  <p className="text-sm text-gray-600">Strong potential for specialty coffee. Focus on unique offerings to differentiate.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ) : isSplitScreen ? (
                         // Show as button in split-screen
                         <div className="flex justify-start">
                           <button className="bg-white border border-gray-200 rounded-lg px-4 py-3 hover:bg-gray-50 transition-colors text-left">
