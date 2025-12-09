@@ -1282,7 +1282,7 @@ const Dashboard = () => {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-900 truncate flex-1">Scenario 1</span>
-                  <span className="text-xs text-gray-400 ml-2">2:30 PM</span>
+                  <span className="text-xs text-gray-400 ml-2">9:30pm</span>
                 </div>
               </button>
               
@@ -1306,7 +1306,8 @@ const Dashboard = () => {
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700 truncate flex-1">Scenario 2: Logged In</span>
+                  <span className="text-sm text-gray-700 truncate flex-1">Scenario 2</span>
+                  <span className="text-xs text-gray-400 ml-2">10:00pm</span>
                   {currentScenario === 2 && <span className="text-xs text-blue-600 ml-2">Active</span>}
                 </div>
               </button>
@@ -1565,12 +1566,12 @@ const Dashboard = () => {
                       <PermitsComplete currency={selectedCurrency} />
                     ) : (
                       <div>
-                        {/* Use body text for short messages, large text for initial welcome */}
+                        {/* Use body text for all messages except initial welcome */}
                         <p className={`${
-                          message.content.length < 100 && index > 0 
+                          index > 0 
                             ? 'text-base text-gray-800' 
                             : `${isMobile ? 'text-4xl' : 'text-4xl'} font-light text-gray-900`
-                        }`} style={{lineHeight: message.content.length < 100 && index > 0 ? '1.6em' : isMobile ? '1.15em' : '1.2em'}}>
+                        }`} style={{lineHeight: index > 0 ? '1.6em' : isMobile ? '1.15em' : '1.2em'}}>
                           {(() => {
                             // Keep full message in all views
                             const content = message.content;
