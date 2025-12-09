@@ -825,9 +825,6 @@ const Dashboard = () => {
                           <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
                             <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
                             <div className="flex items-center gap-2">
-                              <button className="p-1.5 hover:bg-gray-200 rounded-full transition-colors">
-                                <ThumbsUp className="w-4 h-4 text-gray-600" />
-                              </button>
                               <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                                 <Download className="w-4 h-4 text-gray-600" />
                               </button>
@@ -898,6 +895,16 @@ const Dashboard = () => {
                             </div>
                           </div>
                           </div>
+                        </div>
+                        
+                        {/* Like/Dislike buttons below canvas */}
+                        <div className="flex items-center gap-1 mt-2">
+                          <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                            <ThumbsUp className="w-4 h-4 text-gray-500 hover:text-gray-700" />
+                          </button>
+                          <button className="p-1 hover:bg-gray-100 rounded transition-colors">
+                            <ThumbsDown className="w-4 h-4 text-gray-500 hover:text-gray-700" />
+                          </button>
                         </div>
                       </div>
                     ) : (
@@ -1538,9 +1545,6 @@ const Dashboard = () => {
                     <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
                       <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
                       <div className="flex items-center gap-2">
-                        <button className="p-1.5 hover:bg-gray-200 rounded-full transition-colors">
-                          <ThumbsUp className="w-4 h-4 text-gray-600" />
-                        </button>
                         <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                           <Download className="w-4 h-4 text-gray-600" />
                         </button>
