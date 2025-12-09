@@ -1274,14 +1274,14 @@ const Dashboard = () => {
                   setCurrentScenario(1);
                   setChatMessages([{role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}]);
                 }}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
+                className={`w-full text-left p-3 rounded-lg transition-all ${
                   currentScenario === 1 
-                    ? 'bg-white border border-gray-300' 
-                    : 'hover:bg-gray-50'
+                    ? 'bg-blue-50 ring-2 ring-blue-500' 
+                    : 'bg-white hover:bg-gray-50 border border-gray-200'
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 1</span>
+                  <span className="text-sm text-gray-700 truncate flex-1">Scenario 1</span>
                   <span className="text-xs text-gray-400 ml-2">9:30pm</span>
                 </div>
               </button>
@@ -1308,7 +1308,6 @@ const Dashboard = () => {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-700 truncate flex-1">Scenario 2</span>
                   <span className="text-xs text-gray-400 ml-2">10:00pm</span>
-                  {currentScenario === 2 && <span className="text-xs text-blue-600 ml-2">Active</span>}
                 </div>
               </button>
               
