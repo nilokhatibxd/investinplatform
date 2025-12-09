@@ -894,29 +894,29 @@ const Dashboard = () => {
                               </div>
                             </div>
 
-                            {/* Location Intelligence */}
+                            {/* Local Population Data */}
                             <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Location Intelligence</h2>
+                              <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Local Population Data</h2>
                               <div className="grid grid-cols-2 gap-3">
                                 <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">45K</p>
-                                  <p className="text-xs text-gray-600 font-medium">Daily foot traffic</p>
-                                  <p className="text-xs text-gray-400 mt-1">Peak: 12-2pm, 5-8pm</p>
+                                  <p className="text-2xl font-light text-gray-900">7,200</p>
+                                  <p className="text-xs text-gray-600 font-medium">Families</p>
+                                  <p className="text-xs text-gray-400 mt-1">Avg 4.4 members/family</p>
                                 </div>
                                 <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">12K</p>
+                                  <p className="text-2xl font-light text-gray-900">5,760</p>
+                                  <p className="text-xs text-gray-600 font-medium">Children (0-14)</p>
+                                  <p className="text-xs text-gray-400 mt-1">18% of population</p>
+                                </div>
+                                <div className="bg-white border border-gray-200 rounded-lg p-3">
+                                  <p className="text-2xl font-light text-gray-900">12,000</p>
                                   <p className="text-xs text-gray-600 font-medium">University students</p>
-                                  <p className="text-xs text-gray-400 mt-1">AUB + LAU combined</p>
+                                  <p className="text-xs text-gray-400 mt-1">AUB + LAU</p>
                                 </div>
                                 <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">8.5K</p>
-                                  <p className="text-xs text-gray-600 font-medium">Office workers</p>
-                                  <p className="text-xs text-gray-400 mt-1">Within 500m radius</p>
-                                </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">1,200</p>
-                                  <p className="text-xs text-gray-600 font-medium">Parking spaces</p>
-                                  <p className="text-xs text-gray-400 mt-1">4 public lots nearby</p>
+                                  <p className="text-2xl font-light text-gray-900">3,840</p>
+                                  <p className="text-xs text-gray-600 font-medium">Elderly (65+)</p>
+                                  <p className="text-xs text-gray-400 mt-1">12% of population</p>
                                 </div>
                               </div>
                             </div>
@@ -1018,6 +1018,8 @@ const Dashboard = () => {
                                 </div>
                               </div>
                               <p className="text-xs text-gray-400">Source: Commercial Registry, Real Estate Database</p>
+
+                              <div className="mb-4"></div>
 
                               {/* Loan Program CTA */}
                               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
