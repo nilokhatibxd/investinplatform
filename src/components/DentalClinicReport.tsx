@@ -231,7 +231,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       {/* Trade Name Suggestions */}
       <div className={sectionSpacing}>
         <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
-          Available Trade Names in Hamra
+          Available Trade Names
         </h2>
         <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-2 mb-3`}>
           <button className="text-left bg-white border border-gray-200 rounded-lg p-3 hover:bg-blue-50 hover:border-blue-300 transition-all group">
