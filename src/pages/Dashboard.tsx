@@ -55,7 +55,7 @@ const Dashboard = () => {
   const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
   const [, setSelectedBusinessId] = useState<string | null>(null);
   const [showBusinessSidebar, setShowBusinessSidebar] = useState(false);
-  const defaultMessage = "I want to open a specialty coffee shop in Hamra, Beirut";
+  const defaultMessage = "I want to open a private dental clinic in Hamra, Beirut";
   const [inputValue, setInputValue] = useState('');
   
   // Check if canvas is showing on mobile
@@ -760,7 +760,7 @@ const Dashboard = () => {
                           <div className="min-h-screen">
                             {/* Mobile Canvas Header */}
                             <div className="sticky top-0 z-10 flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
-                              <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
+                              <div className="text-sm font-medium text-gray-700">Government Healthcare Investment Analysis</div>
                               <button 
                                 className="p-1.5 hover:bg-gray-200 rounded transition-colors"
                                 onClick={() => {
@@ -773,29 +773,39 @@ const Dashboard = () => {
                             </div>
                             <div className="p-4">
                               <div className="space-y-4">
-                                {/* All the canvas content */}
-                                <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
-                                  <p className="text-gray-600">📍 Hamra, Beirut</p>
-                                </div>
-                                
-                                <div className="grid grid-cols-3 gap-3">
-                                  <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                                    <p className="text-sm font-medium text-green-800">High Traffic</p>
-                                    <p className="text-xs text-green-600">2,500+ daily</p>
-                                  </div>
-                                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                                    <p className="text-sm font-medium text-yellow-800">Competition</p>
-                                    <p className="text-xs text-yellow-600">5 nearby</p>
-                                  </div>
-                                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                                    <p className="text-sm font-medium text-blue-800">Growth</p>
-                                    <p className="text-xs text-blue-600">30% yearly</p>
+                                {/* Government Exclusive Data - Mobile View */}
+                                <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-4">
+                                  <p className="text-sm font-medium text-gray-900 mb-2">📍 Hamra District Intelligence</p>
+                                  <div className="grid grid-cols-2 gap-3 text-xs">
+                                    <div>
+                                      <p className="text-gray-500">Dentists</p>
+                                      <p className="font-bold">65 registered</p>
+                                    </div>
+                                    <div>
+                                      <p className="text-gray-500">Service Gap</p>
+                                      <p className="font-bold text-orange-600">45% unmet</p>
+                                    </div>
                                   </div>
                                 </div>
                                 
-                                <div className="bg-gray-50 rounded-lg p-4">
-                                  <p className="text-sm font-medium text-gray-900 mb-2">Recommendation</p>
-                                  <p className="text-sm text-gray-600">Strong potential for specialty coffee. Focus on unique offerings to differentiate.</p>
+                                <div className="grid grid-cols-3 gap-2">
+                                  <div className="bg-red-50 border border-red-200 rounded-lg p-2">
+                                    <p className="text-xs font-medium text-red-800">Demand</p>
+                                    <p className="text-xs text-red-600">85% caries</p>
+                                  </div>
+                                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-2">
+                                    <p className="text-xs font-medium text-yellow-800">Density</p>
+                                    <p className="text-xs text-yellow-600">20.3/10k</p>
+                                  </div>
+                                  <div className="bg-green-50 border border-green-200 rounded-lg p-2">
+                                    <p className="text-xs font-medium text-green-800">Insurance</p>
+                                    <p className="text-xs text-green-600">55%</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="bg-purple-50 rounded-lg p-3">
+                                  <p className="text-xs font-medium text-gray-900 mb-1">Gov Intelligence</p>
+                                  <p className="text-xs text-gray-700">Fast-track licensing: 48hrs • Tax exemption: 5 years</p>
                                 </div>
                               </div>
                             </div>
@@ -808,8 +818,8 @@ const Dashboard = () => {
                             <div className="flex items-center gap-2">
                               <FileText className="w-5 h-5 text-gray-600" />
                               <div>
-                                <p className="text-sm font-medium text-gray-900">Business Analysis Report</p>
-                                <p className="text-xs text-gray-500">Specialty Coffee Shop in Hamra</p>
+                                <p className="text-sm font-medium text-gray-900">Healthcare Investment Analysis</p>
+                                <p className="text-xs text-gray-500">Private Dental Clinic - Hamra District</p>
                               </div>
                             </div>
                           </button>
@@ -820,7 +830,7 @@ const Dashboard = () => {
                         <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
                           {/* Canvas Header */}
                           <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
-                            <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
+                            <div className="text-sm font-medium text-gray-700">Government Healthcare Investment Analysis</div>
                             <div className="flex items-center gap-2">
                               <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                                 <Download className="w-4 h-4 text-gray-600" />
@@ -835,60 +845,147 @@ const Dashboard = () => {
                           </div>
                           <div className="p-6">
                           <div className="space-y-4">
-                            {/* Widget 1 - Map */}
-                            <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
-                              <p className="text-gray-600">📍 Hamra, Beirut</p>
+                            {/* Widget 1 - Location Intelligence */}
+                            <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-4">
+                              <div className="flex items-center justify-between mb-2">
+                                <p className="text-sm font-semibold text-gray-800">📍 Hamra District Analysis</p>
+                                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">HIGH OPPORTUNITY</span>
+                              </div>
+                              <div className="grid grid-cols-2 gap-2 mt-3">
+                                <div className="bg-white/70 rounded p-2">
+                                  <p className="text-xs text-gray-600">Population</p>
+                                  <p className="text-sm font-medium">32,000</p>
+                                </div>
+                                <div className="bg-white/70 rounded p-2">
+                                  <p className="text-xs text-gray-600">Dentist Density</p>
+                                  <p className="text-sm font-medium">20.3/10k</p>
+                                </div>
+                                <div className="bg-white/70 rounded p-2">
+                                  <p className="text-xs text-gray-600">Service Gap</p>
+                                  <p className="text-sm font-medium text-orange-600">45%</p>
+                                </div>
+                                <div className="bg-white/70 rounded p-2">
+                                  <p className="text-xs text-gray-600">NSSF Coverage</p>
+                                  <p className="text-sm font-medium">55%</p>
+                                </div>
+                              </div>
                             </div>
                             
-                            {/* Widget 2 - Key Metrics */}
+                            {/* Widget 2 - Government-Exclusive Metrics */}
                             <div className="grid grid-cols-3 gap-3">
-                              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                                <p className="text-sm font-medium text-green-800">High Traffic</p>
-                                <p className="text-xs text-green-600">2,500+ daily</p>
+                              <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                                <p className="text-sm font-medium text-red-800">Caries Rate</p>
+                                <p className="text-xs text-red-600">85% children</p>
+                                <p className="text-xs text-gray-500 mt-1">MoPH 2024</p>
                               </div>
                               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
                                 <p className="text-sm font-medium text-yellow-800">Competition</p>
-                                <p className="text-xs text-yellow-600">5 nearby</p>
+                                <p className="text-xs text-yellow-600">30 clinics</p>
+                                <p className="text-xs text-gray-500 mt-1">HIGH</p>
                               </div>
-                              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                                <p className="text-sm font-medium text-blue-800">Growth</p>
-                                <p className="text-xs text-blue-600">30% yearly</p>
+                              <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                                <p className="text-sm font-medium text-green-800">Fast-Track</p>
+                                <p className="text-xs text-green-600">48hr license</p>
+                                <p className="text-xs text-gray-500 mt-1">Available</p>
                               </div>
                             </div>
                             
-                            {/* Widget 3 - Recommendation */}
-                            <div className="bg-gray-50 rounded-lg p-4">
-                              <p className="text-sm font-medium text-gray-900 mb-2">Recommendation</p>
-                              <p className="text-sm text-gray-600">Strong potential for specialty coffee. Focus on unique offerings to differentiate.</p>
+                            {/* Widget 3 - Cross-Ministry Intelligence */}
+                            <div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg p-4 border border-purple-200">
+                              <p className="text-sm font-semibold text-purple-900 mb-2">🔒 Government-Exclusive Insight</p>
+                              <p className="text-sm text-gray-700 mb-2">Cross-ministry data synthesis reveals untapped opportunity in pediatric dentistry. With 18% child population and only 2 specialized pediatric clinics in Hamra.</p>
+                              <div className="flex items-center gap-2 mt-2">
+                                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">MoPH</span>
+                                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">NSSF</span>
+                                <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Municipality</span>
+                              </div>
                             </div>
                             
                             {/* Additional Analysis Sections for Scrolling Test */}
                             <div className="border-t pt-4 mt-4">
-                              <h3 className="text-lg font-semibold text-gray-900 mb-3">Market Analysis</h3>
-                              <p className="text-sm text-gray-600 mb-3">Hamra district shows exceptional promise for specialty coffee establishments. The area has seen a 45% increase in foot traffic over the past year, with peak hours between 8-10 AM and 5-8 PM.</p>
-                              <p className="text-sm text-gray-600 mb-3">Current competition includes 5 established cafes within a 500m radius, but none focus exclusively on specialty coffee. There's a clear gap for premium, third-wave coffee experiences.</p>
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3">🏥 Healthcare Market Intelligence</h3>
+                              <div className="bg-blue-50 border-l-4 border-blue-400 p-3 mb-3">
+                                <p className="text-sm font-medium text-blue-900 mb-1">Government Data Advantage</p>
+                                <p className="text-sm text-gray-700">Our analysis shows 45% dental service gap in Hamra despite high dentist density (20.3/10k). Real-time NSSF claims data reveals average wait times of 3+ weeks for appointments.</p>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-3">Oral disease burden: 85-90% caries prevalence in children, 90%+ periodontal disease in adults. Economic crisis has worsened access - only 55% have insurance coverage.</p>
+                              <p className="text-sm text-gray-600 mb-3">Opportunity: Pediatric specialization severely underserved. Only 2 dedicated pediatric dental clinics for 5,760 children in district.</p>
                               
-                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Demographics</h3>
-                              <p className="text-sm text-gray-600 mb-3">Primary customer base: Young professionals (25-40 years), University students (18-24 years), and expatriates. Average disposable income in the area is 35% above city average.</p>
-                              <p className="text-sm text-gray-600 mb-3">Survey data indicates 78% of residents visit coffee shops at least 3 times per week, with average spending of $8-12 per visit.</p>
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">🎯 Target Demographics (Government Data)</h3>
+                              <div className="grid grid-cols-2 gap-3 mb-3">
+                                <div className="bg-gray-50 rounded p-2">
+                                  <p className="text-xs text-gray-600">Working Adults (15-64)</p>
+                                  <p className="text-sm font-medium">22,400 (70%)</p>
+                                </div>
+                                <div className="bg-gray-50 rounded p-2">
+                                  <p className="text-xs text-gray-600">Children (0-14)</p>
+                                  <p className="text-sm font-medium">5,760 (18%)</p>
+                                </div>
+                                <div className="bg-gray-50 rounded p-2">
+                                  <p className="text-xs text-gray-600">Elderly (65+)</p>
+                                  <p className="text-sm font-medium">3,840 (12%)</p>
+                                </div>
+                                <div className="bg-gray-50 rounded p-2">
+                                  <p className="text-xs text-gray-600">NSSF Insured</p>
+                                  <p className="text-sm font-medium">17,600 (55%)</p>
+                                </div>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-3">Income band: Medium-High. Primary segments: Working-age adults, Students from 2 nearby universities. Strong presence of expats and professionals.</p>
                               
-                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Regulatory Requirements</h3>
-                              <p className="text-sm text-gray-600 mb-3">You'll need to obtain the following licenses: Commercial Registration (Ministry of Economy), Food Service License (Municipality of Beirut), Health Permit (Ministry of Public Health).</p>
-                              <p className="text-sm text-gray-600 mb-3">Estimated timeline: 4-6 weeks for all permits. Total licensing costs approximately $3,500-4,500.</p>
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">⚡ Fast-Track Licensing (48 Hours)</h3>
+                              <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-3">
+                                <p className="text-sm font-medium text-green-900 mb-2">🎯 Government One-Stop Shop Available</p>
+                                <ul className="text-sm text-gray-700 space-y-1">
+                                  <li>• ODL Registration & MoPH License: 24 hours</li>
+                                  <li>• Commercial Registry: 12 hours</li>
+                                  <li>• Municipal Permits: 12 hours</li>
+                                  <li>• NSSF Registration: Immediate</li>
+                                </ul>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-3">Requirements: Lebanese-licensed dentist, clinic blueprints approved by Order of Engineers, minimum 80m² space, sterilization room, 2+ operatories.</p>
                               
-                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Financial Projections</h3>
-                              <p className="text-sm text-gray-600 mb-3">Initial investment: $75,000-100,000 including equipment, renovation, and 3-month operating capital.</p>
-                              <p className="text-sm text-gray-600 mb-3">Break-even timeline: 12-16 months with conservative estimates. Monthly revenue potential: $25,000-35,000 after stabilization.</p>
-                              <p className="text-sm text-gray-600 mb-3">Recommended space: 80-120 square meters with outdoor seating option. Current rental rates: $1,200-1,800/month.</p>
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">💰 Financial Intelligence (Government Data)</h3>
+                              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-3">
+                                <p className="text-sm font-medium text-gray-900 mb-2">NSSF Claims Analysis (Exclusive)</p>
+                                <ul className="text-sm text-gray-700 space-y-1">
+                                  <li>• Average dental visit: $45-85 (NSSF reimburses 70%)</li>
+                                  <li>• Monthly claims volume: 2,850 in Hamra</li>
+                                  <li>• Unmet demand: 1,200+ patients/month</li>
+                                </ul>
+                              </div>
+                              <p className="text-sm text-gray-600 mb-3">Initial investment: $100,000-150,000. Equipment (X-ray, chairs, sterilization): $60,000. Renovation: $25,000. Working capital: $15,000.</p>
+                              <p className="text-sm text-gray-600 mb-3">Space: 80-120m² required. Current rents: $800-1,800/month. Break-even: 8-12 months with NSSF contracts. Monthly revenue potential: $30,000-45,000.</p>
                               
-                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Next Steps</h3>
-                              <ul className="list-disc list-inside text-sm text-gray-600 space-y-2">
-                                <li>Schedule site visits to 3 available properties in Hamra</li>
-                                <li>Connect with equipment suppliers for quotations</li>
-                                <li>Initiate preliminary discussions with Municipality</li>
-                                <li>Develop detailed business plan and financial model</li>
-                                <li>Identify potential local partners or investors</li>
-                              </ul>
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">🚀 Government-Facilitated Next Steps</h3>
+                              <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-lg p-3 mb-3">
+                                <p className="text-sm font-medium text-indigo-900 mb-2">One-Click Actions Available:</p>
+                                <ul className="text-sm text-gray-700 space-y-2">
+                                  <li className="flex items-center gap-2">
+                                    <span className="text-green-600">✓</span>
+                                    <span>Pre-qualify for fast-track licensing (48hr approval)</span>
+                                  </li>
+                                  <li className="flex items-center gap-2">
+                                    <span className="text-green-600">✓</span>
+                                    <span>Access list of 5 pre-approved clinic spaces in Hamra</span>
+                                  </li>
+                                  <li className="flex items-center gap-2">
+                                    <span className="text-green-600">✓</span>
+                                    <span>Connect with NSSF for provider enrollment</span>
+                                  </li>
+                                  <li className="flex items-center gap-2">
+                                    <span className="text-green-600">✓</span>
+                                    <span>Schedule MoPH inspection for equipment certification</span>
+                                  </li>
+                                  <li className="flex items-center gap-2">
+                                    <span className="text-green-600">✓</span>
+                                    <span>Apply for healthcare investment incentives (15% tax reduction)</span>
+                                  </li>
+                                </ul>
+                              </div>
+                              
+                              <div className="border-t pt-4 mt-4">
+                                <p className="text-xs text-gray-500 italic">This analysis combines real-time data from: Ministry of Public Health (MoPH), National Social Security Fund (NSSF), Order of Dentists Lebanon (ODL), Beirut Municipality, Ministry of Finance. Data current as of December 2024.</p>
+                              </div>
                             </div>
                           </div>
                           </div>
@@ -1021,7 +1118,7 @@ const Dashboard = () => {
                           key={index}
                           onClick={(e) => e.preventDefault()}
                           className="flex-shrink-0 border border-gray-300 rounded-2xl p-4 text-left bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                          style={{ width: isMobile ? '38%' : '32%', minHeight: '80px' }}
+                          style={{ width: isMobile ? '60%' : '30%', minHeight: '80px' }}
                         >
                           <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
                         </button>
