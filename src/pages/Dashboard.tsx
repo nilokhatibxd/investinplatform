@@ -45,6 +45,7 @@ const Dashboard = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [isSplitScreen, setIsSplitScreen] = useState(false);
   
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
@@ -777,18 +778,35 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex flex-col bg-white overflow-hidden' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
+      {/* Main Content - ChatGPT Style Center Stage or Split Screen */}
+      <div className={`${isSplitScreen && !isMobile ? 'flex' : ''} ${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex flex-col bg-white overflow-hidden' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
         <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col overflow-hidden' : ''} w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
             <>
+              {/* Header for split screen */}
+              {isSplitScreen && !isMobile && (
+                <div className="flex items-center justify-between p-4 border-b border-gray-200">
+                  <img 
+                    src="/logo.svg" 
+                    alt="Invest in Lebanon" 
+                    className="h-8 w-auto"
+                  />
+                  <button 
+                    onClick={() => setIsSplitScreen(false)}
+                    className="text-sm text-gray-600 hover:text-gray-900"
+                  >
+                    ← Back
+                  </button>
+                </div>
+              )}
+              
               {/* Chat Messages - ChatGPT Style */}
               <div className="flex-1 overflow-y-auto scrollbar-none flex flex-col">
                 <div className="flex-1 flex flex-col justify-end">
                   <div className="space-y-6 pt-20 pb-10">
-                {chatMessages.filter((_, index) => index > 0).map((message, index) => (
+                {chatMessages.filter((message, index) => index > 0 && (!isSplitScreen || message.role !== 'canvas')).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
                       <div className="flex justify-end">
@@ -816,7 +834,10 @@ const Dashboard = () => {
                               <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                                 <Download className="w-4 h-4 text-gray-600" />
                               </button>
-                              <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
+                              <button 
+                                className="p-1.5 hover:bg-gray-200 rounded transition-colors"
+                                onClick={() => setIsSplitScreen(true)}
+                              >
                                 <Expand className="w-4 h-4 text-gray-600" />
                               </button>
                             </div>
@@ -1505,6 +1526,97 @@ const Dashboard = () => {
             </div>
           )}
         </div>
+        
+        {/* Right Panel - Canvas (Split Screen) */}
+        {isSplitScreen && !isMobile && currentScenario === 1 && (() => {
+          const canvasMessage = chatMessages.find(msg => msg.role === 'canvas');
+          if (!canvasMessage) return null;
+          
+          return (
+            <div className="flex-1 bg-gray-50 overflow-y-auto border-l border-gray-200">
+              <div className="p-6">
+                <div className="max-w-4xl mx-auto">
+                  <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    {/* Canvas Header */}
+                    <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
+                      <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
+                      <div className="flex items-center gap-2">
+                        <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
+                          <Download className="w-4 h-4 text-gray-600" />
+                        </button>
+                        <button 
+                          className="p-1.5 hover:bg-gray-200 rounded transition-colors"
+                          onClick={() => setIsSplitScreen(false)}
+                        >
+                          <X className="w-4 h-4 text-gray-600" />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <div className="space-y-4">
+                        {/* Widget 1 - Map */}
+                        <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
+                          <p className="text-gray-600">📍 Hamra, Beirut</p>
+                        </div>
+                        
+                        {/* Widget 2 - Key Metrics */}
+                        <div className="grid grid-cols-3 gap-3">
+                          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                            <p className="text-sm font-medium text-green-800">High Traffic</p>
+                            <p className="text-xs text-green-600">2,500+ daily</p>
+                          </div>
+                          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                            <p className="text-sm font-medium text-yellow-800">Competition</p>
+                            <p className="text-xs text-yellow-600">5 nearby</p>
+                          </div>
+                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                            <p className="text-sm font-medium text-blue-800">Growth</p>
+                            <p className="text-xs text-blue-600">30% yearly</p>
+                          </div>
+                        </div>
+                        
+                        {/* Widget 3 - Recommendation */}
+                        <div className="bg-gray-50 rounded-lg p-4">
+                          <p className="text-sm font-medium text-gray-900 mb-2">Recommendation</p>
+                          <p className="text-sm text-gray-600">Strong potential for specialty coffee. Focus on unique offerings to differentiate.</p>
+                        </div>
+                        
+                        {/* Additional Analysis Sections for Scrolling Test */}
+                        <div className="border-t pt-4 mt-4">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Market Analysis</h3>
+                          <p className="text-sm text-gray-600 mb-3">Hamra district shows exceptional promise for specialty coffee establishments. The area has seen a 45% increase in foot traffic over the past year, with peak hours between 8-10 AM and 5-8 PM.</p>
+                          <p className="text-sm text-gray-600 mb-3">Current competition includes 5 established cafes within a 500m radius, but none focus exclusively on specialty coffee. There's a clear gap for premium, third-wave coffee experiences.</p>
+                          
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Demographics</h3>
+                          <p className="text-sm text-gray-600 mb-3">Primary customer base: Young professionals (25-40 years), University students (18-24 years), and expatriates. Average disposable income in the area is 35% above city average.</p>
+                          <p className="text-sm text-gray-600 mb-3">Survey data indicates 78% of residents visit coffee shops at least 3 times per week, with average spending of $8-12 per visit.</p>
+                          
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Regulatory Requirements</h3>
+                          <p className="text-sm text-gray-600 mb-3">You'll need to obtain the following licenses: Commercial Registration (Ministry of Economy), Food Service License (Municipality of Beirut), Health Permit (Ministry of Public Health).</p>
+                          <p className="text-sm text-gray-600 mb-3">Estimated timeline: 4-6 weeks for all permits. Total licensing costs approximately $3,500-4,500.</p>
+                          
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Financial Projections</h3>
+                          <p className="text-sm text-gray-600 mb-3">Initial investment: $75,000-100,000 including equipment, renovation, and 3-month operating capital.</p>
+                          <p className="text-sm text-gray-600 mb-3">Break-even timeline: 12-16 months with conservative estimates. Monthly revenue potential: $25,000-35,000 after stabilization.</p>
+                          <p className="text-sm text-gray-600 mb-3">Recommended space: 80-120 square meters with outdoor seating option. Current rental rates: $1,200-1,800/month.</p>
+                          
+                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Next Steps</h3>
+                          <ul className="list-disc list-inside text-sm text-gray-600 space-y-2">
+                            <li>Schedule site visits to 3 available properties in Hamra</li>
+                            <li>Connect with equipment suppliers for quotations</li>
+                            <li>Initiate preliminary discussions with Municipality</li>
+                            <li>Develop detailed business plan and financial model</li>
+                            <li>Identify potential local partners or investors</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
       </div>
       
       {/* Other flows would go here */}
