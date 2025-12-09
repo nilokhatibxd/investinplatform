@@ -1513,7 +1513,13 @@ const Dashboard = () => {
                 <div className="flex-1 flex flex-col justify-end">
                   <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
                     <div className="space-y-6 pt-20 pb-10">
-                {chatMessages.filter((msg) => {
+                {chatMessages.filter((msg, idx) => {
+                  // For scenario 1, hide welcome message once user starts chatting
+                  if (currentScenario === 1 && idx === 0 && msg.role === 'assistant' && 
+                      msg.content === "Welcome.\nLet's explore what you can build today." && 
+                      chatMessages.some(m => m.role === 'user')) {
+                    return false;
+                  }
                   // For scenario 2, hide alert when canvas is open
                   if (currentScenario === 2 && msg.role === 'alert' && chatMessages.some(m => m.role === 'canvas')) return false;
                   return true;
@@ -1779,11 +1785,11 @@ const Dashboard = () => {
           </div>
           )}
 
-          {/* Bottom Section - Welcome, Suggestions, Input */}
+          {/* Bottom Section - Welcome (hidden after chat starts), Suggestions, Input */}
           <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1 || currentScenario === 2) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
             <div className={`max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
               
-              {/* Suggestion Cards - Only for Scenario 1 */}
+              {/* Suggestion Cards - Only for Scenario 1 when no user messages */}
               {currentScenario === 1 && !chatMessages.some(msg => msg.role === 'user') && (
                 <div className="mb-10">
                   <div className="flex items-center gap-2">
