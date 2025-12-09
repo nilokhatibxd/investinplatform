@@ -854,17 +854,6 @@ const Dashboard = () => {
                               </h1>
                             </div>
 
-                            {/* Summary */}
-                            <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Summary</h2>
-                              <div className="bg-blue-50 border-l-4 border-blue-500 p-4">
-                                <p className="text-sm text-gray-800 leading-relaxed">
-                                  Based on cross-ministerial data analysis, opening a dental clinic in Hamra presents a <span className="font-semibold">high-opportunity investment</span>. Government records indicate 32,000 residents with only 30 operational clinics, resulting in a 45% service gap. With 17,600 NSSF-insured residents and average wait times exceeding 3 weeks, immediate market entry is advisable.
-                                </p>
-                              </div>
-                              <p className="text-xs text-gray-400 mt-2">Source: NSSF Claims Database, Municipality Census 2024</p>
-                            </div>
-
                             {/* Location Map */}
                             <div className="mb-8">
                               <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Location & Competition</h2>
@@ -889,153 +878,183 @@ const Dashboard = () => {
                                   <p className="text-xs text-gray-500">1km radius • 30 competitors</p>
                                 </div>
                               </div>
+                              <p className="text-xs text-gray-400 mt-2">Source: Order of Dentists Registry, Municipality GIS Database</p>
                             </div>
 
-                            {/* Location Intelligence */}
+                            {/* Summary */}
                             <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Location Intelligence</h2>
-                              <div className="grid grid-cols-2 gap-3">
-                                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">45K</p>
-                                  <p className="text-xs text-gray-600 font-medium">Daily foot traffic</p>
-                                  <p className="text-xs text-gray-400 mt-1">Peak: 12-2pm, 5-8pm</p>
-                                </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">12K</p>
-                                  <p className="text-xs text-gray-600 font-medium">University students</p>
-                                  <p className="text-xs text-gray-400 mt-1">AUB + LAU combined</p>
-                                </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">8.5K</p>
-                                  <p className="text-xs text-gray-600 font-medium">Office workers</p>
-                                  <p className="text-xs text-gray-400 mt-1">Within 500m radius</p>
-                                </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3">
-                                  <p className="text-2xl font-light text-gray-900">1,200</p>
-                                  <p className="text-xs text-gray-600 font-medium">Parking spaces</p>
-                                  <p className="text-xs text-gray-400 mt-1">4 public lots nearby</p>
-                                </div>
+                              <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Summary</h2>
+                              <div className="bg-blue-50 border-l-4 border-blue-500 p-4">
+                                <p className="text-sm text-gray-800 leading-relaxed">
+                                  Based on cross-ministerial data analysis, opening a dental clinic in Hamra presents a <span className="font-semibold">high-opportunity investment</span>. Government records indicate 32,000 residents with only 30 operational clinics, resulting in a 45% service gap. With 17,600 NSSF-insured residents and average wait times exceeding 3 weeks, immediate market entry is advisable.
+                                </p>
                               </div>
-                              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                                <p className="text-xs font-medium text-green-900">Competitive Advantage Identified</p>
-                                <p className="text-xs text-gray-700 mt-1">Only 1 clinic offers evening hours • Zero Sunday operations • Limited pediatric services</p>
-                              </div>
+                              <p className="text-xs text-gray-400 mt-2">Source: NSSF Claims Database, Municipality Census 2024, Order of Dentists Registry</p>
                             </div>
 
-                            {/* Property CTA */}
-                            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-8">
-                              <div className="flex items-start gap-3">
-                                <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <MapPin className="w-4 h-4 text-indigo-600" />
-                                </div>
-                                <div className="flex-1">
-                                  <p className="text-sm font-medium text-gray-900 mb-1">View Available Properties</p>
-                                  <p className="text-xs text-gray-600 mb-2">6 pre-qualified commercial spaces meet healthcare facility requirements in Hamra.</p>
-                                  <button className="text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-white px-3 py-1 rounded border border-indigo-200 hover:bg-indigo-50 transition-colors">
-                                    Schedule Viewings →
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
+                            <div className="border-t border-gray-200 mb-8"></div>
 
-                            {/* Population Health Profile */}
+                            {/* Key Facts */}
                             <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Population Health Profile</h2>
-                              <div className="grid grid-cols-2 gap-3">
-                                <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <p className="text-2xl font-light text-gray-900">85%</p>
-                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Children</span>
+                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Hamra District - Key Facts</h2>
+                              
+                              {/* Critical Metrics */}
+                              <div className="grid grid-cols-3 gap-4 mb-6">
+                                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow group cursor-pointer">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-3xl font-light text-gray-900">1,067</p>
+                                      <p className="text-xs text-gray-600 font-medium mt-1">patients per clinic</p>
+                                    </div>
+                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <svg className="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                                      </svg>
+                                      <span className="text-xs text-red-500">+23%</span>
+                                    </div>
                                   </div>
-                                  <p className="text-xs text-gray-600">Caries prevalence (5-15 years)</p>
-                                  <p className="text-xs text-red-600 mt-1">↑ 7% above national avg</p>
+                                  <p className="text-xs text-gray-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">vs. 450 optimal ratio</p>
                                 </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <p className="text-2xl font-light text-gray-900">92%</p>
-                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Adults</span>
+                                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow group cursor-pointer">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-3xl font-light text-gray-900">3.2</p>
+                                      <p className="text-xs text-gray-600 font-medium mt-1">weeks avg wait time</p>
+                                    </div>
+                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <svg className="w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                                      </svg>
+                                      <span className="text-xs text-red-500">+45%</span>
+                                    </div>
                                   </div>
-                                  <p className="text-xs text-gray-600">Periodontal disease (35+)</p>
-                                  <p className="text-xs text-orange-600 mt-1">Critical need identified</p>
+                                  <p className="text-xs text-gray-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">from last year</p>
                                 </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <p className="text-2xl font-light text-gray-900">2</p>
-                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Pediatric</span>
+                                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow group cursor-pointer">
+                                  <div className="flex items-start justify-between">
+                                    <div>
+                                      <p className="text-3xl font-light text-gray-900">$1.4M</p>
+                                      <p className="text-xs text-gray-600 font-medium mt-1">annual unmet demand</p>
+                                    </div>
+                                    <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                                      <svg className="w-4 h-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                                      </svg>
+                                      <span className="text-xs text-green-500">+18%</span>
+                                    </div>
                                   </div>
-                                  <p className="text-xs text-gray-600">Specialists for 5,760 children</p>
-                                  <p className="text-xs text-purple-600 mt-1">Major service gap</p>
-                                </div>
-                                <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <p className="text-2xl font-light text-gray-900">0</p>
-                                    <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Geriatric</span>
-                                  </div>
-                                  <p className="text-xs text-gray-600">Specialists for 3,840 elderly</p>
-                                  <p className="text-xs text-gray-500 mt-1">Unserved market</p>
+                                  <p className="text-xs text-gray-400 mt-2 opacity-0 group-hover:opacity-100 transition-opacity">based on refused claims</p>
                                 </div>
                               </div>
-                              <p className="text-xs text-gray-400 mt-3">Source: MoPH Epidemiological Surveillance Unit, Q3 2024</p>
-                            </div>
 
-                            {/* Patient Flow Analysis CTA */}
-                            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8">
-                              <div className="flex items-start gap-3">
-                                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                                  <FileText className="w-4 h-4 text-blue-600" />
+                              {/* Population Health Profile - Better Design */}
+                              <div className="mb-4">
+                                <h3 className="text-sm font-semibold text-gray-900 mb-3">Population Health Profile</h3>
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-2xl font-light text-red-900">85%</p>
+                                      <span className="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Children</span>
+                                    </div>
+                                    <p className="text-xs text-gray-600">Caries prevalence (5-15 years)</p>
+                                    <p className="text-xs text-red-600 mt-1">↑ 7% above national avg</p>
+                                  </div>
+                                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-2xl font-light text-orange-900">92%</p>
+                                      <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded">Adults</span>
+                                    </div>
+                                    <p className="text-xs text-gray-600">Periodontal disease (35+)</p>
+                                    <p className="text-xs text-orange-600 mt-1">Critical need</p>
+                                  </div>
+                                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-2xl font-light text-purple-900">2</p>
+                                      <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded">Pediatric</span>
+                                    </div>
+                                    <p className="text-xs text-gray-600">Specialists for 5,760 children</p>
+                                    <p className="text-xs text-purple-600 mt-1">Major gap</p>
+                                  </div>
+                                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-2xl font-light text-gray-900">0</p>
+                                      <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Geriatric</span>
+                                    </div>
+                                    <p className="text-xs text-gray-600">Specialists for 3,840 elderly</p>
+                                    <p className="text-xs text-gray-500 mt-1">Unserved market</p>
+                                  </div>
                                 </div>
-                                <div className="flex-1">
-                                  <p className="text-sm font-medium text-gray-900 mb-1">Request Patient Flow Analysis</p>
-                                  <p className="text-xs text-gray-600 mb-2">Government-exclusive service: Get hourly patient patterns, peak times, and referral networks from NSSF data.</p>
-                                  <button className="text-xs font-medium text-blue-600 hover:text-blue-700 bg-white px-3 py-1 rounded border border-blue-200 hover:bg-blue-50 transition-colors">
-                                    Generate Report →
-                                  </button>
+                                <p className="text-xs text-gray-400 mt-3">Source: MoPH Epidemiological Surveillance Unit, Q3 2024</p>
+                              </div>
+
+                              {/* Service Request CTA */}
+                              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                                <div className="flex items-start gap-3">
+                                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <FileText className="w-4 h-4 text-blue-600" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-900 mb-1">Request Detailed Patient Flow Analysis</p>
+                                    <p className="text-xs text-gray-600 mb-2">Get hourly patient flow patterns, peak demand times, and referral networks from NSSF data.</p>
+                                    <button className="text-xs font-medium text-blue-600 hover:text-blue-700 bg-white px-3 py-1 rounded border border-blue-200 hover:bg-blue-50 transition-colors">
+                                      Generate Report →
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </div>
 
                             <div className="border-t border-gray-200 mb-8"></div>
 
-                            {/* Investment Analysis */}
+                            {/* Financial Intelligence */}
                             <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Investment Analysis</h2>
+                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Financial Projections (Government Data)</h2>
                               
-                              <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4">
-                                <p className="text-sm font-medium text-gray-900 mb-3">Based on 12 recent clinic openings in similar districts:</p>
-                                <div className="space-y-3">
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Initial capital required</span>
-                                    <span className="text-sm font-semibold text-gray-900">$100,000 - $150,000</span>
+                              <div className="bg-yellow-50 p-4 rounded-lg mb-4">
+                                <h3 className="text-sm font-semibold text-gray-900 mb-3">Revenue Intelligence</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm">
+                                  <div>
+                                    <p className="text-gray-600">NSSF claim average:</p>
+                                    <p className="font-semibold text-gray-900">$65 per visit</p>
                                   </div>
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Break-even timeline</span>
-                                    <span className="text-sm font-semibold text-gray-900">8-12 months</span>
+                                  <div>
+                                    <p className="text-gray-600">Monthly claims volume:</p>
+                                    <p className="font-semibold text-gray-900">2,850 in Hamra</p>
                                   </div>
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Space requirement</span>
-                                    <span className="text-sm font-semibold text-gray-900">80-120m²</span>
+                                  <div>
+                                    <p className="text-gray-600">Capture rate (new clinic):</p>
+                                    <p className="font-semibold text-gray-900">3-5% first year</p>
                                   </div>
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Monthly rent (Hamra)</span>
-                                    <span className="text-sm font-semibold text-gray-900">$800-1,800</span>
-                                  </div>
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Projected monthly revenue</span>
-                                    <span className="text-sm font-semibold text-green-600">$35,000-45,000</span>
+                                  <div>
+                                    <p className="text-gray-600">Projected monthly revenue:</p>
+                                    <p className="font-semibold text-green-600">$35,000-45,000</p>
                                   </div>
                                 </div>
-                                <p className="text-xs text-gray-400 mt-3">Source: Commercial Registry, NSSF Claims Data</p>
+                                <p className="text-xs text-gray-400 mt-3">Source: NSSF Claims Processing Unit, Finance Ministry Tax Records</p>
                               </div>
 
-                              {/* Loan Program CTA */}
-                              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                              {/* Investment Requirements */}
+                              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                <h3 className="text-sm font-semibold text-gray-900 mb-2">Investment Analysis</h3>
+                                <p className="text-sm text-gray-700 mb-2">Based on 12 recent clinic openings in similar districts:</p>
+                                <ul className="text-sm text-gray-600 space-y-1">
+                                  <li>• Initial capital: $100,000 - $150,000</li>
+                                  <li>• Break-even: 8-12 months with NSSF contracts</li>
+                                  <li>• Space requirement: 80-120m² (Current availability: 6 suitable properties)</li>
+                                  <li>• Monthly rent range: $800-1,800 in Hamra commercial zones</li>
+                                </ul>
+                                <p className="text-xs text-gray-400 mt-2">Source: Commercial Registry, Real Estate Registry Database</p>
+                              </div>
+
+                              {/* Financial Service CTA */}
+                              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
                                 <div className="flex items-start gap-3">
                                   <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
                                     <Building2 className="w-4 h-4 text-green-600" />
                                   </div>
                                   <div className="flex-1">
-                                    <p className="text-sm font-medium text-gray-900 mb-1">Access Subsidized Healthcare Loan</p>
-                                    <p className="text-xs text-gray-600 mb-2">3.5% interest rate through Central Bank circular 578 for healthcare facilities.</p>
+                                    <p className="text-sm font-medium text-gray-900 mb-1">Access Subsidized Loan Program</p>
+                                    <p className="text-xs text-gray-600 mb-2">Healthcare sector qualifies for 3.5% interest rate through Central Bank circular 578.</p>
                                     <button className="text-xs font-medium text-green-600 hover:text-green-700 bg-white px-3 py-1 rounded border border-green-200 hover:bg-green-50 transition-colors">
                                       Check Eligibility →
                                     </button>
@@ -1046,68 +1065,45 @@ const Dashboard = () => {
 
                             <div className="border-t border-gray-200 mb-8"></div>
 
-                            {/* Fast-Track Licensing */}
+                            {/* Regulatory Fast-Track */}
                             <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Fast-Track Licensing Process</h2>
+                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Regulatory Fast-Track Program</h2>
                               
-                              <div className="space-y-3">
-                                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-start justify-between">
-                                    <div className="flex items-start gap-3">
-                                      <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
-                                        1
-                                      </div>
-                                      <div>
-                                        <p className="text-sm font-medium text-gray-900">Healthcare Registration</p>
-                                        <p className="text-xs text-gray-600 mt-1">Order of Dentists + MoPH License</p>
-                                      </div>
+                              <div className="bg-green-50 p-4 rounded-lg mb-4">
+                                <h3 className="text-sm font-semibold text-gray-900 mb-2">48-Hour Healthcare Licensing Track</h3>
+                                <p className="text-sm text-gray-700 mb-3">Your dental clinic qualifies for expedited processing:</p>
+                                <div className="space-y-2">
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                      <span className="text-xs font-bold text-green-600">1</span>
                                     </div>
-                                    <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">24 hours</span>
+                                    <p className="text-sm text-gray-700">Order of Dentists Registration + MoPH License <span className="font-medium">(24 hours)</span></p>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                      <span className="text-xs font-bold text-green-600">2</span>
+                                    </div>
+                                    <p className="text-sm text-gray-700">Commercial Registry + Tax Registration <span className="font-medium">(12 hours)</span></p>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center">
+                                      <span className="text-xs font-bold text-green-600">3</span>
+                                    </div>
+                                    <p className="text-sm text-gray-700">Municipal Permits + NSSF Registration <span className="font-medium">(12 hours)</span></p>
                                   </div>
                                 </div>
-                                
-                                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-start justify-between">
-                                    <div className="flex items-start gap-3">
-                                      <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
-                                        2
-                                      </div>
-                                      <div>
-                                        <p className="text-sm font-medium text-gray-900">Business Registration</p>
-                                        <p className="text-xs text-gray-600 mt-1">Commercial Registry + Tax ID</p>
-                                      </div>
-                                    </div>
-                                    <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">12 hours</span>
-                                  </div>
-                                </div>
-                                
-                                <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-sm transition-shadow">
-                                  <div className="flex items-start justify-between">
-                                    <div className="flex items-start gap-3">
-                                      <div className="w-8 h-8 bg-gray-900 text-white rounded-full flex items-center justify-center flex-shrink-0 text-sm font-bold">
-                                        3
-                                      </div>
-                                      <div>
-                                        <p className="text-sm font-medium text-gray-900">Final Permits</p>
-                                        <p className="text-xs text-gray-600 mt-1">Municipal Permits + NSSF Registration</p>
-                                      </div>
-                                    </div>
-                                    <span className="text-xs font-medium text-gray-900 bg-gray-100 px-2 py-1 rounded">12 hours</span>
-                                  </div>
-                                </div>
+                                <p className="text-xs text-gray-400 mt-3">Available through Investment Development Authority One-Stop Shop</p>
                               </div>
-                              
-                              <p className="text-xs text-gray-400 mt-3">Total time: 48 hours through Investment Development Authority</p>
-                              
-                              {/* Pre-Submit Application */}
-                              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mt-4">
+
+                              {/* License Application CTA */}
+                              <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4">
                                 <div className="flex items-start gap-3">
                                   <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                                     <Shield className="w-4 h-4 text-purple-600" />
                                   </div>
                                   <div className="flex-1">
-                                    <p className="text-sm font-medium text-gray-900 mb-1">Pre-Submit Your Application</p>
-                                    <p className="text-xs text-gray-600 mb-2">Reserve business name and start document verification now.</p>
+                                    <p className="text-sm font-medium text-gray-900 mb-1">Pre-Submit License Application</p>
+                                    <p className="text-xs text-gray-600 mb-2">Reserve your business name and start document verification while finalizing location.</p>
                                     <button className="text-xs font-medium text-purple-600 hover:text-purple-700 bg-white px-3 py-1 rounded border border-purple-200 hover:bg-purple-50 transition-colors">
                                       Start Application →
                                     </button>
@@ -1118,46 +1114,113 @@ const Dashboard = () => {
 
                             <div className="border-t border-gray-200 mb-8"></div>
 
-                            {/* Additional Services */}
+                            {/* Location Intelligence */}
                             <div className="mb-8">
-                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">You May Also Be Interested In</h2>
+                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Location Intelligence</h2>
+                              
+                              <div className="bg-gray-50 p-4 rounded-lg mb-4">
+                                <h3 className="text-sm font-semibold text-gray-900 mb-2">Hamra Commercial Analysis</h3>
+                                <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+                                  <div>
+                                    <p className="text-gray-600">Foot traffic (daily):</p>
+                                    <p className="font-semibold text-gray-900">45,000 persons</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-600">University students:</p>
+                                    <p className="font-semibold text-gray-900">12,000 (AUB + LAU)</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-600">Office workers:</p>
+                                    <p className="font-semibold text-gray-900">8,500 professionals</p>
+                                  </div>
+                                  <div>
+                                    <p className="text-gray-600">Parking availability:</p>
+                                    <p className="font-semibold text-gray-900">4 public lots (1,200 spaces)</p>
+                                  </div>
+                                </div>
+                                <p className="text-sm text-gray-700">
+                                  <span className="font-medium">Competitive advantage:</span> Only 1 clinic offers evening hours (after 6 PM). Zero clinics open on Sundays. Limited pediatric services create immediate differentiation opportunity.
+                                </p>
+                                <p className="text-xs text-gray-400 mt-2">Source: Municipality Traffic Department, University Registrars</p>
+                              </div>
+
+                              {/* Property Search CTA */}
+                              <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4 mb-4">
+                                <div className="flex items-start gap-3">
+                                  <div className="w-8 h-8 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                    <MapPin className="w-4 h-4 text-indigo-600" />
+                                  </div>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-900 mb-1">View Available Properties</p>
+                                    <p className="text-xs text-gray-600 mb-2">6 pre-qualified commercial spaces meet healthcare facility requirements.</p>
+                                    <button className="text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-white px-3 py-1 rounded border border-indigo-200 hover:bg-indigo-50 transition-colors">
+                                      Schedule Viewings →
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="border-t border-gray-200 mb-8"></div>
+
+                            {/* Risk Assessment */}
+                            <div className="mb-8">
+                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Risk Mitigation Analysis</h2>
+                              
+                              <div className="space-y-3">
+                                <div className="flex items-start gap-3">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5"></div>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-900">Low Competition Risk</p>
+                                    <p className="text-xs text-gray-600">Current clinics operating at 137% capacity. New entrants absorbed quickly.</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5"></div>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-900">Stable Demand</p>
+                                    <p className="text-xs text-gray-600">Healthcare spending increased 8% YoY despite economic conditions.</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                  <div className="w-2 h-2 bg-yellow-500 rounded-full mt-1.5"></div>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-900">Currency Exposure</p>
+                                    <p className="text-xs text-gray-600">Equipment imports require USD. Consider leasing options through subsidized programs.</p>
+                                  </div>
+                                </div>
+                                <div className="flex items-start gap-3">
+                                  <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5"></div>
+                                  <div className="flex-1">
+                                    <p className="text-sm font-medium text-gray-900">Regulatory Stability</p>
+                                    <p className="text-xs text-gray-600">Healthcare sector protected. No license changes expected per MoPH 5-year plan.</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="border-t border-gray-200 mb-8"></div>
+
+                            {/* Additional Government Services */}
+                            <div className="mb-8">
+                              <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Additional Government Services</h2>
                               
                               <div className="grid grid-cols-2 gap-3">
-                                <button className="text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <p className="text-xs font-medium text-gray-900 mb-1">NSSF Provider Network</p>
-                                      <p className="text-xs text-gray-600">Join preferred provider list</p>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                                  </div>
+                                <button className="text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg p-3 transition-colors">
+                                  <p className="text-xs font-medium text-gray-900 mb-1">NSSF Provider Network</p>
+                                  <p className="text-xs text-gray-600">Join preferred provider list</p>
                                 </button>
-                                <button className="text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <p className="text-xs font-medium text-gray-900 mb-1">Equipment Import License</p>
-                                      <p className="text-xs text-gray-600">Duty exemption available</p>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                                  </div>
+                                <button className="text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg p-3 transition-colors">
+                                  <p className="text-xs font-medium text-gray-900 mb-1">Equipment Import License</p>
+                                  <p className="text-xs text-gray-600">Duty exemption available</p>
                                 </button>
-                                <button className="text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <p className="text-xs font-medium text-gray-900 mb-1">Staff Recruitment Portal</p>
-                                      <p className="text-xs text-gray-600">Access qualified healthcare workers</p>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                                  </div>
+                                <button className="text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg p-3 transition-colors">
+                                  <p className="text-xs font-medium text-gray-900 mb-1">Staff Recruitment Portal</p>
+                                  <p className="text-xs text-gray-600">Access qualified healthcare workers</p>
                                 </button>
-                                <button className="text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
-                                  <div className="flex items-center justify-between">
-                                    <div>
-                                      <p className="text-xs font-medium text-gray-900 mb-1">Tax Advisory Session</p>
-                                      <p className="text-xs text-gray-600">Free consultation with MOF</p>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-                                  </div>
+                                <button className="text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg p-3 transition-colors">
+                                  <p className="text-xs font-medium text-gray-900 mb-1">Tax Advisory Session</p>
+                                  <p className="text-xs text-gray-600">Free consultation with MOF</p>
                                 </button>
                               </div>
                             </div>
@@ -1167,23 +1230,15 @@ const Dashboard = () => {
                             {/* Report Footer */}
                             <div className="text-center mb-8">
                               <p className="text-xs text-gray-400">
-                                This report contains confidential government data. Distribution restricted.
+                                This report contains confidential government data. Distribution restricted to authorized investment inquiries only.
+                              </p>
+                              <p className="text-xs text-gray-400 mt-1">
+                                Data accuracy verified: {new Date().toLocaleDateString()} • Next update: Quarterly
                               </p>
                             </div>
                           </div>
                           </div>
 
-                          {/* Fixed Footer with Action Buttons */}
-                          <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
-                            <div className="flex gap-3 max-w-3xl mx-auto">
-                              <button className="flex-1 bg-gray-900 hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-full transition-colors">
-                                Start Your Clinic in Hamra
-                              </button>
-                              <button className="flex-1 bg-white hover:bg-gray-50 text-gray-900 font-medium py-3 px-6 rounded-full border-2 border-gray-900 transition-colors">
-                                Explore More Locations
-                              </button>
-                            </div>
-                          </div>
                           {/* Fixed Footer with Action Buttons */}
                           <div className="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
                             <div className="flex gap-3 max-w-3xl mx-auto">
