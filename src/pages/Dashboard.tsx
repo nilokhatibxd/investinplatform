@@ -1026,8 +1026,54 @@ const Dashboard = () => {
                     </button>
                   </div>
                 </div>
-                <div className="max-h-80 overflow-y-auto p-4">
-                  <p className="text-sm text-gray-500">Updates coming soon...</p>
+                <div className="max-h-80 overflow-y-auto">
+                  <div className="space-y-1">
+                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-900">EU-EBRD launches €12.5M sustainability program for SMEs</p>
+                          <p className="text-xs text-gray-500 mt-1">EBRD</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-900">BDL Circular 331: 75% startup funding guarantee extended</p>
+                          <p className="text-xs text-gray-500 mt-1">Central Bank</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-900">New tech visa: 48-hour approval for IT specialists</p>
+                          <p className="text-xs text-gray-500 mt-1">General Security</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-900">Zero tax on IP revenues for knowledge economy</p>
+                          <p className="text-xs text-gray-500 mt-1">Ministry of Finance</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-900">IDAL offers 50% rent subsidy for tech startups</p>
+                          <p className="text-xs text-gray-500 mt-1">IDAL</p>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1163,6 +1209,67 @@ const Dashboard = () => {
             <Zap className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
           </button>
+          
+          <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+            <div className="p-4 border-b border-gray-100">
+              <div className="flex items-center justify-between">
+                <h3 className="font-semibold text-gray-900">What's New</h3>
+                <button className="text-xs text-gray-400 hover:text-gray-600 font-medium flex items-center gap-1">
+                  View all
+                  <ChevronRight className="w-3 h-3" />
+                </button>
+              </div>
+            </div>
+            <div className="max-h-80 overflow-y-auto">
+              <div className="space-y-1">
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">MoPH simplifies medical facility licensing - 15 day fast-track</p>
+                      <p className="text-xs text-gray-500 mt-1">Ministry of Health • 1 hour ago</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Hamra municipality reduces permit fees by 30% for Q1 2025</p>
+                      <p className="text-xs text-gray-500 mt-1">Beirut Municipality • 3 hours ago</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">NSSF launches digital registration for healthcare providers</p>
+                      <p className="text-xs text-gray-500 mt-1">Social Security • 5 hours ago</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">New dental equipment tax exemption for 2025 approved</p>
+                      <p className="text-xs text-gray-500 mt-1">Ministry of Finance • Today</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Central Bank: Medical sector loans at 0% interest extended</p>
+                      <p className="text-xs text-gray-500 mt-1">BDL • Yesterday</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         
         {/* Notifications */}
@@ -1175,15 +1282,61 @@ const Dashboard = () => {
           <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
             <div className="p-4 border-b border-gray-100">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900">What's New</h3>
+                <h3 className="font-semibold text-gray-900">Notifications</h3>
                 <button className="text-xs text-gray-400 hover:text-gray-600 font-medium flex items-center gap-1">
                   View all
                   <ChevronRight className="w-3 h-3" />
                 </button>
               </div>
             </div>
-            <div className="max-h-80 overflow-y-auto p-4">
-              <p className="text-sm text-gray-500">Updates coming soon...</p>
+            <div className="max-h-80 overflow-y-auto">
+              <div className="space-y-1">
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Municipality inspection scheduled: Dec 15, 2:00 PM</p>
+                      <p className="text-xs text-gray-500 mt-1">Beirut Municipality • 2 hours ago</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">MoPH requests updated sterilization protocols</p>
+                      <p className="text-xs text-gray-500 mt-1">Min. of Health • 5 hours ago</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Your permit applications forwarded to authorities</p>
+                      <p className="text-xs text-gray-500 mt-1">System Update • Today</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Q4 tax filing deadline: January 20, 2025</p>
+                      <p className="text-xs text-gray-500 mt-1">Ministry of Finance • Yesterday</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+                <div className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-900">Document vault backup completed</p>
+                      <p className="text-xs text-gray-500 mt-1">System • 2 days ago</p>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -2114,6 +2267,161 @@ const Dashboard = () => {
                     </button>
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* Burger Menu Dashboard - Bento Grid */}
+          {isMobileMenuOpen && currentScenario === 2 && (
+            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                  <h2 className="text-xl font-semibold text-gray-900">Dashboard</h2>
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-600" />
+                  </button>
+                </div>
+                
+                {/* Bento Grid */}
+                <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 80px)' }}>
+                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    
+                    {/* Wallet Balance - Large Card */}
+                    <div className="md:col-span-2 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <p className="text-sm text-gray-400 mb-1">Wallet Balance</p>
+                          <p className="text-3xl font-light">
+                            {selectedCurrency === 'USD' 
+                              ? `$${(walletBalance / 89500).toFixed(2)}`
+                              : `${walletBalance.toLocaleString()} LBP`
+                            }
+                          </p>
+                        </div>
+                        <Wallet className="w-8 h-8 text-gray-400" />
+                      </div>
+                      <button className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors">
+                        Top Up Balance
+                      </button>
+                    </div>
+                    
+                    {/* Business Stage */}
+                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div>
+                          <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Business Stage</p>
+                          <p className="text-lg font-semibold text-gray-900">Setup Phase</p>
+                        </div>
+                        <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                          <span className="text-sm font-bold text-orange-600">75%</span>
+                        </div>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div className="bg-orange-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                      </div>
+                    </div>
+                    
+                    {/* Quick Stats */}
+                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Quick Stats</p>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Permits</span>
+                          <span className="text-sm font-medium text-gray-900">3 Pending</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Documents</span>
+                          <span className="text-sm font-medium text-gray-900">12 Uploaded</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-sm text-gray-600">Tasks</span>
+                          <span className="text-sm font-medium text-gray-900">5 Active</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Upcoming Actions - Wide Card */}
+                    <div className="md:col-span-2 bg-white border border-gray-200 rounded-2xl p-6">
+                      <div className="flex items-center justify-between mb-4">
+                        <p className="text-xs text-gray-500 uppercase tracking-wide">Upcoming Actions</p>
+                        <button className="text-xs text-blue-600 hover:text-blue-800 font-medium">View all</button>
+                      </div>
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-900">Municipality inspection</p>
+                            <p className="text-xs text-gray-500">Dec 15, 2:00 PM</p>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-900">Submit sterilization protocols</p>
+                            <p className="text-xs text-gray-500">Due in 3 days</p>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-900">Q4 tax filing</p>
+                            <p className="text-xs text-gray-500">Jan 20, 2025</p>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-gray-400" />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Recent Transactions */}
+                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Recent Payments</p>
+                      <div className="space-y-3">
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">Permit Fees</p>
+                          <p className="text-xs text-gray-500">$60.00 • Today</p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">Document Processing</p>
+                          <p className="text-xs text-gray-500">$25.00 • Dec 8</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Company Info */}
+                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Business Info</p>
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium text-gray-900">Hamra Dental Clinic</p>
+                        <p className="text-xs text-gray-500">Registration: In Progress</p>
+                        <p className="text-xs text-gray-500">Type: Medical Facility</p>
+                        <p className="text-xs text-gray-500">Location: Beirut</p>
+                      </div>
+                    </div>
+                    
+                    {/* Help Center */}
+                    <div className="md:col-span-2 lg:col-span-1 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <p className="text-sm font-semibold text-gray-900">Need Help?</p>
+                          <p className="text-xs text-gray-600 mt-1">Get support from our team</p>
+                        </div>
+                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                          <span className="text-white text-xs font-bold">?</span>
+                        </div>
+                      </div>
+                      <button className="w-full mt-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                        Contact Support
+                      </button>
+                    </div>
+                    
+                  </div>
+                </div>
               </div>
             </div>
           )}
