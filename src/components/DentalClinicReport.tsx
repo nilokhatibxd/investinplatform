@@ -233,7 +233,6 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
         <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
           Available Trade Names in Hamra
         </h2>
-        <p className="text-xs text-gray-600 mb-3">Pre-verified names available for immediate registration:</p>
         <div className={`grid ${isMobile ? 'grid-cols-1' : 'grid-cols-2'} gap-2 mb-3`}>
           <button className="text-left bg-white border border-gray-200 rounded-lg p-3 hover:bg-blue-50 hover:border-blue-300 transition-all group">
             <p className="text-sm font-medium text-gray-900 group-hover:text-blue-600">Hamra Dental Excellence</p>
