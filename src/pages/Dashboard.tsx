@@ -19,7 +19,6 @@ import {
   Shield,
   AudioWaveform,
   Zap,
-  Menu,
   ThumbsUp,
   ThumbsDown,
   ChevronLeft,
@@ -602,7 +601,7 @@ const Dashboard = () => {
   
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [, setIsLoggedIn] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<'LBP' | 'USD'>('LBP');
   const [walletBalance] = useState(2750000); // Wallet balance in LBP
   const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas' | 'thinking' | 'alert'; content: any}>>([
@@ -735,7 +734,8 @@ const Dashboard = () => {
     ]
   };
 
-  // Notifications
+  // Notifications - commented out as not used
+  /*
   const notifications = [
     { id: 1, title: 'Application #VR-2024-1127 visa renewal due for Ahmed Hassan', time: '2 hrs ago', type: 'urgent' },
     { id: 2, title: 'Shipment #SH-445821 cleared customs - electronics import', time: '4 hrs ago', type: 'success' },
@@ -743,6 +743,7 @@ const Dashboard = () => {
     { id: 4, title: 'TVA Filing #TVA-Q4-2024 available for submission', time: 'Yesterday', type: 'info' },
     { id: 5, title: 'Visa #EV-2024-3341 approved for Maria Garcia - Tech Specialist', time: 'Yesterday', type: 'success' }
   ];
+  */
 
   // Government Feed Updates - commented out as not used
   /*
@@ -915,7 +916,7 @@ const Dashboard = () => {
                     />
                   </button>
                   
-                  {/* Burger Menu */}
+                  {/* Grid Menu */}
                   <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     className="w-11 h-11 bg-white rounded-full flex items-center justify-center ml-1"
@@ -923,7 +924,17 @@ const Dashboard = () => {
                     {isMobileMenuOpen ? (
                       <X className="w-5 h-5 text-gray-900" />
                     ) : (
-                      <Menu className="w-5 h-5 text-gray-900" />
+                      <div className="grid grid-cols-3 gap-0.5">
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                        <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
+                      </div>
                     )}
                   </button>
                 </>
@@ -1358,19 +1369,19 @@ const Dashboard = () => {
         
         {/* Dot Grid Menu - Far Right */}
         <button 
-          onClick={() => setShowSidebar(true)}
+          onClick={() => setIsMobileMenuOpen(true)}
           className="w-12 h-12 bg-white rounded-full border-2 border-white flex items-center justify-center hover:bg-white transition-all shadow-sm group"
         >
           <div className="grid grid-cols-3 gap-1">
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
-            <div className="w-1 h-1 bg-gray-400 group-hover:bg-white rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
+            <div className="w-1 h-1 bg-gray-400 group-hover:bg-gray-600 rounded-full transition-colors"></div>
           </div>
         </button>
       </div>
@@ -2271,7 +2282,7 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Burger Menu Dashboard - Bento Grid */}
+          {/* Grid Menu Dashboard - Bento Grid */}
           {isMobileMenuOpen && currentScenario === 2 && (
             <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
               <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
