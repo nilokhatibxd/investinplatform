@@ -27,10 +27,7 @@ import {
   Download,
   Expand,
   Wallet,
-  AlertCircle,
   CheckCircle,
-  Clock,
-  RefreshCw,
   Check,
   Copy
 } from 'lucide-react';
@@ -313,7 +310,6 @@ const PermitProcessingAnimation = ({ onComplete }: { onComplete: () => void }) =
   return (
     <div className="space-y-3 text-base text-gray-800" style={{lineHeight: '1.6em'}}>
       {steps.map((step, idx) => {
-        const Icon = step.icon;
         const isComplete = idx <= currentStep;
         const isProcessing = idx === currentStep;
         
@@ -342,7 +338,7 @@ const PermitProcessingAnimation = ({ onComplete }: { onComplete: () => void }) =
 };
 
 // Permits Complete Component
-const PermitsComplete = ({ currency }: { currency: 'LBP' | 'USD' }) => {
+const PermitsComplete = () => {
   const today = new Date();
   const appliedDate = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   
@@ -1362,7 +1358,7 @@ const Dashboard = () => {
                 <div className="flex-1 flex flex-col justify-end">
                   <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
                     <div className="space-y-6 pt-20 pb-10">
-                {chatMessages.filter((msg, index) => {
+                {chatMessages.filter((msg) => {
                   // For scenario 2, hide alert when canvas is open
                   if (currentScenario === 2 && msg.role === 'alert' && chatMessages.some(m => m.role === 'canvas')) return false;
                   return true;
@@ -1445,24 +1441,7 @@ const Dashboard = () => {
                             </div>
                           </div>
                           <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
-                            {message.content === 'permits' ? (
-                              <PermitsCanvas 
-                                variant="desktop" 
-                                currency={selectedCurrency}
-                                onConfirmDocuments={() => {
-                                  // Show user confirmation and processing
-                                  const paymentAmount = selectedCurrency === 'USD' ? '$60' : '5,370,000 LBP';
-                                  setChatMessages([
-                                    {role: 'user', content: `Apply for 3 permits • ${paymentAmount}`},
-                                    {role: 'assistant', content: `Payment processed successfully.`},
-                                    {role: 'assistant', content: 'processing_permits'}
-                                  ]);
-                                  setIsSplitScreen(false);
-                                }}
-                              />
-                            ) : (
-                              <DentalClinicReport variant="desktop" currency={selectedCurrency} />
-                            )}
+                            <DentalClinicReport variant="desktop" currency={selectedCurrency} />
                           </div>
                         </div>
                         
@@ -1562,7 +1541,7 @@ const Dashboard = () => {
                       />
                     ) : message.content === 'permits_complete' ? (
                       // Show approved permits
-                      <PermitsComplete currency={selectedCurrency} />
+                      <PermitsComplete />
                     ) : (
                       <div>
                         {/* Use body text for all messages except initial welcome */}
@@ -2348,24 +2327,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
-                      {canvasMessage.content === 'permits' ? (
-                        <PermitsCanvas 
-                          variant="split-screen" 
-                          currency={selectedCurrency}
-                          onConfirmDocuments={() => {
-                            // Show user confirmation and processing  
-                            const paymentAmount = selectedCurrency === 'USD' ? '$60' : '5,370,000 LBP';
-                            setChatMessages([
-                              {role: 'user', content: `Apply for 3 permits • ${paymentAmount}`},
-                              {role: 'assistant', content: `Payment processed successfully.`},
-                              {role: 'assistant', content: 'processing_permits'}
-                            ]);
-                            setIsSplitScreen(false);
-                          }}
-                        />
-                      ) : (
-                        <DentalClinicReport variant="split-screen" currency={selectedCurrency} />
-                      )}
+                      <DentalClinicReport variant="split-screen" currency={selectedCurrency} />
                     </div>
                   </div>
                 </div>
