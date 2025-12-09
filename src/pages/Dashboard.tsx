@@ -25,7 +25,10 @@ import {
   ArrowUp,
   Download,
   Expand,
-  MapPin
+  MapPin,
+  DollarSign,
+  Home,
+  Maximize
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -859,7 +862,7 @@ const Dashboard = () => {
                               <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Summary</h2>
                               <div className="bg-blue-50 border-l-4 border-blue-500 p-4">
                                 <p className="text-sm text-gray-800 leading-relaxed">
-                                  Based on cross-ministerial data analysis, opening a dental clinic in Hamra presents a <span className="font-semibold">high-opportunity investment</span>. Government records indicate 32,000 residents with only 30 operational clinics, resulting in a 45% service gap. With 17,600 NSSF-insured residents and average wait times exceeding 3 weeks, immediate market entry is advisable.
+                                  Hamra is a university district with 12,000 students and residential families totaling 32,000 residents. Government data shows only 30 operational dental clinics serving the area, resulting in a 45% service gap. With 17,600 NSSF-insured residents and average wait times of 3 weeks, the district represents an underserved market for dental services.
                                 </p>
                               </div>
                               <p className="text-xs text-gray-400 mt-2">Source: NSSF Claims Database, Municipality Census 2024</p>
@@ -916,10 +919,6 @@ const Dashboard = () => {
                                   <p className="text-xs text-gray-400 mt-1">4 public lots nearby</p>
                                 </div>
                               </div>
-                              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                                <p className="text-xs font-medium text-green-900">Competitive Advantage Identified</p>
-                                <p className="text-xs text-gray-700 mt-1">Only 1 clinic offers evening hours • Zero Sunday operations • Limited pediatric services</p>
-                              </div>
                             </div>
 
                             {/* Property CTA */}
@@ -948,7 +947,7 @@ const Dashboard = () => {
                                     <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Children</span>
                                   </div>
                                   <p className="text-xs text-gray-600">Caries prevalence (5-15 years)</p>
-                                  <p className="text-xs text-red-600 mt-1">↑ 7% above national avg</p>
+                                  <p className="text-xs text-red-600 mt-1">↑ 7%</p>
                                 </div>
                                 <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
                                   <div className="flex items-center justify-between mb-2">
@@ -956,7 +955,7 @@ const Dashboard = () => {
                                     <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Adults</span>
                                   </div>
                                   <p className="text-xs text-gray-600">Periodontal disease (35+)</p>
-                                  <p className="text-xs text-orange-600 mt-1">Critical need identified</p>
+                                  <p className="text-xs text-orange-600 mt-1">↑ 12%</p>
                                 </div>
                                 <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
                                   <div className="flex items-center justify-between mb-2">
@@ -964,7 +963,7 @@ const Dashboard = () => {
                                     <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Pediatric</span>
                                   </div>
                                   <p className="text-xs text-gray-600">Specialists for 5,760 children</p>
-                                  <p className="text-xs text-purple-600 mt-1">Major service gap</p>
+                                  <p className="text-xs text-purple-600 mt-1">↓ 85%</p>
                                 </div>
                                 <div className="bg-white border border-gray-200 rounded-lg p-3 hover:shadow-sm transition-shadow">
                                   <div className="flex items-center justify-between mb-2">
@@ -972,7 +971,7 @@ const Dashboard = () => {
                                     <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">Geriatric</span>
                                   </div>
                                   <p className="text-xs text-gray-600">Specialists for 3,840 elderly</p>
-                                  <p className="text-xs text-gray-500 mt-1">Unserved market</p>
+                                  <p className="text-xs text-gray-500 mt-1">—</p>
                                 </div>
                               </div>
                               <p className="text-xs text-gray-400 mt-3">Source: MoPH Epidemiological Surveillance Unit, Q3 2024</p>
@@ -1000,32 +999,25 @@ const Dashboard = () => {
                             <div className="mb-8">
                               <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Investment Analysis</h2>
                               
-                              <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4">
-                                <p className="text-sm font-medium text-gray-900 mb-3">Based on 12 recent clinic openings in similar districts:</p>
-                                <div className="space-y-3">
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Initial capital required</span>
-                                    <span className="text-sm font-semibold text-gray-900">$100,000 - $150,000</span>
-                                  </div>
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Break-even timeline</span>
-                                    <span className="text-sm font-semibold text-gray-900">8-12 months</span>
-                                  </div>
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Space requirement</span>
-                                    <span className="text-sm font-semibold text-gray-900">80-120m²</span>
-                                  </div>
-                                  <div className="flex justify-between items-center pb-2 border-b border-gray-100">
-                                    <span className="text-sm text-gray-600">Monthly rent (Hamra)</span>
-                                    <span className="text-sm font-semibold text-gray-900">$800-1,800</span>
-                                  </div>
-                                  <div className="flex justify-between items-center">
-                                    <span className="text-sm text-gray-600">Projected monthly revenue</span>
-                                    <span className="text-sm font-semibold text-green-600">$35,000-45,000</span>
-                                  </div>
+                              <p className="text-sm font-medium text-gray-900 mb-3">Based on 12 recent clinic openings in similar districts:</p>
+                              <div className="grid grid-cols-3 gap-3 mb-4">
+                                <div className="bg-white border border-gray-200 rounded-lg p-3 text-center hover:shadow-sm transition-shadow">
+                                  <DollarSign className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                                  <p className="text-lg font-light text-gray-900">$100-150K</p>
+                                  <p className="text-xs text-gray-600">Initial capital</p>
                                 </div>
-                                <p className="text-xs text-gray-400 mt-3">Source: Commercial Registry, NSSF Claims Data</p>
+                                <div className="bg-white border border-gray-200 rounded-lg p-3 text-center hover:shadow-sm transition-shadow">
+                                  <Maximize className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                                  <p className="text-lg font-light text-gray-900">80-120m²</p>
+                                  <p className="text-xs text-gray-600">Space required</p>
+                                </div>
+                                <div className="bg-white border border-gray-200 rounded-lg p-3 text-center hover:shadow-sm transition-shadow">
+                                  <Home className="w-6 h-6 text-gray-400 mx-auto mb-2" />
+                                  <p className="text-lg font-light text-gray-900">$800-1,800</p>
+                                  <p className="text-xs text-gray-600">Monthly rent</p>
+                                </div>
                               </div>
+                              <p className="text-xs text-gray-400">Source: Commercial Registry, Real Estate Database</p>
 
                               {/* Loan Program CTA */}
                               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
