@@ -25,11 +25,7 @@ import {
   ChevronLeft,
   ArrowUp,
   Download,
-  Expand,
-  MapPin,
-  DollarSign,
-  Home,
-  Maximize
+  Expand
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -935,21 +931,30 @@ const Dashboard = () => {
                       </button>
                     )}
                     
-                    {/* Cards Container */}
-                    <div 
-                      id="suggestions-container"
-                      className="flex gap-2 overflow-x-auto scrollbar-none scroll-smooth flex-1"
-                    >
-                      {suggestionCards.map((suggestion, index) => (
-                        <button
-                          key={index}
-                          onClick={(e) => e.preventDefault()}
-                          className="flex-shrink-0 border border-gray-300 rounded-2xl p-4 text-left bg-white hover:bg-gray-50 transition-colors cursor-pointer"
-                          style={{ width: isMobile ? '60%' : '30%', minHeight: '80px' }}
-                        >
-                          <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
-                        </button>
-                      ))}
+                    {/* Cards Container with fade effect */}
+                    <div className="relative flex-1 overflow-hidden">
+                      <div 
+                        id="suggestions-container"
+                        className="flex gap-2 overflow-x-auto scrollbar-none scroll-smooth"
+                      >
+                        {suggestionCards.map((suggestion, index) => (
+                          <button
+                            key={index}
+                            onClick={(e) => e.preventDefault()}
+                            className="flex-shrink-0 border border-gray-300 rounded-2xl p-4 text-left bg-white hover:bg-gray-50 transition-colors cursor-pointer"
+                            style={{ 
+                              width: isMobile ? '60%' : 'calc(40% - 4px)', 
+                              minHeight: '80px' 
+                            }}
+                          >
+                            <p className="text-sm text-gray-700 leading-relaxed">{suggestion}</p>
+                          </button>
+                        ))}
+                      </div>
+                      {/* Fade overlay on right side - desktop only */}
+                      {!isMobile && (
+                        <div className="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-white to-transparent pointer-events-none" />
+                      )}
                     </div>
                     
                     {/* Right Arrow - Desktop only */}
