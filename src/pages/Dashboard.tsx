@@ -1852,7 +1852,7 @@ const Dashboard = () => {
                           <FileCheck className={`${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-purple-600`} />
                         </div>
                         
-                        <div className="flex-1">
+                        <div className={`flex-1 ${isMobile ? 'mr-2' : ''}`}>
                           <p className={`${isMobile ? 'text-[11px]' : 'text-sm'} font-medium text-gray-900`}>3 pending permits require your attention</p>
                             
                             {/* Grey permit pills */}
@@ -1898,7 +1898,38 @@ const Dashboard = () => {
                             </div>
                         </div>
                         
-                        {/* Apply button matching permits canvas style */}
+                        {/* Apply button - hide on mobile to stack vertically */}
+                        {!isMobile && (
+                          <button
+                            onClick={() => {
+                              // Start with user request and document verification
+                              setChatMessages([
+                                {role: 'user', content: 'I would like to apply for:\n\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                                {role: 'assistant', content: 'typing'},
+                              ]);
+                              // Show document verification after typing
+                              setTimeout(() => {
+                                setChatMessages([
+                                  {role: 'user', content: 'I would like to apply for:\n\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                                  {role: 'assistant', content: 'document_verification'}
+                                ]);
+                              }, 1500);
+                            }}
+                            className="w-36 py-2.5 px-5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-between"
+                          >
+                          <span className="flex items-center gap-1.5">
+                            <Wallet className="w-3.5 h-3.5" />
+                            Apply
+                          </span>
+                          <span className="font-semibold text-xs">
+                            {selectedCurrency === 'LBP' ? '5.4M' : '$60'}
+                          </span>
+                          </button>
+                        )}
+                      </div>
+                      
+                      {/* Apply button for mobile - below the alert content */}
+                      {isMobile && (
                         <button
                           onClick={() => {
                             // Start with user request and document verification
@@ -1914,17 +1945,12 @@ const Dashboard = () => {
                               ]);
                             }, 1500);
                           }}
-                          className="w-36 py-2.5 px-5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-between"
+                          className="w-full mt-3 py-2 px-4 bg-gray-900 text-white rounded-full text-xs font-medium hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
                         >
-                          <span className="flex items-center gap-1.5">
-                            <Wallet className="w-3.5 h-3.5" />
-                            Apply
-                          </span>
-                          <span className="font-semibold text-xs">
-                            {selectedCurrency === 'LBP' ? '5.4M' : '$60'}
-                          </span>
+                          <Wallet className="w-3 h-3" />
+                          <span>Apply for {selectedCurrency === 'LBP' ? '5.4M' : '$60'}</span>
                         </button>
-                      </div>
+                      )}
                     </div>
                 </div>
               )}
@@ -2056,7 +2082,7 @@ const Dashboard = () => {
                       {/* Attachment Icon */}
                       <div className="group relative">
                         <button 
-                          className={`${isMobile ? 'w-8 h-8' : 'w-8 h-8'} bg-transparent hover:bg-white/[0.02] border border-white/10 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
+                          className={`${isMobile ? 'w-8 h-8' : 'w-8 h-8'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
                         >
                           <Paperclip className={`${isMobile ? 'w-4 h-4' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                         </button>
@@ -2193,9 +2219,9 @@ const Dashboard = () => {
                   <X className="w-5 h-5 text-gray-600" />
                 </button>
                 
-                <div className="flex h-full">
-                  {/* Sidebar */}
-                  <div className="w-64 bg-gray-50 border-r border-gray-200 p-4">
+                <div className={`${isMobile ? 'flex flex-col' : 'flex'} h-full`}>
+                  {/* Sidebar - Full width on mobile */}
+                  <div className={`${isMobile ? 'w-full border-b' : 'w-64 border-r'} bg-gray-50 border-gray-200 p-4 ${isMobile ? 'max-h-48 overflow-y-auto' : ''}`}>
                     <div className="mb-6">
                       <h3 className="font-semibold text-gray-900">Document Vault</h3>
                     </div>
@@ -2228,8 +2254,8 @@ const Dashboard = () => {
                     </div>
                   </div>
                   
-                  {/* Main Content */}
-                  <div className="flex-1 flex flex-col">
+                  {/* Main Content - Full width on mobile */}
+                  <div className="flex-1 flex flex-col overflow-hidden">
                     <div className="p-6 border-b border-gray-100">
                       <h4 className="font-medium text-gray-900">{selectedFolder}</h4>
                     </div>
