@@ -904,6 +904,89 @@ const Dashboard = () => {
                                   </div>
                                 </div>
 
+                                {/* Patient Flow Analysis CTA */}
+                                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+                                  <div className="flex items-start gap-2">
+                                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                      <FileText className="w-3 h-3 text-blue-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                      <p className="text-xs font-medium text-gray-900 mb-1">Request Patient Flow Analysis</p>
+                                      <p className="text-xs text-gray-600 mb-2">Government-exclusive: Get hourly patterns and referral networks.</p>
+                                      <button className="text-xs font-medium text-blue-600 hover:text-blue-700 bg-white px-2 py-1 rounded border border-blue-200 hover:bg-blue-50 transition-colors">
+                                        Generate Report →
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Subsidized Loan Program */}
+                                <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-6">
+                                  <div className="flex items-start gap-2">
+                                    <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                      <Building2 className="w-3 h-3 text-green-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                      <p className="text-xs font-medium text-gray-900 mb-1">Access Subsidized Healthcare Loan</p>
+                                      <p className="text-xs text-gray-600 mb-2">3.5% interest rate through Central Bank circular 578.</p>
+                                      <button className="text-xs font-medium text-green-600 hover:text-green-700 bg-white px-2 py-1 rounded border border-green-200 hover:bg-green-50 transition-colors">
+                                        Check Eligibility →
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Pre-Submit Application */}
+                                <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mb-6">
+                                  <div className="flex items-start gap-2">
+                                    <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                      <Shield className="w-3 h-3 text-purple-600" />
+                                    </div>
+                                    <div className="flex-1">
+                                      <p className="text-xs font-medium text-gray-900 mb-1">Pre-Submit Your Application</p>
+                                      <p className="text-xs text-gray-600 mb-2">Reserve business name and start verification now.</p>
+                                      <button className="text-xs font-medium text-purple-600 hover:text-purple-700 bg-white px-2 py-1 rounded border border-purple-200 hover:bg-purple-50 transition-colors">
+                                        Start Application →
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                {/* Additional Services */}
+                                <div className="mb-6">
+                                  <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">You May Also Be Interested In</h2>
+                                  
+                                  <div className="space-y-2">
+                                    <button className="w-full text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
+                                      <div className="flex items-center justify-between">
+                                        <div>
+                                          <p className="text-xs font-medium text-gray-900 mb-1">NSSF Provider Network</p>
+                                          <p className="text-xs text-gray-600">Join preferred provider list</p>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                      </div>
+                                    </button>
+                                    <button className="w-full text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
+                                      <div className="flex items-center justify-between">
+                                        <div>
+                                          <p className="text-xs font-medium text-gray-900 mb-1">Equipment Import License</p>
+                                          <p className="text-xs text-gray-600">Duty exemption available</p>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                      </div>
+                                    </button>
+                                    <button className="w-full text-left bg-white hover:bg-gray-50 border border-gray-200 rounded-lg p-3 transition-colors group">
+                                      <div className="flex items-center justify-between">
+                                        <div>
+                                          <p className="text-xs font-medium text-gray-900 mb-1">Staff Recruitment Portal</p>
+                                          <p className="text-xs text-gray-600">Access qualified workers</p>
+                                        </div>
+                                        <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
+                                      </div>
+                                    </button>
+                                  </div>
+                                </div>
+
                                 {/* Action Buttons */}
                                 <div className="space-y-2 mb-8">
                                   <button className="w-full bg-gray-900 text-white py-3 rounded-full text-sm font-medium">
@@ -1947,7 +2030,7 @@ const Dashboard = () => {
                   <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                     {/* Canvas Header */}
                     <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
-                      <div className="text-sm font-medium text-gray-700">Business Analysis Report</div>
+                      <div className="text-sm font-medium text-gray-700">Private Dental Clinic in Hamra District</div>
                       <div className="flex items-center gap-2">
                         <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                           <Download className="w-4 h-4 text-gray-600" />
@@ -1960,62 +2043,190 @@ const Dashboard = () => {
                         </button>
                       </div>
                     </div>
-                    <div className="p-6">
-                      <div className="space-y-4">
-                        {/* Widget 1 - Map */}
-                        <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg flex items-center justify-center">
-                          <p className="text-gray-600">📍 Hamra, Beirut</p>
+                    <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
+                      <div className="max-w-3xl mx-auto">
+                        {/* Split-Screen Report Content - Same as Desktop */}
+                        <div className="mb-6">
+                          <p className="text-xs text-gray-400 mb-2">{new Date().toLocaleDateString()}</p>
+                          <h1 className="text-xl font-light text-gray-900">Private Dental Clinic in Hamra District</h1>
                         </div>
-                        
-                        {/* Widget 2 - Key Metrics */}
-                        <div className="grid grid-cols-3 gap-3">
-                          <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                            <p className="text-sm font-medium text-green-800">High Traffic</p>
-                            <p className="text-xs text-green-600">2,500+ daily</p>
+
+                        {/* Summary */}
+                        <div className="mb-6">
+                          <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Summary</h2>
+                          <div className="bg-blue-50 border-l-4 border-blue-500 p-3">
+                            <p className="text-xs text-gray-800 leading-relaxed">
+                              Hamra is a university district with 12,000 students and residential families totaling 32,000 residents. Government data shows only 30 operational dental clinics serving the area, resulting in a 45% service gap. With 17,600 NSSF-insured residents and average wait times of 3 weeks, the district represents an underserved market for dental services.
+                            </p>
                           </div>
-                          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
-                            <p className="text-sm font-medium text-yellow-800">Competition</p>
-                            <p className="text-xs text-yellow-600">5 nearby</p>
-                          </div>
-                          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                            <p className="text-sm font-medium text-blue-800">Growth</p>
-                            <p className="text-xs text-blue-600">30% yearly</p>
+                          <p className="text-xs text-gray-400 mt-1">Source: NSSF Claims Database, Municipality Census 2024</p>
+                        </div>
+
+                        {/* Location Map */}
+                        <div className="mb-6">
+                          <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Location & Competition</h2>
+                          <div className="bg-gray-100 rounded-lg h-48 relative flex items-center justify-center border border-gray-200">
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <MapPin className="w-10 h-10 text-gray-400" />
+                            </div>
+                            <div className="absolute top-3 left-3 bg-white rounded-lg p-2 shadow-sm">
+                              <p className="text-xs font-medium text-gray-900 mb-1">Hamra District</p>
+                              <div className="space-y-1">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                                  <p className="text-xs text-gray-600">Your location</p>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  <p className="text-xs text-gray-600">30 existing clinics</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="absolute bottom-3 right-3 bg-white rounded-lg p-2 shadow-sm">
+                              <p className="text-xs text-gray-500">1km radius • 30 competitors</p>
+                            </div>
                           </div>
                         </div>
-                        
-                        {/* Widget 3 - Recommendation */}
-                        <div className="bg-gray-50 rounded-lg p-4">
-                          <p className="text-sm font-medium text-gray-900 mb-2">Recommendation</p>
-                          <p className="text-sm text-gray-600">Strong potential for specialty coffee. Focus on unique offerings to differentiate.</p>
+
+                        {/* Local Population Data */}
+                        <div className="mb-6">
+                          <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Local Population Data</h2>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="bg-white border border-gray-200 rounded-lg p-3">
+                              <p className="text-lg font-light text-gray-900">7,200</p>
+                              <p className="text-xs text-gray-600 font-medium">Families</p>
+                              <p className="text-xs text-gray-400 mt-1">Avg 4.4 members</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-3">
+                              <p className="text-lg font-light text-gray-900">5,760</p>
+                              <p className="text-xs text-gray-600 font-medium">Children (0-14)</p>
+                              <p className="text-xs text-gray-400 mt-1">18% of population</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-3">
+                              <p className="text-lg font-light text-gray-900">12,000</p>
+                              <p className="text-xs text-gray-600 font-medium">University students</p>
+                              <p className="text-xs text-gray-400 mt-1">AUB + LAU</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-3">
+                              <p className="text-lg font-light text-gray-900">3,840</p>
+                              <p className="text-xs text-gray-600 font-medium">Elderly (65+)</p>
+                              <p className="text-xs text-gray-400 mt-1">12% of population</p>
+                            </div>
+                          </div>
                         </div>
-                        
-                        {/* Additional Analysis Sections for Scrolling Test */}
-                        <div className="border-t pt-4 mt-4">
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3">Market Analysis</h3>
-                          <p className="text-sm text-gray-600 mb-3">Hamra district shows exceptional promise for specialty coffee establishments. The area has seen a 45% increase in foot traffic over the past year, with peak hours between 8-10 AM and 5-8 PM.</p>
-                          <p className="text-sm text-gray-600 mb-3">Current competition includes 5 established cafes within a 500m radius, but none focus exclusively on specialty coffee. There's a clear gap for premium, third-wave coffee experiences.</p>
-                          
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Demographics</h3>
-                          <p className="text-sm text-gray-600 mb-3">Primary customer base: Young professionals (25-40 years), University students (18-24 years), and expatriates. Average disposable income in the area is 35% above city average.</p>
-                          <p className="text-sm text-gray-600 mb-3">Survey data indicates 78% of residents visit coffee shops at least 3 times per week, with average spending of $8-12 per visit.</p>
-                          
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Regulatory Requirements</h3>
-                          <p className="text-sm text-gray-600 mb-3">You'll need to obtain the following licenses: Commercial Registration (Ministry of Economy), Food Service License (Municipality of Beirut), Health Permit (Ministry of Public Health).</p>
-                          <p className="text-sm text-gray-600 mb-3">Estimated timeline: 4-6 weeks for all permits. Total licensing costs approximately $3,500-4,500.</p>
-                          
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Financial Projections</h3>
-                          <p className="text-sm text-gray-600 mb-3">Initial investment: $75,000-100,000 including equipment, renovation, and 3-month operating capital.</p>
-                          <p className="text-sm text-gray-600 mb-3">Break-even timeline: 12-16 months with conservative estimates. Monthly revenue potential: $25,000-35,000 after stabilization.</p>
-                          <p className="text-sm text-gray-600 mb-3">Recommended space: 80-120 square meters with outdoor seating option. Current rental rates: $1,200-1,800/month.</p>
-                          
-                          <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Next Steps</h3>
-                          <ul className="list-disc list-inside text-sm text-gray-600 space-y-2">
-                            <li>Schedule site visits to 3 available properties in Hamra</li>
-                            <li>Connect with equipment suppliers for quotations</li>
-                            <li>Initiate preliminary discussions with Municipality</li>
-                            <li>Develop detailed business plan and financial model</li>
-                            <li>Identify potential local partners or investors</li>
-                          </ul>
+
+                        {/* Property CTA */}
+                        <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 mb-6">
+                          <div className="flex items-start gap-3">
+                            <div className="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                              <MapPin className="w-3 h-3 text-indigo-600" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-xs font-medium text-gray-900 mb-1">View Available Properties</p>
+                              <p className="text-xs text-gray-600 mb-2">6 pre-qualified spaces in Hamra.</p>
+                              <button className="text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-white px-2 py-1 rounded border border-indigo-200 hover:bg-indigo-50 transition-colors">
+                                Schedule Viewings →
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Population Health Profile */}
+                        <div className="mb-6">
+                          <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Population Health Profile</h2>
+                          <div className="grid grid-cols-2 gap-2">
+                            <div className="bg-white border border-gray-200 rounded-lg p-2">
+                              <div className="flex items-center justify-between mb-1">
+                                <p className="text-lg font-light text-gray-900">85%</p>
+                                <span className="text-xs text-red-600">↑ 7%</span>
+                              </div>
+                              <p className="text-xs text-gray-600">Children caries</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-2">
+                              <div className="flex items-center justify-between mb-1">
+                                <p className="text-lg font-light text-gray-900">92%</p>
+                                <span className="text-xs text-orange-600">↑ 12%</span>
+                              </div>
+                              <p className="text-xs text-gray-600">Adult periodontal</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-2">
+                              <div className="flex items-center justify-between mb-1">
+                                <p className="text-lg font-light text-gray-900">2</p>
+                                <span className="text-xs text-purple-600">↓ 85%</span>
+                              </div>
+                              <p className="text-xs text-gray-600">Pediatric specialists</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-2">
+                              <div className="flex items-center justify-between mb-1">
+                                <p className="text-lg font-light text-gray-900">0</p>
+                                <span className="text-xs text-gray-500">—</span>
+                              </div>
+                              <p className="text-xs text-gray-600">Geriatric specialists</p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-400 mt-2">Source: MoPH Surveillance Unit, Q3 2024</p>
+                        </div>
+
+                        {/* Investment Analysis */}
+                        <div className="mb-6">
+                          <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Investment Analysis</h2>
+                          <p className="text-xs text-gray-600 mb-2">Based on 12 recent clinic openings:</p>
+                          <div className="grid grid-cols-3 gap-2">
+                            <div className="bg-white border border-gray-200 rounded-lg p-2 text-center">
+                              <DollarSign className="w-4 h-4 text-gray-400 mx-auto mb-1" />
+                              <p className="text-sm font-light">$100-150K</p>
+                              <p className="text-xs text-gray-600">Capital</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-2 text-center">
+                              <Maximize className="w-4 h-4 text-gray-400 mx-auto mb-1" />
+                              <p className="text-sm font-light">80-120m²</p>
+                              <p className="text-xs text-gray-600">Space</p>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-2 text-center">
+                              <Home className="w-4 h-4 text-gray-400 mx-auto mb-1" />
+                              <p className="text-sm font-light">$800-1.8K</p>
+                              <p className="text-xs text-gray-600">Rent</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Fast-Track Licensing */}
+                        <div className="mb-6">
+                          <h2 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wide">Fast-Track Licensing</h2>
+                          <div className="space-y-2">
+                            <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+                              <div className="flex items-center gap-2">
+                                <div className="w-5 h-5 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold">1</div>
+                                <span className="text-xs font-medium">Healthcare Registration</span>
+                              </div>
+                              <span className="text-xs bg-gray-100 px-2 py-1 rounded">24hrs</span>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+                              <div className="flex items-center gap-2">
+                                <div className="w-5 h-5 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                                <span className="text-xs font-medium">Business Registration</span>
+                              </div>
+                              <span className="text-xs bg-gray-100 px-2 py-1 rounded">12hrs</span>
+                            </div>
+                            <div className="bg-white border border-gray-200 rounded-lg p-3 flex justify-between items-center">
+                              <div className="flex items-center gap-2">
+                                <div className="w-5 h-5 bg-gray-900 text-white rounded-full flex items-center justify-center text-xs font-bold">3</div>
+                                <span className="text-xs font-medium">Final Permits</span>
+                              </div>
+                              <span className="text-xs bg-gray-100 px-2 py-1 rounded">12hrs</span>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-400 mt-2">Total: 48 hours through Investment Authority</p>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="space-y-2">
+                          <button className="w-full bg-gray-900 text-white py-3 rounded-full text-sm font-medium">
+                            Start Your Clinic in Hamra
+                          </button>
+                          <button className="w-full bg-white text-gray-900 py-3 rounded-full border-2 border-gray-900 text-sm font-medium">
+                            Explore More Locations
+                          </button>
                         </div>
                       </div>
                     </div>
