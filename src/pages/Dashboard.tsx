@@ -25,9 +25,567 @@ import {
   ChevronLeft,
   ArrowUp,
   Download,
-  Expand
+  Expand,
+  Wallet,
+  AlertCircle,
+  CheckCircle,
+  Clock,
+  RefreshCw,
+  Check,
+  Copy
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+
+// Typewriter Text Component
+const TypewriterText = ({ text, onComplete }: { text: string; onComplete?: () => void }) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayedText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, 20); // Adjust speed here
+      return () => clearTimeout(timer);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [currentIndex, text, onComplete]);
+
+  return (
+    <span>
+      {displayedText}
+      {currentIndex < text.length && (
+        <span className="inline-block w-0.5 h-4 bg-gray-600 animate-pulse ml-0.5"></span>
+      )}
+    </span>
+  );
+};
+
+// Attachments Uploaded Component
+const AttachmentsUploaded = ({ count = 5 }: { count?: number }) => {
+  return (
+    <div className="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-lg px-4 py-3 hover:bg-gray-50 transition-colors">
+      <FileText className="w-5 h-5 text-gray-600" />
+      <span className="text-sm font-medium text-gray-900">{count} documents uploaded</span>
+      <Download className="w-4 h-4 text-gray-400" />
+    </div>
+  );
+};
+
+// Permit Selection Component for Chat
+const PermitSelection = ({ currency, onConfirm }: { currency: 'LBP' | 'USD'; onConfirm: (selected: number[]) => void }) => {
+  const [selectedPermits, setSelectedPermits] = useState<number[]>([]);
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  
+  const permits = [
+    {
+      id: 1,
+      title: 'Municipal Use & Occupancy',
+      ministry: 'Municipality of Beirut',
+      description: 'Allows your unit to operate as a medical facility with proper zoning approval.',
+      cost: currency === 'LBP' ? '1,790,000' : '20',
+      icon: Building2
+    },
+    {
+      id: 2,
+      title: 'MoPH Clinical Readiness',
+      ministry: 'Ministry of Public Health',
+      description: 'Confirms compliance with infection control and sterilization requirements.',
+      cost: currency === 'LBP' ? '1,790,000' : '20',
+      icon: FileCheck
+    },
+    {
+      id: 3,
+      title: 'Radiation Safety',
+      ministry: 'Lebanese Atomic Energy',
+      description: 'Required registration for clinics using X-ray diagnostic equipment.',
+      cost: currency === 'LBP' ? '1,790,000' : '20',
+      icon: Shield
+    }
+  ];
+
+  const togglePermit = (id: number) => {
+    setSelectedPermits(prev => 
+      prev.includes(id) 
+        ? prev.filter(p => p !== id)
+        : [...prev, id]
+    );
+  };
+
+  const calculateTotal = () => {
+    const sum = selectedPermits.length * 20;
+    return currency === 'USD' ? `$${sum}` : `${(sum * 89500).toLocaleString()} LBP`;
+  };
+
+  const [showCards, setShowCards] = useState(false);
+
+  return (
+    <div className="space-y-4">
+      <span className="text-base text-gray-800">
+        <TypewriterText 
+          text="Please confirm if you are ready to apply for all the permits below"
+          onComplete={() => setShowCards(true)}
+        />
+      </span>
+
+      {/* Permit cards carousel */}
+      {showCards && (
+        <div className="flex gap-3 overflow-x-auto scrollbar-none pb-2 animate-fadeIn">
+          {permits.map((permit) => {
+          const Icon = permit.icon;
+          const isSelected = selectedPermits.includes(permit.id);
+          
+          return (
+            <button
+              key={permit.id}
+              onClick={() => !isConfirmed && togglePermit(permit.id)}
+              disabled={isConfirmed}
+              className={`flex-shrink-0 w-64 text-left p-4 rounded-xl border transition-all ${
+                isConfirmed 
+                  ? isSelected ? 'border-gray-200 bg-white shadow-sm opacity-75' : 'border-gray-200 bg-gray-50 opacity-50'
+                  : isSelected 
+                    ? 'border-gray-200 bg-white shadow-sm' 
+                    : 'border-gray-200 bg-gray-50 hover:bg-white hover:shadow-sm'
+              }`}
+            >
+              {/* Selection indicator */}
+              <div className="flex items-start justify-between mb-3">
+                <Icon className="w-6 h-6 text-gray-600" />
+                <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
+                  isSelected 
+                    ? 'border-gray-900 bg-gray-900' 
+                    : 'border-gray-300 bg-white'
+                }`}>
+                  {isSelected && <Check className="w-3 h-3 text-white" />}
+                </div>
+              </div>
+              
+              <h3 className="font-medium text-gray-900 text-sm mb-1">{permit.title}</h3>
+              <p className="text-xs text-gray-500 mb-2">{permit.ministry}</p>
+              <p className="text-xs text-gray-600 mb-3">{permit.description}</p>
+              
+              <div className="pt-3 border-t border-gray-100">
+                <span className="text-lg font-light text-gray-900">{permit.cost}</span>
+                <span className="text-xs text-gray-500 ml-1">{currency}</span>
+              </div>
+            </button>
+          );
+        })}
+        </div>
+      )}
+
+      {/* Apply button and Select all */}
+      {showCards && !isConfirmed && (
+        <>
+          <div className="flex justify-between items-center">
+            <button
+              onClick={() => {
+                setIsConfirmed(true);
+                onConfirm(selectedPermits);
+              }}
+              disabled={selectedPermits.length === 0}
+              className={`py-3 px-6 rounded-full text-sm font-medium transition-colors flex items-center gap-3 ${
+                selectedPermits.length > 0 
+                  ? 'bg-gray-900 text-white hover:bg-gray-800' 
+                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+              <Wallet className="w-4 h-4" />
+              Apply
+            </span>
+            <span className="font-semibold">{calculateTotal()}</span>
+          </button>
+          <button
+            onClick={() => setSelectedPermits(selectedPermits.length === permits.length ? [] : permits.map(p => p.id))}
+            className="px-3 py-1.5 bg-gray-100 text-xs text-gray-600 rounded-full hover:bg-gray-200 transition-colors"
+          >
+            {selectedPermits.length === permits.length ? 'Deselect all' : 'Select all'}
+          </button>
+        </div>
+        <div>
+          <p className="text-xs text-gray-500 mt-2">
+            Note: This prepayment initiates the permit review process. Approval is subject to inspection and compliance verification.
+          </p>
+        </div>
+      </>
+      )}
+    </div>
+  );
+};
+
+// Document Verification Component for Chat
+const DocumentVerification = ({ onConfirm }: { onConfirm: () => void }) => {
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const documents = [
+    { name: 'Company Formation.pdf', size: '2.3 MB' },
+    { name: 'Business Plan.pdf', size: '1.8 MB' },
+    { name: 'Property Lease.pdf', size: '450 KB' },
+    { name: 'Floor Plans.pdf', size: '3.2 MB' },
+    { name: 'Equipment List.xlsx', size: '120 KB' }
+  ];
+
+  return (
+    <div className="space-y-4">
+      <div>
+        <p className="text-base text-gray-800 mb-3">
+          <TypewriterText 
+            text="Please review the documents from your vault before proceeding." 
+            onComplete={() => setShowContent(true)}
+          />
+        </p>
+        
+        {/* Document list - horizontal scrolling like input attachments */}
+        {showContent && (
+          <div className="flex gap-2 overflow-x-auto scrollbar-none pb-2 animate-fadeIn">
+            {documents.map((doc, index) => (
+              <div key={index} className="flex-shrink-0 bg-gray-50 rounded-lg border border-gray-200 p-2">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-red-500" />
+                  <div className="min-w-0">
+                    <p className="text-xs font-medium text-gray-900 truncate">{doc.name}</p>
+                    <p className="text-xs text-gray-500">{doc.size}</p>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.accept = '.pdf,.xlsx,.doc,.docx';
+                      input.click();
+                    }}
+                    className="w-4 h-4 rounded-full hover:bg-gray-200 flex items-center justify-center transition-colors"
+                  >
+                    <X className="w-2 h-2 text-gray-400" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Confirm & Proceed button */}
+      {!isConfirmed && showContent && (
+        <div className="flex justify-start">
+          <button
+            onClick={() => {
+              setIsConfirmed(true);
+              onConfirm();
+            }}
+            className="w-48 py-3 px-6 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors"
+          >
+            Confirm & Proceed
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Permit Processing Animation Component
+const PermitProcessingAnimation = ({ onComplete }: { onComplete: () => void }) => {
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    { text: 'Submitting to Municipality of Beirut', icon: Building2 },
+    { text: 'Submitting to Ministry of Public Health', icon: FileCheck },
+    { text: 'Registering with Radiation Safety Authority', icon: Shield }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentStep(prev => {
+        if (prev < steps.length - 1) {
+          return prev + 1;
+        } else {
+          clearInterval(timer);
+          setTimeout(onComplete, 1000);
+          return prev;
+        }
+      });
+    }, 1500);
+
+    return () => clearInterval(timer);
+  }, [onComplete]);
+
+  return (
+    <div className="space-y-3 text-base text-gray-800" style={{lineHeight: '1.6em'}}>
+      {steps.map((step, idx) => {
+        const Icon = step.icon;
+        const isComplete = idx <= currentStep;
+        const isProcessing = idx === currentStep;
+        
+        return (
+          <div
+            key={idx}
+            className={`flex items-center gap-3 transition-all duration-500 ${
+              isComplete ? 'opacity-100' : 'opacity-30'
+            }`}
+          >
+            <div className={`relative transition-all duration-500`}>
+              {isProcessing ? (
+                <div className="w-5 h-5 border-2 border-gray-300 border-t-gray-900 rounded-full animate-spin" />
+              ) : isComplete ? (
+                <CheckCircle className="w-5 h-5 text-green-600" />
+              ) : (
+                <Circle className="w-5 h-5 text-gray-300" />
+              )}
+            </div>
+            <span>{step.text}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// Permits Complete Component
+const PermitsComplete = ({ currency }: { currency: 'LBP' | 'USD' }) => {
+  const today = new Date();
+  const appliedDate = today.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  
+  const permitDocs = [
+    { 
+      title: 'Municipal Use & Occupancy',
+      ministry: 'Municipality of Beirut',
+      ticketId: `MUN-${Math.floor(Math.random() * 9000) + 1000}`,
+      status: 'Under Review',
+      icon: Building2
+    },
+    { 
+      title: 'MoPH Clinical Readiness',
+      ministry: 'Ministry of Public Health',
+      ticketId: `MPH-${Math.floor(Math.random() * 9000) + 1000}`,
+      status: 'Under Review',
+      icon: FileCheck
+    },
+    { 
+      title: 'Radiation Safety',
+      ministry: 'Lebanese Atomic Energy',
+      ticketId: `RAD-${Math.floor(Math.random() * 9000) + 1000}`,
+      status: 'Under Review',
+      icon: Shield
+    }
+  ];
+
+  const [selectedApplication, setSelectedApplication] = useState<any>(null);
+
+  useEffect(() => {
+    // Pre-populate user message after a delay
+    const timer = setTimeout(() => {
+      const input = document.querySelector('textarea') as HTMLTextAreaElement;
+      if (input) {
+        input.value = 'How long does the inspection process usually take?';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="space-y-4">
+      <p className="text-base text-gray-800">Your permit applications have been received:</p>
+      
+          {/* Permit tickets - vertical elegant cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fadeIn">
+            {permitDocs.map((permit, idx) => {
+              const Icon = permit.icon;
+              return (
+                <div key={idx} className="bg-white rounded-xl border border-gray-200 hover:shadow-lg transition-shadow">
+                  <div className="p-5">
+                    {/* Icon and reference number */}
+                    <div className="flex items-start justify-between mb-4">
+                      <Icon className="w-8 h-8 text-gray-400" />
+                      <button className="flex items-center gap-1 px-2 py-1 hover:bg-gray-50 rounded-md transition-colors group">
+                        <span className="text-xs font-mono font-medium text-gray-700">{permit.ticketId}</span>
+                        <Copy className="w-3 h-3 text-gray-400 group-hover:text-gray-600" />
+                      </button>
+                    </div>
+                    
+                    {/* Title and ministry */}
+                    <h3 className="font-semibold text-gray-900 mb-1">{permit.title}</h3>
+                    <p className="text-xs text-gray-500 mb-4">{permit.ministry}</p>
+                    
+                    {/* Meta info */}
+                    <div className="space-y-2 pt-3 border-t border-gray-100">
+                      <div className="flex justify-between text-xs">
+                        <span className="text-gray-500">Applied on</span>
+                        <span className="text-gray-700">{appliedDate}</span>
+                      </div>
+                      <div className="flex justify-between text-xs">
+                        <span className="text-gray-500">Status</span>
+                        <span className="text-green-600 font-medium">Applied</span>
+                      </div>
+                    </div>
+                    
+                    {/* View Application button */}
+                    <button 
+                      onClick={() => setSelectedApplication(permit)}
+                      className="w-full mt-4 py-2 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-100 transition-colors"
+                    >
+                      View Application
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          <p className="text-base text-gray-800">
+            I'll notify you as soon as each authority schedules your inspection or needs additional information.
+          </p>
+      
+      {/* Application Modal */}
+      {selectedApplication && (
+        <ApplicationModal 
+          application={selectedApplication}
+          onClose={() => setSelectedApplication(null)}
+        />
+      )}
+    </div>
+  );
+};
+
+// Application Modal Component
+const ApplicationModal = ({ application, onClose }: { application: any; onClose: () => void }) => {
+  const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
+        {/* Modal Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900">Permit Application</h2>
+            <p className="text-sm text-gray-500 mt-1">Reference: {application.ticketId}</p>
+          </div>
+          <button 
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+        
+        {/* PDF-style Application Preview */}
+        <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 120px)' }}>
+          <div className="bg-white border border-gray-300 rounded-lg p-8 shadow-sm" style={{ minHeight: '800px' }}>
+            {/* Application Header */}
+            <div className="text-center mb-8 pb-6 border-b-2 border-gray-300">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">REPUBLIC OF LEBANON</h1>
+              <h2 className="text-lg font-semibold text-gray-800">{application.ministry}</h2>
+              <p className="text-sm text-gray-600 mt-2">Application for {application.title}</p>
+            </div>
+            
+            {/* Application Number and Date */}
+            <div className="flex justify-between mb-8">
+              <div>
+                <p className="text-xs text-gray-500">Application Number:</p>
+                <p className="font-mono font-medium">{application.ticketId}</p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-gray-500">Date Submitted:</p>
+                <p className="font-medium">{today}</p>
+              </div>
+            </div>
+            
+            {/* Applicant Information */}
+            <div className="mb-8">
+              <h3 className="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">APPLICANT INFORMATION</h3>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-gray-500">Full Name:</p>
+                  <p className="font-medium">Dr. Ahmed Hassan</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">National ID:</p>
+                  <p className="font-medium">LB-1234567890</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Contact Number:</p>
+                  <p className="font-medium">+961 71 234 567</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Email:</p>
+                  <p className="font-medium">dr.ahmed@dentalclinic.lb</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Business Information */}
+            <div className="mb-8">
+              <h3 className="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">BUSINESS INFORMATION</h3>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                  <p className="text-gray-500">Business Name:</p>
+                  <p className="font-medium">Hamra Dental Clinic</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Business Type:</p>
+                  <p className="font-medium">Medical Facility - Dental Clinic</p>
+                </div>
+                <div className="col-span-2">
+                  <p className="text-gray-500">Business Address:</p>
+                  <p className="font-medium">123 Hamra Street, Beirut, Lebanon</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Floor Area:</p>
+                  <p className="font-medium">180 m²</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Number of Treatment Rooms:</p>
+                  <p className="font-medium">4</p>
+                </div>
+              </div>
+            </div>
+            
+            {/* Attached Documents */}
+            <div className="mb-8">
+              <h3 className="font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-200">ATTACHED DOCUMENTS</h3>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Company Formation Certificate</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Property Lease Agreement</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Floor Plans and Layout</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Equipment List and Specifications</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <CheckCircle className="w-4 h-4 text-green-500" />
+                  <span>Professional Medical License</span>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Declaration */}
+            <div className="mt-12 p-4 bg-gray-50 rounded-lg text-sm">
+              <p className="text-gray-600 italic">
+                I hereby declare that all information provided in this application is true and correct to the best of my knowledge. 
+                I understand that providing false information may result in rejection of this application.
+              </p>
+              <div className="mt-4">
+                <p className="text-xs text-gray-500">Digitally signed by:</p>
+                <p className="font-medium">Dr. Ahmed Hassan</p>
+                <p className="text-xs text-gray-500">{today}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const [query, setQuery] = useState('');
@@ -48,9 +606,10 @@ const Dashboard = () => {
   
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
-  const [, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<'LBP' | 'USD'>('LBP');
-  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas' | 'thinking'; content: any}>>([
+  const [walletBalance] = useState(2750000); // Wallet balance in LBP
+  const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas' | 'thinking' | 'alert'; content: any}>>([
     {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -410,7 +969,7 @@ const Dashboard = () => {
       )}
 
       {/* Desktop Header for Scenario 1 only */}
-      {!isMobile && !isSplitScreen && currentScenario === 1 && (
+      {currentScenario === 1 && !isMobile && !isSplitScreen && (
         <>
           {/* Fade gradient overlay for desktop */}
           <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/90 to-transparent pointer-events-none"></div>
@@ -476,27 +1035,13 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            
-            {/* Login Button */}
-            <button 
-              onClick={() => {
-                setCurrentScenario(2);
-                setIsLoggedIn(true);
-                setChatMessages([
-                  {role: 'assistant', content: "Welcome back! How can I help you today with your business?"}
-                ]);
-              }}
-              className="px-6 py-2 bg-gray-100 text-black rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
-              Login
-            </button>
           </div>
         </div>
         </>
       )}
 
-      {/* Desktop Company Dropdown - Top Left for logged in scenarios 2-6 */}
-      {!isMobile && currentScenario >= 2 && (
+      {/* Desktop Company Dropdown - Top Left for scenario 3+ only - Hide in split screen */}
+      {!isMobile && !isSplitScreen && currentScenario >= 3 && (
         <div className="fixed top-6 left-72 z-50">
           <div className="flex items-center gap-3 bg-white/90 backdrop-blur-xl rounded-full border border-gray-200/50 px-4 py-3">
           <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
@@ -564,16 +1109,34 @@ const Dashboard = () => {
       </div>
       )}
 
-      {/* Floating RSS Feeds and Notifications - Desktop Only - Only for logged in scenarios */}
-      {!isMobile && currentScenario >= 2 && (
-      <div className="fixed top-6 right-6 z-40 flex items-center gap-4">
+      {/* Fade gradient overlay for desktop - Scenario 2+ - Hide in split screen */}
+      {!isMobile && !isSplitScreen && currentScenario >= 2 && (
+        <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/90 to-transparent pointer-events-none"></div>
+      )}
+      
+      {/* Floating RSS Feeds and Notifications - Desktop Only - Only for logged in scenarios - Hide in split screen */}
+      {!isMobile && !isSplitScreen && currentScenario >= 2 && (
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
+        {/* Wallet Balance - Only show for scenario 2 */}
+        {currentScenario === 2 && (
+          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full border border-gray-200/50 px-3 py-2">
+            <Wallet className="w-4 h-4 text-gray-600" />
+            <span className="text-sm font-medium text-gray-900">
+              {selectedCurrency === 'LBP' 
+                ? `${(walletBalance / 1000).toFixed(0)}K LBP` 
+                : `$${(walletBalance / 89500).toFixed(0)}`
+              }
+            </span>
+          </div>
+        )}
+        
         {/* Currency Switcher */}
-        <div className="flex items-center bg-white/90 backdrop-blur-xl rounded-full p-1 border border-gray-200/50">
+        <div className="flex items-center bg-gray-100 rounded-full p-1">
           <button 
             onClick={() => setSelectedCurrency('LBP')}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
               selectedCurrency === 'LBP' 
-                ? 'bg-gray-900 text-white' 
+                ? 'bg-white text-gray-900 shadow-sm' 
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -583,7 +1146,7 @@ const Dashboard = () => {
             onClick={() => setSelectedCurrency('USD')}
             className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
               selectedCurrency === 'USD' 
-                ? 'bg-gray-900 text-white' 
+                ? 'bg-white text-gray-900 shadow-sm' 
                 : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -591,11 +1154,26 @@ const Dashboard = () => {
           </button>
         </div>
         
-        {/* RSS Feeds */}
+        {/* Search Icon */}
+        <div className="relative group">
+          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
+            <Search className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
+          </button>
+        </div>
+        
+        {/* RSS Feeds / What's New */}
         <div className="relative group">
           <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
             <Zap className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+          </button>
+        </div>
+        
+        {/* Notifications */}
+        <div className="relative group">
+          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
+            <Bell className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
+            <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full"></div>
           </button>
           
           <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
@@ -610,52 +1188,6 @@ const Dashboard = () => {
             </div>
             <div className="max-h-80 overflow-y-auto p-4">
               <p className="text-sm text-gray-500">Updates coming soon...</p>
-            </div>
-          </div>
-        </div>
-        
-        {/* Search Icon */}
-        <div className="relative group">
-          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
-            <Search className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
-          </button>
-        </div>
-        
-        {/* Notifications */}
-        <div className="relative group">
-          <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
-            <Bell className="w-5 h-5 text-gray-400 group-hover:text-gray-900" />
-            <div className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
-          </button>
-          
-          <div className="absolute top-full right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
-            <div className="p-4 border-b border-gray-100">
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900">Notifications</h3>
-                <button className="text-xs text-gray-400 hover:text-gray-600 font-medium flex items-center gap-1">
-                  View all
-                  <ChevronRight className="w-3 h-3" />
-                </button>
-              </div>
-            </div>
-            <div className="max-h-80 overflow-y-auto">
-              {notifications.map((notification) => (
-                <button
-                  key={notification.id}
-                  className="w-full p-4 text-left hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <p className="text-sm text-gray-900 leading-relaxed mb-2">{notification.title}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs text-gray-400">DED</span>
-                        <span className="text-xs text-gray-500">{notification.time}</span>
-                      </div>
-                    </div>
-                    <ChevronRight className="w-4 h-4 text-gray-400 ml-2 flex-shrink-0 self-center" />
-                  </div>
-                </button>
-              ))}
             </div>
           </div>
         </div>
@@ -754,15 +1286,30 @@ const Dashboard = () => {
                 </div>
               </button>
               
-              {/* Scenario 2: Coming Soon */}
-              <div
-                className="w-full text-left p-3 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed"
+              {/* Scenario 2: Logged In State */}
+              <button
+                onClick={() => {
+                  // Set logged in first to prevent header flicker
+                  setIsLoggedIn(true);
+                  // Small delay to ensure clean transition
+                  setIsLoggedIn(true);
+                  setCurrentScenario(2);
+                  setChatMessages([
+                    {role: 'assistant', content: "Welcome back, Ahmed.\nYour clinic is nearly ready to launch."},
+                    {role: 'alert', content: '3 pending permits require your attention'}
+                  ]);
+                }}
+                className={`w-full text-left p-3 rounded-lg transition-all ${
+                  currentScenario === 2 
+                    ? 'bg-blue-50 ring-2 ring-blue-500' 
+                    : 'bg-white hover:bg-gray-50 border border-gray-200'
+                }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500 truncate flex-1">Scenario 2</span>
-                  <span className="text-xs text-gray-400 ml-2">Coming soon!</span>
+                  <span className="text-sm text-gray-700 truncate flex-1">Scenario 2: Logged In</span>
+                  {currentScenario === 2 && <span className="text-xs text-blue-600 ml-2">Active</span>}
                 </div>
-              </div>
+              </button>
               
               {/* Scenario 3: Tourism & Hotels - Coming Soon */}
               <div
@@ -794,7 +1341,7 @@ const Dashboard = () => {
 
       {/* Main Content - ChatGPT Style Center Stage or Split Screen */}
       <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar && !isSplitScreen ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
-        <div className={`${(currentScenario === 1 || currentScenario === 2) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col overflow-hidden' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'}`}>
+        <div className={`${(currentScenario === 1 || currentScenario === 2) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'} h-full`}>
           
           {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
@@ -815,23 +1362,28 @@ const Dashboard = () => {
                 <div className="flex-1 flex flex-col justify-end">
                   <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
                     <div className="space-y-6 pt-20 pb-10">
-                {chatMessages.filter((_, index) => index > 0).map((message, index) => (
+                {chatMessages.filter((msg, index) => {
+                  // For scenario 2, hide alert when canvas is open
+                  if (currentScenario === 2 && msg.role === 'alert' && chatMessages.some(m => m.role === 'canvas')) return false;
+                  return true;
+                }).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
                       <div className="flex justify-end">
                         <div className="bg-gray-100 rounded-2xl px-4 py-2.5 max-w-[85%]">
-                          <p className={`${isMobile ? 'text-base' : 'text-base'} text-gray-900`}>
+                          <p className={`${isMobile ? 'text-base' : 'text-base'} text-gray-900 whitespace-pre-line`}>
                             {message.content}
                           </p>
                         </div>
                       </div>
-                    ) : message.role === 'thinking' ? (
-                      // Thinking animation
+                    ) : message.role === 'thinking' || message.content === 'typing' ? (
+                      // Typing animation with blinking cursor
                       <div className="py-2">
-                        <p className="text-base animate-shimmer">
-                          {message.content}
-                        </p>
+                        <span className="inline-block w-0.5 h-5 bg-gray-600 animate-pulse"></span>
                       </div>
+                    ) : message.role === 'alert' ? (
+                      // Alert message for permits - positioned above input
+                      null  // Don't render inline, will render absolutely positioned
                     ) : message.role === 'canvas' ? (
                       // Canvas Container - fullscreen on mobile
                       isCanvasFullscreen ? (
@@ -840,7 +1392,9 @@ const Dashboard = () => {
                           <div className="min-h-screen">
                             {/* Mobile Canvas Header */}
                             <div className="sticky top-0 z-10 flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
-                              <div className="text-sm font-medium text-gray-700">Private Dental Clinic in Hamra District</div>
+                              <div className="text-sm font-medium text-gray-700">
+                                {message.content === 'permits' ? 'Pending Operational Permits' : 'Private Dental Clinic in Hamra District'}
+                              </div>
                               <button 
                                 className="p-1.5 hover:bg-gray-200 rounded transition-colors"
                                 onClick={() => {
@@ -863,8 +1417,8 @@ const Dashboard = () => {
                             <div className="flex items-center gap-2">
                               <FileText className="w-5 h-5 text-gray-600" />
                               <div>
-                                <p className="text-sm font-medium text-gray-900">Healthcare Investment Analysis</p>
-                                <p className="text-xs text-gray-500">Private Dental Clinic - Hamra District</p>
+                                <p className="text-sm font-medium text-gray-900">{message.content === 'permits' ? 'Operational Permits' : 'Healthcare Investment Analysis'}</p>
+                                <p className="text-xs text-gray-500">{message.content === 'permits' ? 'Pending Permits - Ahmed\'s Clinic' : 'Private Dental Clinic - Hamra District'}</p>
                               </div>
                             </div>
                           </button>
@@ -875,7 +1429,9 @@ const Dashboard = () => {
                         <div className="border border-gray-200 rounded-lg overflow-hidden bg-white">
                           {/* Canvas Header */}
                           <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
-                            <div className="text-sm font-medium text-gray-700">Private Dental Clinic in Hamra District</div>
+                            <div className="text-sm font-medium text-gray-700">
+                              {message.content === 'permits' ? 'Pending Operational Permits' : 'Private Dental Clinic in Hamra District'}
+                            </div>
                             <div className="flex items-center gap-2">
                               <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                                 <Download className="w-4 h-4 text-gray-600" />
@@ -889,7 +1445,24 @@ const Dashboard = () => {
                             </div>
                           </div>
                           <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
-                            <DentalClinicReport variant="desktop" currency={selectedCurrency} />
+                            {message.content === 'permits' ? (
+                              <PermitsCanvas 
+                                variant="desktop" 
+                                currency={selectedCurrency}
+                                onConfirmDocuments={() => {
+                                  // Show user confirmation and processing
+                                  const paymentAmount = selectedCurrency === 'USD' ? '$60' : '5,370,000 LBP';
+                                  setChatMessages([
+                                    {role: 'user', content: `Apply for 3 permits • ${paymentAmount}`},
+                                    {role: 'assistant', content: `Payment processed successfully.`},
+                                    {role: 'assistant', content: 'processing_permits'}
+                                  ]);
+                                  setIsSplitScreen(false);
+                                }}
+                              />
+                            ) : (
+                              <DentalClinicReport variant="desktop" currency={selectedCurrency} />
+                            )}
                           </div>
                         </div>
                         
@@ -904,15 +1477,111 @@ const Dashboard = () => {
                         </div>
                       </div>
                       )
+                    ) : message.content === 'permit_selection' ? (
+                      // Permit selection with cards
+                      <PermitSelection
+                        currency={selectedCurrency}
+                        onConfirm={(selectedIds) => {
+                          // Show payment request then process
+                          const permitNames = [
+                            'Municipal Use & Occupancy',
+                            'MoPH Clinical Readiness', 
+                            'Radiation Safety'
+                          ].filter((_, idx) => selectedIds.includes(idx + 1));
+                          
+                          const sum = selectedIds.length * 20;
+                          const paymentAmount = selectedCurrency === 'USD' ? `$${sum}` : `${(sum * 89500).toLocaleString()} LBP`;
+                          
+                          setChatMessages(prev => {
+                            // Filter out any existing processing or completed permits to prevent duplicates
+                            const filtered = prev.filter(msg => 
+                              msg.content !== 'permit_selection' && 
+                              msg.content !== 'processing_permits' && 
+                              msg.content !== 'permits_complete'
+                            );
+                            return [
+                              ...filtered,
+                              {role: 'user', content: `Please proceed with payment of ${paymentAmount} for:\n\n${permitNames.map(p => `• ${p}`).join('\n')}`},
+                              {role: 'assistant', content: 'payment_confirmed'}
+                            ];
+                          });
+                          
+                          // After showing payment confirmation, show processing
+                          setTimeout(() => {
+                            setChatMessages(prev => [
+                              ...prev,
+                              {role: 'assistant', content: 'processing_permits'}
+                            ]);
+                          }, 2000);
+                        }}
+                      />
+                    ) : message.content === 'document_verification' ? (
+                      // Document verification in chat
+                      <DocumentVerification
+                        onConfirm={() => {
+                          // Show attachments uploaded, then permit selection
+                          setChatMessages(prev => [
+                            ...prev.filter(msg => msg.content !== 'document_verification'),
+                            {role: 'assistant', content: 'attachments_uploaded'},
+                            {role: 'assistant', content: 'permit_selection'}
+                          ]);
+                        }}
+                      />
+                    ) : message.content === 'attachments_uploaded' ? (
+                      // Show attachments uploaded bubble
+                      <AttachmentsUploaded count={5} />
+                    ) : message.content === 'payment_confirmed' ? (
+                      // Show payment confirmation only
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <p className="text-base text-gray-800">Your payment has been received successfully</p>
+                        <button className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors group">
+                          <span className="text-xs font-medium text-gray-900">PMT-{Date.now().toString().slice(-8)}</span>
+                          <Copy className="w-3 h-3 text-gray-400 group-hover:text-gray-600" />
+                        </button>
+                      </div>
+                    ) : message.content === 'processing_permits' ? (
+                      // Processing permits animation
+                      <PermitProcessingAnimation 
+                        onComplete={() => {
+                          // Remove processing and show completed permits
+                          setChatMessages(prev => {
+                            // Check if permits_complete already exists to prevent duplicates
+                            const hasCompleted = prev.some(msg => msg.content === 'permits_complete');
+                            if (hasCompleted) return prev;
+                            
+                            return [
+                              ...prev.filter(msg => msg.content !== 'processing_permits'),
+                              {role: 'assistant', content: 'permits_complete'}
+                            ];
+                          });
+                          // Pre-populate a user message after 3 seconds
+                          setTimeout(() => {
+                            setQuery('How long does the inspection process usually take?');
+                          }, 3000);
+                        }}
+                      />
+                    ) : message.content === 'permits_complete' ? (
+                      // Show approved permits
+                      <PermitsComplete currency={selectedCurrency} />
                     ) : (
                       <div>
-                        <p className={`${isMobile ? 'text-5xl' : 'text-4xl'} font-light text-gray-900`} style={{lineHeight: isMobile ? '1.1em' : '1.2em'}}>
-                          {message.content.split('\n').map((line: string, i: number) => (
-                            <span key={i}>
-                              {line}
-                              {i < message.content.split('\n').length - 1 && <br />}
-                            </span>
-                          ))}
+                        {/* Use body text for short messages, large text for initial welcome */}
+                        <p className={`${
+                          message.content.length < 100 && index > 0 
+                            ? 'text-base text-gray-800' 
+                            : `${isMobile ? 'text-4xl' : 'text-4xl'} font-light text-gray-900`
+                        }`} style={{lineHeight: message.content.length < 100 && index > 0 ? '1.6em' : isMobile ? '1.15em' : '1.2em'}}>
+                          {(() => {
+                            // Keep full message in all views
+                            const content = message.content;
+                            
+                            return content.split('\n').map((line: string, i: number) => (
+                              <span key={i}>
+                                {line}
+                                {i < content.split('\n').length - 1 && <br />}
+                              </span>
+                            ));
+                          })()}
                         </p>
                         
                         {/* Thumbs up/down for assistant messages - not on first message */}
@@ -978,23 +1647,10 @@ const Dashboard = () => {
 
           {/* Bottom Section - Welcome, Suggestions, Input */}
           <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1 || currentScenario === 2) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
-            <div className="max-w-3xl mx-auto px-4">
-              {/* Welcome Message */}
-              {chatMessages.length === 1 && (
-                <div className="mb-10 text-center">
-                  <p className={`${isMobile ? 'text-5xl' : 'text-4xl'} font-light text-gray-900`} style={{lineHeight: '1.2em'}}>
-                    {chatMessages[0].content.split('\n').map((line: string, i: number) => (
-                      <span key={i}>
-                        {line}
-                        {i < chatMessages[0].content.split('\n').length - 1 && <br />}
-                      </span>
-                    ))}
-                  </p>
-                </div>
-              )}
+            <div className={`max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
               
-              {/* Suggestion Cards */}
-              {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && (
+              {/* Suggestion Cards - Only for Scenario 1 */}
+              {currentScenario === 1 && !chatMessages.some(msg => msg.role === 'user') && (
                 <div className="mb-10">
                   <div className="flex items-center gap-2">
                     {/* Left Arrow - Desktop only */}
@@ -1049,6 +1705,95 @@ const Dashboard = () => {
                       </button>
                     )}
                   </div>
+                </div>
+              )}
+              
+              {/* Permits Alert - Above input with same spacing as suggestions */}
+              {currentScenario === 2 && chatMessages.some(msg => msg.role === 'alert') && !chatMessages.some(msg => msg.role === 'canvas') && (
+                <div className="mb-10">
+                    <div className="border border-gray-200 rounded-lg p-3 bg-white hover:border-gray-300 transition-all duration-300 ease-in-out transform shadow-sm">
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          {/* Purple pending icon */}
+                          <div className="w-8 h-8 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
+                            <FileCheck className="w-4 h-4 text-purple-600" />
+                          </div>
+                          
+                          <div className="flex-1">
+                            <p className="text-sm font-medium text-gray-900">3 pending permits require your attention</p>
+                            
+                            {/* Grey permit pills */}
+                            <div className="flex flex-wrap gap-1.5 mt-1.5">
+                              <button
+                                onClick={() => {
+                                  // Start with user request and document verification
+                                  setChatMessages([
+                                    {role: 'user', content: 'I would like to apply for:\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                                    {role: 'assistant', content: 'document_verification'}
+                                  ]);
+                                }}
+                                className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs hover:bg-gray-200 transition-colors"
+                              >
+                                Municipal Use
+                              </button>
+                              
+                              <button
+                                onClick={() => {
+                                  // Start with user request and document verification
+                                  setChatMessages([
+                                    {role: 'user', content: 'I would like to apply for:\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                                    {role: 'assistant', content: 'document_verification'}
+                                  ]);
+                                }}
+                                className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs hover:bg-gray-200 transition-colors"
+                              >
+                                MoPH Clinical
+                              </button>
+                              
+                              <button
+                                onClick={() => {
+                                  // Start with user request and document verification
+                                  setChatMessages([
+                                    {role: 'user', content: 'I would like to apply for:\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                                    {role: 'assistant', content: 'document_verification'}
+                                  ]);
+                                }}
+                                className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs hover:bg-gray-200 transition-colors"
+                              >
+                                Radiation Safety
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Apply button matching permits canvas style */}
+                        <button
+                          onClick={() => {
+                            // Start with user request and document verification
+                            setChatMessages([
+                              {role: 'user', content: 'I would like to apply for:\n\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                              {role: 'assistant', content: 'typing'},
+                            ]);
+                            // Show document verification after typing
+                            setTimeout(() => {
+                              setChatMessages([
+                                {role: 'user', content: 'I would like to apply for:\n\n1. Municipal Use & Occupancy\n2. MoPH Clinical Readiness\n3. Radiation Safety'},
+                                {role: 'assistant', content: 'document_verification'}
+                              ]);
+                            }, 1500);
+                          }}
+                          className="w-36 py-2.5 px-5 bg-gray-900 text-white rounded-full text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-between"
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <Wallet className="w-3.5 h-3.5" />
+                            Apply
+                          </span>
+                          <span className="font-semibold text-xs">
+                            {selectedCurrency === 'LBP' ? '5.4M' : '$60'}
+                          </span>
+                        </button>
+                      </div>
+                    </div>
                 </div>
               )}
               
@@ -1231,6 +1976,33 @@ const Dashboard = () => {
                                 setIsSplitScreen(true);
                               }
                             }, 2000);
+                          } else if (currentScenario === 2 && query.trim()) {
+                            // Handle scenario 2 messages
+                            const userMessage = query;
+                            setQuery('');
+                            
+                            // Check if this is the inspection question
+                            if (userMessage.toLowerCase().includes('inspection') && userMessage.toLowerCase().includes('how long')) {
+                              setChatMessages(prev => [
+                                ...prev,
+                                {role: 'user', content: userMessage},
+                                {role: 'assistant', content: 'typing'}
+                              ]);
+                              
+                              // After typing animation, show response
+                              setTimeout(() => {
+                                setChatMessages(prev => [
+                                  ...prev.filter(msg => msg.content !== 'typing'),
+                                  {role: 'assistant', content: 'Based on current processing times:\n\n• Municipal inspections typically take 2-3 weeks\n• MoPH clinical readiness review: 3-4 weeks\n• Radiation safety verification: 1-2 weeks\n\nAll inspections can run in parallel, so you should expect the full process to complete within 3-4 weeks.'}
+                                ]);
+                              }, 1500);
+                            } else {
+                              // Generic response for other messages
+                              setChatMessages(prev => [
+                                ...prev,
+                                {role: 'user', content: userMessage}
+                              ]);
+                            }
                           }
                         }}
                         className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center transition-all`}
@@ -1549,7 +2321,7 @@ const Dashboard = () => {
         </div>
         
         {/* Right Panel - Canvas (Split Screen) */}
-        {isSplitScreen && !isMobile && currentScenario === 1 && (() => {
+        {isSplitScreen && !isMobile && (currentScenario === 1 || currentScenario === 2) && (() => {
           const canvasMessage = chatMessages.find(msg => msg.role === 'canvas');
           if (!canvasMessage) return null;
           
@@ -1560,7 +2332,9 @@ const Dashboard = () => {
                   <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
                     {/* Canvas Header */}
                     <div className="flex items-center justify-between p-3 border-b border-gray-200 bg-gray-50">
-                      <div className="text-sm font-medium text-gray-700">Private Dental Clinic in Hamra District</div>
+                      <div className="text-sm font-medium text-gray-700">
+                        {canvasMessage.content === 'permits' ? 'Pending Operational Permits' : 'Private Dental Clinic in Hamra District'}
+                      </div>
                       <div className="flex items-center gap-2">
                         <button className="p-1.5 hover:bg-gray-200 rounded transition-colors">
                           <Download className="w-4 h-4 text-gray-600" />
@@ -1574,7 +2348,24 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
-                      <DentalClinicReport variant="split-screen" currency={selectedCurrency} />
+                      {canvasMessage.content === 'permits' ? (
+                        <PermitsCanvas 
+                          variant="split-screen" 
+                          currency={selectedCurrency}
+                          onConfirmDocuments={() => {
+                            // Show user confirmation and processing  
+                            const paymentAmount = selectedCurrency === 'USD' ? '$60' : '5,370,000 LBP';
+                            setChatMessages([
+                              {role: 'user', content: `Apply for 3 permits • ${paymentAmount}`},
+                              {role: 'assistant', content: `Payment processed successfully.`},
+                              {role: 'assistant', content: 'processing_permits'}
+                            ]);
+                            setIsSplitScreen(false);
+                          }}
+                        />
+                      ) : (
+                        <DentalClinicReport variant="split-screen" currency={selectedCurrency} />
+                      )}
                     </div>
                   </div>
                 </div>
