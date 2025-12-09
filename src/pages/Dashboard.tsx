@@ -2282,151 +2282,191 @@ const Dashboard = () => {
             </div>
           )}
 
-          {/* Grid Menu Dashboard - Bento Grid */}
+          {/* Grid Menu Dashboard - Modern Right Sidebar */}
           {isMobileMenuOpen && currentScenario === 2 && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+            <>
+              {/* Backdrop */}
+              <div 
+                className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
+                onClick={() => setIsMobileMenuOpen(false)}
+              />
+              
+              {/* Right Sidebar */}
+              <div className="fixed right-0 top-0 h-full w-[420px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-out">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                  <h2 className="text-xl font-semibold text-gray-900">Dashboard</h2>
+                <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+                  <h2 className="text-lg font-semibold text-gray-900">Dashboard</h2>
                   <button 
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors"
                   >
-                    <X className="w-5 h-5 text-gray-600" />
+                    <X className="w-4 h-4 text-gray-500" />
                   </button>
                 </div>
                 
-                {/* Bento Grid */}
-                <div className="p-6 overflow-y-auto" style={{ maxHeight: 'calc(90vh - 80px)' }}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {/* Content */}
+                <div className="overflow-y-auto h-full pb-20">
+                  <div className="p-6 space-y-4">
                     
-                    {/* Wallet Balance - Large Card */}
-                    <div className="md:col-span-2 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 text-white">
-                      <div className="flex items-start justify-between mb-4">
+                    {/* Wallet Balance - Premium Card */}
+                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-5 border border-blue-100">
+                      <div className="flex items-center justify-between mb-3">
                         <div>
-                          <p className="text-sm text-gray-400 mb-1">Wallet Balance</p>
-                          <p className="text-3xl font-light">
+                          <p className="text-xs text-gray-600 font-medium mb-1">Wallet Balance</p>
+                          <p className="text-2xl font-semibold text-gray-900">
                             {selectedCurrency === 'USD' 
                               ? `$${(walletBalance / 89500).toFixed(2)}`
                               : `${walletBalance.toLocaleString()} LBP`
                             }
                           </p>
                         </div>
-                        <Wallet className="w-8 h-8 text-gray-400" />
+                        <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                          <Wallet className="w-6 h-6 text-blue-600" />
+                        </div>
                       </div>
-                      <button className="mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-sm font-medium transition-colors">
+                      <button className="w-full mt-3 py-2.5 bg-white hover:bg-gray-50 rounded-xl text-sm font-medium text-gray-700 shadow-sm transition-all">
                         Top Up Balance
                       </button>
                     </div>
                     
-                    {/* Business Stage */}
-                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">Business Stage</p>
-                          <p className="text-lg font-semibold text-gray-900">Setup Phase</p>
-                        </div>
-                        <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-bold text-orange-600">75%</span>
-                        </div>
+                    {/* Business Progress */}
+                    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold text-gray-900">Business Setup</h3>
+                        <span className="px-2.5 py-1 bg-orange-50 text-orange-600 rounded-full text-xs font-semibold">
+                          75%
+                        </span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div className="bg-orange-500 h-2 rounded-full" style={{ width: '75%' }}></div>
+                      <div className="w-full bg-gray-100 rounded-full h-2 mb-3">
+                        <div className="bg-gradient-to-r from-orange-400 to-orange-500 h-2 rounded-full transition-all" style={{ width: '75%' }}></div>
                       </div>
+                      <p className="text-xs text-gray-500">3 steps remaining to launch</p>
                     </div>
                     
-                    {/* Quick Stats */}
-                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Quick Stats</p>
-                      <div className="space-y-3">
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Permits</span>
-                          <span className="text-sm font-medium text-gray-900">3 Pending</span>
+                    {/* Quick Actions Grid */}
+                    <div className="grid grid-cols-3 gap-3">
+                      <button className="bg-white rounded-xl p-4 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all group">
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                            <FileText className="w-5 h-5 text-blue-600" />
+                          </div>
+                          <span className="text-xs text-gray-600 font-medium">Permits</span>
+                          <span className="text-xs font-bold text-gray-900">3</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Documents</span>
-                          <span className="text-sm font-medium text-gray-900">12 Uploaded</span>
+                      </button>
+                      
+                      <button className="bg-white rounded-xl p-4 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all group">
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center group-hover:bg-green-100 transition-colors">
+                            <CheckCircle className="w-5 h-5 text-green-600" />
+                          </div>
+                          <span className="text-xs text-gray-600 font-medium">Tasks</span>
+                          <span className="text-xs font-bold text-gray-900">5</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-sm text-gray-600">Tasks</span>
-                          <span className="text-sm font-medium text-gray-900">5 Active</span>
+                      </button>
+                      
+                      <button className="bg-white rounded-xl p-4 border border-gray-100 hover:border-gray-200 hover:shadow-sm transition-all group">
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center group-hover:bg-purple-100 transition-colors">
+                            <Bell className="w-5 h-5 text-purple-600" />
+                          </div>
+                          <span className="text-xs text-gray-600 font-medium">Alerts</span>
+                          <span className="text-xs font-bold text-gray-900">2</span>
                         </div>
-                      </div>
+                      </button>
                     </div>
                     
-                    {/* Upcoming Actions - Wide Card */}
-                    <div className="md:col-span-2 bg-white border border-gray-200 rounded-2xl p-6">
+                    {/* Upcoming Actions */}
+                    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
                       <div className="flex items-center justify-between mb-4">
-                        <p className="text-xs text-gray-500 uppercase tracking-wide">Upcoming Actions</p>
-                        <button className="text-xs text-blue-600 hover:text-blue-800 font-medium">View all</button>
+                        <h3 className="text-sm font-semibold text-gray-900">Upcoming Actions</h3>
+                        <button className="text-xs text-blue-600 hover:text-blue-700 font-semibold">
+                          View all →
+                        </button>
                       </div>
                       <div className="space-y-3">
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-900">Municipality inspection</p>
-                            <p className="text-xs text-gray-500">Dec 15, 2:00 PM</p>
+                        <button className="w-full text-left p-3 rounded-xl hover:bg-gray-50 transition-colors group">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-red-50 rounded-lg flex items-center justify-center mt-0.5">
+                              <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">Municipality inspection</p>
+                              <p className="text-xs text-gray-500 mt-0.5">Dec 15, 2:00 PM</p>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 mt-1" />
                           </div>
-                          <ChevronRight className="w-4 h-4 text-gray-400" />
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-900">Submit sterilization protocols</p>
-                            <p className="text-xs text-gray-500">Due in 3 days</p>
+                        </button>
+                        
+                        <button className="w-full text-left p-3 rounded-xl hover:bg-gray-50 transition-colors group">
+                          <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 bg-orange-50 rounded-lg flex items-center justify-center mt-0.5">
+                              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-medium text-gray-900">Submit protocols</p>
+                              <p className="text-xs text-gray-500 mt-0.5">Due in 3 days</p>
+                            </div>
+                            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-gray-600 mt-1" />
                           </div>
-                          <ChevronRight className="w-4 h-4 text-gray-400" />
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                          <div className="flex-1">
-                            <p className="text-sm text-gray-900">Q4 tax filing</p>
-                            <p className="text-xs text-gray-500">Jan 20, 2025</p>
-                          </div>
-                          <ChevronRight className="w-4 h-4 text-gray-400" />
-                        </div>
+                        </button>
                       </div>
                     </div>
                     
-                    {/* Recent Transactions */}
-                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Recent Payments</p>
+                    {/* Recent Activity */}
+                    <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-4">Recent Activity</h3>
                       <div className="space-y-3">
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">Permit Fees</p>
-                          <p className="text-xs text-gray-500">$60.00 • Today</p>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-green-50 rounded-lg flex items-center justify-center">
+                            <CheckCircle className="w-4 h-4 text-green-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-700">Permit fees paid</p>
+                            <p className="text-xs text-gray-500">$60.00 • 2 hours ago</p>
+                          </div>
                         </div>
-                        <div>
-                          <p className="text-sm font-medium text-gray-900">Document Processing</p>
-                          <p className="text-xs text-gray-500">$25.00 • Dec 8</p>
+                        
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
+                            <FileText className="w-4 h-4 text-blue-600" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-sm text-gray-700">Documents uploaded</p>
+                            <p className="text-xs text-gray-500">12 files • Today</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                     
-                    {/* Company Info */}
-                    <div className="bg-white border border-gray-200 rounded-2xl p-6">
-                      <p className="text-xs text-gray-500 uppercase tracking-wide mb-3">Business Info</p>
-                      <div className="space-y-2">
-                        <p className="text-sm font-medium text-gray-900">Hamra Dental Clinic</p>
-                        <p className="text-xs text-gray-500">Registration: In Progress</p>
-                        <p className="text-xs text-gray-500">Type: Medical Facility</p>
-                        <p className="text-xs text-gray-500">Location: Beirut</p>
+                    {/* Company Info Card */}
+                    <div className="bg-gradient-to-r from-gray-50 to-gray-100 rounded-2xl p-5 border border-gray-200">
+                      <div className="flex items-start gap-3">
+                        <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
+                          <Building2 className="w-5 h-5 text-gray-700" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-sm font-semibold text-gray-900">Hamra Dental Clinic</h3>
+                          <p className="text-xs text-gray-500 mt-1">Medical Facility • Beirut</p>
+                          <div className="flex items-center gap-2 mt-2">
+                            <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-md text-xs font-medium">
+                              Registration Pending
+                            </span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     
-                    {/* Help Center */}
-                    <div className="md:col-span-2 lg:col-span-1 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-2xl p-6">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <p className="text-sm font-semibold text-gray-900">Need Help?</p>
-                          <p className="text-xs text-gray-600 mt-1">Get support from our team</p>
-                        </div>
-                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs font-bold">?</span>
+                    {/* Help Section */}
+                    <div className="bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl p-5 text-white">
+                      <div className="flex items-center justify-between mb-3">
+                        <h3 className="text-sm font-semibold">Need assistance?</h3>
+                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                          <span className="text-xs font-bold">?</span>
                         </div>
                       </div>
-                      <button className="w-full mt-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
+                      <p className="text-xs text-blue-100 mb-3">Our team is ready to help you navigate the setup process.</p>
+                      <button className="w-full py-2.5 bg-white text-blue-600 rounded-xl text-sm font-semibold hover:bg-blue-50 transition-colors">
                         Contact Support
                       </button>
                     </div>
@@ -2434,7 +2474,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
 
           {/* Video Chat Modal */}
