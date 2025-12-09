@@ -45,14 +45,6 @@ const useScrollAnimation = () => {
 };
 
 const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desktop', currency = 'LBP' }) => {
-  // Currency formatting
-  const formatCurrency = (amount: number) => {
-    if (currency === 'LBP') {
-      return `L£${(amount * 89500).toLocaleString()}`; // Using approximate rate
-    }
-    return `$${amount.toLocaleString()}`;
-  };
-  
   // Determine styling based on variant
   const isMobile = variant === 'mobile';
   const isSplitScreen = variant === 'split-screen';

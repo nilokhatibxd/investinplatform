@@ -48,7 +48,7 @@ const Dashboard = () => {
   
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [, setIsLoggedIn] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<'LBP' | 'USD'>('LBP');
   const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas' | 'thinking'; content: any}>>([
     {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
