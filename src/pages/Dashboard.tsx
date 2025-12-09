@@ -799,7 +799,8 @@ const Dashboard = () => {
               {/* Chat Messages - ChatGPT Style */}
               <div className="flex-1 overflow-y-auto scrollbar-none flex flex-col">
                 <div className="flex-1 flex flex-col justify-end">
-                  <div className="space-y-6 pt-20 pb-10">
+                  <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
+                    <div className="space-y-6 pt-20 pb-10">
                 {chatMessages.filter((message, index) => index > 0).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
@@ -950,6 +951,7 @@ const Dashboard = () => {
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
+                    </div>
                   </div>
                 </div>
               </div>
