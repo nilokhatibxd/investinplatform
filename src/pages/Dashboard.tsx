@@ -845,28 +845,56 @@ const Dashboard = () => {
                           </div>
                           <div className="p-6">
                           <div className="space-y-4">
-                            {/* Widget 1 - Location Intelligence */}
-                            <div className="h-48 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-4">
-                              <div className="flex items-center justify-between mb-2">
-                                <p className="text-sm font-semibold text-gray-800">📍 Hamra District Analysis</p>
-                                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">HIGH OPPORTUNITY</span>
+                            {/* Location Map Section */}
+                            <div className="bg-gray-900 rounded-xl overflow-hidden h-64 relative">
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                              <div className="absolute inset-0 flex items-center justify-center">
+                                {/* Map placeholder - would be interactive map */}
+                                <div className="text-center z-20">
+                                  <h2 className="text-3xl font-light text-white mb-2">Hamra District</h2>
+                                  <p className="text-sm text-gray-300">Central Beirut</p>
+                                </div>
                               </div>
-                              <div className="grid grid-cols-2 gap-2 mt-3">
-                                <div className="bg-white/70 rounded p-2">
-                                  <p className="text-xs text-gray-600">Population</p>
-                                  <p className="text-sm font-medium">32,000</p>
+                              <div className="absolute top-4 right-4 z-20">
+                                <span className="px-3 py-1.5 bg-green-500 text-white text-xs font-medium rounded">HIGH OPPORTUNITY</span>
+                              </div>
+                            </div>
+
+                            {/* Key Metrics - Large Cards */}
+                            <div className="grid grid-cols-2 gap-4 mt-6">
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
+                                <p className="text-5xl font-light text-gray-900">32K</p>
+                                <p className="text-sm font-medium text-gray-700 mt-2">Population</p>
+                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Growing 12% annually, highest density in Beirut</p>
+                                <div className="mt-4 pt-3 border-t border-gray-100">
+                                  <p className="text-xs text-gray-400">Municipality Census 2024</p>
                                 </div>
-                                <div className="bg-white/70 rounded p-2">
-                                  <p className="text-xs text-gray-600">Dentist Density</p>
-                                  <p className="text-sm font-medium">20.3/10k</p>
+                              </div>
+                              
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
+                                <p className="text-5xl font-light text-gray-900">30</p>
+                                <p className="text-sm font-medium text-gray-700 mt-2">Operational Clinics</p>
+                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Only 2 pediatric specialists identified</p>
+                                <div className="mt-4 pt-3 border-t border-gray-100">
+                                  <p className="text-xs text-gray-400">Order of Dentists Registry</p>
                                 </div>
-                                <div className="bg-white/70 rounded p-2">
-                                  <p className="text-xs text-gray-600">Service Gap</p>
-                                  <p className="text-sm font-medium text-orange-600">45%</p>
+                              </div>
+                              
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
+                                <p className="text-5xl font-light text-orange-600">45%</p>
+                                <p className="text-sm font-medium text-gray-700 mt-2">Market Gap</p>
+                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">3+ week wait times despite high clinic density</p>
+                                <div className="mt-4 pt-3 border-t border-gray-100">
+                                  <p className="text-xs text-gray-400">NSSF Claims Analysis</p>
                                 </div>
-                                <div className="bg-white/70 rounded p-2">
-                                  <p className="text-xs text-gray-600">NSSF Coverage</p>
-                                  <p className="text-sm font-medium">55%</p>
+                              </div>
+                              
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
+                                <p className="text-5xl font-light text-green-600">55%</p>
+                                <p className="text-sm font-medium text-gray-700 mt-2">Insurance Holders</p>
+                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">17,600 NSSF members with dental coverage</p>
+                                <div className="mt-4 pt-3 border-t border-gray-100">
+                                  <p className="text-xs text-gray-400">NSSF Database</p>
                                 </div>
                               </div>
                             </div>
