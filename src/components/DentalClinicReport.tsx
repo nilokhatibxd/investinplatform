@@ -22,8 +22,8 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
   const containerClass = isMobile ? 'max-w-none' : 'max-w-3xl mx-auto';
   const headerTextSize = isMobile ? 'text-lg' : 'text-2xl';
   const sectionSpacing = isMobile ? 'mb-6' : 'mb-8';
-  const cardPadding = isMobile ? 'p-2' : 'p-3';
-  const ctaPadding = isMobile ? 'p-3' : 'p-4';
+  const cardPadding = isMobile ? 'p-4' : variant === 'split-screen' ? 'p-5' : 'p-6';
+  const ctaPadding = isMobile ? 'p-4' : variant === 'split-screen' ? 'p-5' : 'p-6';
   const statTextSize = isMobile ? 'text-lg' : 'text-2xl';
   const mapHeight = isMobile ? 'h-48' : isSplitScreen ? 'h-48' : 'h-64';
 
@@ -159,26 +159,6 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
           </div>
         </div>
         <p className="text-xs text-gray-400 mt-3">{isMobile ? 'Source: MoPH Surveillance Unit, Q3 2024' : 'Source: MoPH Epidemiological Surveillance Unit, Q3 2024'}</p>
-      </div>
-
-      {/* Patient Flow Analysis CTA */}
-      <div className={`bg-blue-50 border border-blue-200 rounded-lg ${ctaPadding} ${sectionSpacing}`}>
-        <div className={`flex items-start justify-between gap-${isMobile ? '2' : '3'}`}>
-          <div className={`flex items-start gap-${isMobile ? '2' : '3'} flex-1`}>
-            <div className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0`}>
-              <FileText className={`${isMobile ? 'w-3 h-3' : 'w-4 h-4'} text-blue-600`} />
-            </div>
-            <div>
-              <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-gray-900 mb-1`}>Request Patient Flow Analysis</p>
-              <p className="text-xs text-gray-600">
-                {isMobile ? 'Government-exclusive: Get hourly patterns and referral networks.' : 'Government-exclusive service: Get hourly patient patterns, peak times, and referral networks from NSSF data.'}
-              </p>
-            </div>
-          </div>
-          <button className={`text-xs font-medium text-blue-600 hover:text-blue-700 bg-white px-${isMobile ? '2' : '3'} py-1 rounded border border-blue-200 hover:bg-blue-50 transition-colors flex-shrink-0`}>
-            Generate Report →
-          </button>
-        </div>
       </div>
 
       <div className="border-t border-gray-200 mb-8"></div>
