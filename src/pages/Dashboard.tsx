@@ -9,7 +9,6 @@ import {
   Plus,
   Circle,
   ChevronRight,
-  Globe,
   Mic,
   MicOff,
   Paperclip,
@@ -22,7 +21,6 @@ import {
   Menu,
   ThumbsUp,
   ThumbsDown,
-  MessageSquare,
   ChevronLeft,
   ArrowUp,
   Download,
@@ -55,7 +53,7 @@ const Dashboard = () => {
   ]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [businesses, setBusinesses] = useState<Array<{id: string; name: string; timestamp: Date}>>([]);
-  const [selectedBusinessId, setSelectedBusinessId] = useState<string | null>(null);
+  const [, setSelectedBusinessId] = useState<string | null>(null);
   const [showBusinessSidebar, setShowBusinessSidebar] = useState(false);
   const defaultMessage = "I want to open a specialty coffee shop in Hamra, Beirut";
   const [inputValue, setInputValue] = useState('');
@@ -165,7 +163,8 @@ const Dashboard = () => {
     { id: 5, title: 'Visa #EV-2024-3341 approved for Maria Garcia - Tech Specialist', time: 'Yesterday', type: 'success' }
   ];
 
-  // Government Feed Updates
+  // Government Feed Updates - commented out as not used
+  /*
   const feedUpdates = [
     { 
       id: 1, 
@@ -200,6 +199,7 @@ const Dashboard = () => {
       type: 'trade' 
     }
   ];
+  */
 
   const handleDocumentSelect = (doc: {name: string; type: string; size: string; lastModified: string}, folder: string) => {
     const docWithFolder = { ...doc, folder };
@@ -751,7 +751,7 @@ const Dashboard = () => {
                 <div className="flex-1 flex flex-col justify-end">
                   <div className={`w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
                     <div className="space-y-6 pt-20 pb-10">
-                {chatMessages.filter((message, index) => index > 0).map((message, index) => (
+                {chatMessages.filter((_, index) => index > 0).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
                       <div className="flex justify-end">
