@@ -1080,6 +1080,11 @@ const Dashboard = () => {
                               {role: 'thinking', content: 'Analyzing location potential...'}
                             ]);
                             
+                            // Scroll to bottom immediately
+                            setTimeout(() => {
+                              messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+                            }, 100);
+                            
                             // After 2 seconds, replace thinking with canvas
                             setTimeout(() => {
                               setChatMessages(prev => [
