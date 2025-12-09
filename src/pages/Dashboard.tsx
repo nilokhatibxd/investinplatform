@@ -846,54 +846,99 @@ const Dashboard = () => {
                           <div className="p-6">
                           <div className="space-y-4">
                             {/* Location Map Section */}
-                            <div className="bg-gray-900 rounded-xl overflow-hidden h-64 relative">
+                            <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden h-64 relative mb-8">
+                              {/* Stylized map grid background */}
+                              <div className="absolute inset-0 opacity-10">
+                                <div className="h-full w-full" style={{
+                                  backgroundImage: `repeating-linear-gradient(0deg, transparent, transparent 35px, rgba(255,255,255,0.05) 35px, rgba(255,255,255,0.05) 36px),
+                                                    repeating-linear-gradient(90deg, transparent, transparent 35px, rgba(255,255,255,0.05) 35px, rgba(255,255,255,0.05) 36px)`
+                                }}></div>
+                              </div>
                               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                {/* Map placeholder - would be interactive map */}
-                                <div className="text-center z-20">
-                                  <h2 className="text-3xl font-light text-white mb-2">Hamra District</h2>
-                                  <p className="text-sm text-gray-300">Central Beirut</p>
+                              
+                              {/* Animated Pin */}
+                              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                                <div className="relative">
+                                  {/* Pulsing circle behind pin */}
+                                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2">
+                                    <div className="w-8 h-8 bg-red-500 rounded-full animate-ping opacity-30"></div>
+                                  </div>
+                                  {/* Pin icon */}
+                                  <div className="relative flex flex-col items-center">
+                                    <div className="w-10 h-10 bg-red-500 rounded-full border-2 border-white shadow-lg flex items-center justify-center">
+                                      <div className="w-2 h-2 bg-white rounded-full"></div>
+                                    </div>
+                                    <div className="w-0.5 h-6 bg-red-500 -mt-1"></div>
+                                  </div>
+                                </div>
+                                
+                                {/* Location Label */}
+                                <div className="mt-4 text-center">
+                                  <h2 className="text-2xl font-light text-white mb-1">Hamra District</h2>
+                                  <p className="text-sm text-gray-300">33.8938° N, 35.4886° E</p>
                                 </div>
                               </div>
+                              
                               <div className="absolute top-4 right-4 z-20">
                                 <span className="px-3 py-1.5 bg-green-500 text-white text-xs font-medium rounded">HIGH OPPORTUNITY</span>
                               </div>
+                              
+                              {/* Map controls hint */}
+                              <div className="absolute bottom-4 left-4 z-20">
+                                <p className="text-xs text-gray-400">Interactive map • Click to explore</p>
+                              </div>
+                            </div>
+
+                            {/* Section Headline */}
+                            <div className="mb-6">
+                              <h3 className="text-2xl font-light text-gray-900 mb-2">
+                                Hamra presents an optimal investment opportunity with high demand and underserved specializations
+                              </h3>
+                              <p className="text-sm text-gray-500">Cross-ministry data reveals significant market inefficiencies despite high clinic density</p>
                             </div>
 
                             {/* Key Metrics - Large Cards */}
-                            <div className="grid grid-cols-2 gap-4 mt-6">
-                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
-                                <p className="text-5xl font-light text-gray-900">32K</p>
-                                <p className="text-sm font-medium text-gray-700 mt-2">Population</p>
-                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Growing 12% annually, highest density in Beirut</p>
-                                <div className="mt-4 pt-3 border-t border-gray-100">
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group flex flex-col h-48">
+                                <div className="flex-grow">
+                                  <p className="text-5xl font-light text-gray-900">32K</p>
+                                  <p className="text-sm font-medium text-gray-700 mt-2">Population</p>
+                                  <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Growing 12% annually, highest density in Beirut</p>
+                                </div>
+                                <div className="mt-auto pt-3 border-t border-gray-100">
                                   <p className="text-xs text-gray-400">Municipality Census 2024</p>
                                 </div>
                               </div>
                               
-                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
-                                <p className="text-5xl font-light text-gray-900">30</p>
-                                <p className="text-sm font-medium text-gray-700 mt-2">Operational Clinics</p>
-                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Only 2 pediatric specialists identified</p>
-                                <div className="mt-4 pt-3 border-t border-gray-100">
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group flex flex-col h-48">
+                                <div className="flex-grow">
+                                  <p className="text-5xl font-light text-gray-900">30</p>
+                                  <p className="text-sm font-medium text-gray-700 mt-2">Operational Clinics</p>
+                                  <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Only 2 pediatric specialists identified</p>
+                                </div>
+                                <div className="mt-auto pt-3 border-t border-gray-100">
                                   <p className="text-xs text-gray-400">Order of Dentists Registry</p>
                                 </div>
                               </div>
                               
-                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
-                                <p className="text-5xl font-light text-orange-600">45%</p>
-                                <p className="text-sm font-medium text-gray-700 mt-2">Market Gap</p>
-                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">3+ week wait times despite high clinic density</p>
-                                <div className="mt-4 pt-3 border-t border-gray-100">
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group flex flex-col h-48">
+                                <div className="flex-grow">
+                                  <p className="text-5xl font-light text-orange-600">45%</p>
+                                  <p className="text-sm font-medium text-gray-700 mt-2">Market Gap</p>
+                                  <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">3+ week wait times despite high clinic density</p>
+                                </div>
+                                <div className="mt-auto pt-3 border-t border-gray-100">
                                   <p className="text-xs text-gray-400">NSSF Claims Analysis</p>
                                 </div>
                               </div>
                               
-                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group">
-                                <p className="text-5xl font-light text-green-600">55%</p>
-                                <p className="text-sm font-medium text-gray-700 mt-2">Insurance Holders</p>
-                                <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">17,600 NSSF members with dental coverage</p>
-                                <div className="mt-4 pt-3 border-t border-gray-100">
+                              <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow group flex flex-col h-48">
+                                <div className="flex-grow">
+                                  <p className="text-5xl font-light text-green-600">55%</p>
+                                  <p className="text-sm font-medium text-gray-700 mt-2">Insurance Holders</p>
+                                  <p className="text-xs text-gray-400 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">17,600 NSSF members with dental coverage</p>
+                                </div>
+                                <div className="mt-auto pt-3 border-t border-gray-100">
                                   <p className="text-xs text-gray-400">NSSF Database</p>
                                 </div>
                               </div>
