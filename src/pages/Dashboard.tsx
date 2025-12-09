@@ -793,12 +793,6 @@ const Dashboard = () => {
                     alt="Invest in Lebanon" 
                     className="h-8 w-auto"
                   />
-                  <button 
-                    onClick={() => setIsSplitScreen(false)}
-                    className="text-sm text-gray-600 hover:text-gray-900"
-                  >
-                    ← Back
-                  </button>
                 </div>
               )}
               
