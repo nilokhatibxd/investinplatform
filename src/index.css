@@ -87,6 +87,16 @@
   background-clip: text;
 }
 
+/* Hide scrollbar for scrollbar-none class */
+.scrollbar-none {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 /* Custom scrollbar for textarea */
 textarea::-webkit-scrollbar {
   width: 4px;

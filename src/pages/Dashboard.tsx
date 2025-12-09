@@ -776,14 +776,15 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage */}
-      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex flex-col bg-white' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} min-h-screen`}>
-        <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col justify-end overflow-y-auto' : ''} w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
+      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + ' flex flex-col bg-white overflow-hidden' : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
+        <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col overflow-hidden' : ''} w-full max-w-3xl mx-auto ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
-            <div className="w-full">
+            <>
               {/* Chat Messages - ChatGPT Style */}
-              <div className="space-y-6 mb-10">
+              <div className="flex-1 overflow-y-auto scrollbar-none">
+                <div className="space-y-6 pt-20 pb-10">
                 {chatMessages.filter((_, index) => index > 0).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
@@ -832,6 +833,35 @@ const Dashboard = () => {
                               <p className="text-sm font-medium text-gray-900 mb-2">Recommendation</p>
                               <p className="text-sm text-gray-600">Strong potential for specialty coffee. Focus on unique offerings to differentiate.</p>
                             </div>
+                            
+                            {/* Additional Analysis Sections for Scrolling Test */}
+                            <div className="border-t pt-4 mt-4">
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3">Market Analysis</h3>
+                              <p className="text-sm text-gray-600 mb-3">Hamra district shows exceptional promise for specialty coffee establishments. The area has seen a 45% increase in foot traffic over the past year, with peak hours between 8-10 AM and 5-8 PM.</p>
+                              <p className="text-sm text-gray-600 mb-3">Current competition includes 5 established cafes within a 500m radius, but none focus exclusively on specialty coffee. There's a clear gap for premium, third-wave coffee experiences.</p>
+                              
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Demographics</h3>
+                              <p className="text-sm text-gray-600 mb-3">Primary customer base: Young professionals (25-40 years), University students (18-24 years), and expatriates. Average disposable income in the area is 35% above city average.</p>
+                              <p className="text-sm text-gray-600 mb-3">Survey data indicates 78% of residents visit coffee shops at least 3 times per week, with average spending of $8-12 per visit.</p>
+                              
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Regulatory Requirements</h3>
+                              <p className="text-sm text-gray-600 mb-3">You'll need to obtain the following licenses: Commercial Registration (Ministry of Economy), Food Service License (Municipality of Beirut), Health Permit (Ministry of Public Health).</p>
+                              <p className="text-sm text-gray-600 mb-3">Estimated timeline: 4-6 weeks for all permits. Total licensing costs approximately $3,500-4,500.</p>
+                              
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Financial Projections</h3>
+                              <p className="text-sm text-gray-600 mb-3">Initial investment: $75,000-100,000 including equipment, renovation, and 3-month operating capital.</p>
+                              <p className="text-sm text-gray-600 mb-3">Break-even timeline: 12-16 months with conservative estimates. Monthly revenue potential: $25,000-35,000 after stabilization.</p>
+                              <p className="text-sm text-gray-600 mb-3">Recommended space: 80-120 square meters with outdoor seating option. Current rental rates: $1,200-1,800/month.</p>
+                              
+                              <h3 className="text-lg font-semibold text-gray-900 mb-3 mt-6">Next Steps</h3>
+                              <ul className="list-disc list-inside text-sm text-gray-600 space-y-2">
+                                <li>Schedule site visits to 3 available properties in Hamra</li>
+                                <li>Connect with equipment suppliers for quotations</li>
+                                <li>Initiate preliminary discussions with Municipality</li>
+                                <li>Develop detailed business plan and financial model</li>
+                                <li>Identify potential local partners or investors</li>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -862,8 +892,9 @@ const Dashboard = () => {
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
+                </div>
               </div>
-            </div>
+            </>
           ) : (
             // Original content for other scenarios
             <div className="text-left mb-12">
