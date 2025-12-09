@@ -754,26 +754,15 @@ const Dashboard = () => {
                 </div>
               </button>
               
-              {/* Scenario 2: Logged In State */}
-              <button
-                onClick={() => {
-                  setCurrentScenario(2);
-                  setIsLoggedIn(true);
-                  setChatMessages([
-                    {role: 'assistant', content: "Welcome back! How can I help you today with your business?"}
-                  ]);
-                }}
-                className={`w-full text-left p-3 rounded-lg transition-all ${
-                  currentScenario === 2 
-                    ? 'bg-blue-50 ring-2 ring-blue-500' 
-                    : 'bg-white hover:bg-gray-50 border border-gray-200'
-                }`}
+              {/* Scenario 2: Coming Soon */}
+              <div
+                className="w-full text-left p-3 rounded-lg bg-gray-50 opacity-50 cursor-not-allowed"
               >
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700 truncate flex-1">Scenario 2: Logged In</span>
-                  {currentScenario === 2 && <span className="text-xs text-blue-600 ml-2">Active</span>}
+                  <span className="text-sm text-gray-500 truncate flex-1">Scenario 2</span>
+                  <span className="text-xs text-gray-400 ml-2">Coming soon!</span>
                 </div>
-              </button>
+              </div>
               
               {/* Scenario 3: Tourism & Hotels - Coming Soon */}
               <div
