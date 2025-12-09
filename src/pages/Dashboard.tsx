@@ -1844,17 +1844,16 @@ const Dashboard = () => {
               
               {/* Permits Alert - Above input with same spacing as suggestions */}
               {currentScenario === 2 && chatMessages.some(msg => msg.role === 'alert') && !chatMessages.some(msg => msg.role === 'canvas') && (
-                <div className="mb-10">
-                    <div className="border border-gray-200 rounded-lg p-3 bg-white hover:border-gray-300 transition-all duration-300 ease-in-out transform shadow-sm">
-                      <div className={`${isMobile ? 'flex-col space-y-3' : 'flex items-center justify-between gap-4'}`}>
-                        <div className="flex items-center gap-3">
-                          {/* Purple pending icon */}
-                          <div className="w-8 h-8 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
-                            <FileCheck className="w-4 h-4 text-purple-600" />
-                          </div>
-                          
-                          <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-900">3 pending permits require your attention</p>
+                <div className={`${isMobile ? 'mb-3' : 'mb-10'}`}>
+                    <div className={`border border-gray-200 rounded-lg ${isMobile ? 'p-2.5' : 'p-3'} bg-white hover:border-gray-300 transition-all duration-300 ease-in-out transform shadow-sm`}>
+                      <div className="flex items-center gap-3">
+                        {/* Purple pending icon */}
+                        <div className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0`}>
+                          <FileCheck className={`${isMobile ? 'w-3 h-3' : 'w-3.5 h-3.5'} text-purple-600`} />
+                        </div>
+                        
+                        <div className="flex-1">
+                          <p className={`${isMobile ? 'text-[11px]' : 'text-sm'} font-medium text-gray-900`}>3 pending permits require your attention</p>
                             
                             {/* Grey permit pills */}
                             <div className="flex flex-wrap gap-1.5 mt-1.5">
@@ -1897,7 +1896,6 @@ const Dashboard = () => {
                                 Radiation Safety
                               </button>
                             </div>
-                          </div>
                         </div>
                         
                         {/* Apply button matching permits canvas style */}
@@ -1960,7 +1958,7 @@ const Dashboard = () => {
               )}
 
               {/* Main Input Row */}
-              <div className={`${isMobile ? 'p-3' : 'p-4'} relative`}>
+              <div className={`${isMobile ? 'px-2 py-1.5' : 'p-4'} relative`}>
                 <div className="relative overflow-hidden" style={{ maxHeight: isMobile ? '50px' : '60px' }}>
                   <textarea
                     placeholder="Message..."
@@ -1999,7 +1997,7 @@ const Dashboard = () => {
               </div>
 
               {/* Bottom Controls Row */}
-              <div className={`${isMobile ? 'px-3 pb-3 pt-1' : 'px-4 pb-4 pt-2'} border-t border-gray-200`}>
+              <div className={`${isMobile ? 'px-2 pb-2 pt-1' : 'px-4 pb-4 pt-2'} border-t border-gray-200`}>
                 <div className="flex items-center justify-between">
                   
                   {/* Left Side - Recording State or Normal State */}
@@ -2014,9 +2012,9 @@ const Dashboard = () => {
                     <div className="flex items-center gap-4">
                       {/* PRO Dropdown */}
                       <div className="relative group">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-transparent hover:bg-gray-50 border border-gray-300 rounded-lg transition-all backdrop-blur-sm">
-                          <span className="text-sm font-medium text-gray-700">
-                          <span className="text-xs font-normal text-gray-400 mr-1">Agent</span>
+                        <button className={`flex items-center gap-2 ${isMobile ? 'px-2 py-1.5' : 'px-4 py-2'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-lg transition-all backdrop-blur-sm`}>
+                          <span className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-gray-700`}>
+                          {!isMobile && <span className="text-xs font-normal text-gray-400 mr-1">Agent</span>}
                           {agents.find(a => a.id === selectedAgent)?.name || 'PRO'}
                         </span>
                           <ChevronRight className="w-3 h-3 text-gray-400 rotate-90" />
@@ -2045,9 +2043,9 @@ const Dashboard = () => {
                         <div className="group relative">
                           <button 
                             onClick={() => setShowVault(true)}
-                            className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
+                            className={`${isMobile ? 'w-8 h-8' : 'w-8 h-8'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
                           >
-                            <Shield className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
+                            <Shield className={`${isMobile ? 'w-4 h-4' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                           </button>
                           <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-100 text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                             Vault
@@ -2058,9 +2056,9 @@ const Dashboard = () => {
                       {/* Attachment Icon */}
                       <div className="group relative">
                         <button 
-                          className={`${isMobile ? 'w-10 h-10' : 'w-8 h-8'} bg-transparent hover:bg-white/[0.02] border border-white/10 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
+                          className={`${isMobile ? 'w-8 h-8' : 'w-8 h-8'} bg-transparent hover:bg-white/[0.02] border border-white/10 rounded-md flex items-center justify-center transition-all backdrop-blur-sm`}
                         >
-                          <Paperclip className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
+                          <Paperclip className={`${isMobile ? 'w-4 h-4' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                         </button>
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-100 text-gray-900 text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                           Attach
@@ -2139,9 +2137,9 @@ const Dashboard = () => {
                             }
                           }
                         }}
-                        className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center transition-all`}
+                        className={`${isMobile ? 'w-9 h-9' : 'w-10 h-10'} bg-gray-900 hover:bg-gray-800 rounded-full flex items-center justify-center transition-all`}
                       >
-                        <ArrowUp className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-white`} stroke-width="2" />
+                        <ArrowUp className={`${isMobile ? 'w-4 h-4' : 'w-4 h-4'} text-white`} stroke-width="2" />
                       </button>
                     ) : (
                       <>
@@ -2155,12 +2153,12 @@ const Dashboard = () => {
                                 // Start timer
                               }
                             }}
-                            className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
+                            className={`${isMobile ? 'w-8 h-8' : 'w-10 h-10'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
                           >
                             {isRecording ? (
-                              <Circle className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-red-500 fill-red-500`} />
+                              <Circle className={`${isMobile ? 'w-3.5 h-3.5' : 'w-4 h-4'} text-red-500 fill-red-500`} />
                             ) : (
-                              <Mic className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
+                              <Mic className={`${isMobile ? 'w-3.5 h-3.5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                             )}
                           </button>
                         </div>
@@ -2169,9 +2167,9 @@ const Dashboard = () => {
                         <div className="group relative">
                           <button 
                             onClick={() => setShowVideoChat(true)}
-                            className={`${isMobile ? 'w-12 h-12' : 'w-10 h-10'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
+                            className={`${isMobile ? 'w-8 h-8' : 'w-10 h-10'} bg-transparent hover:bg-gray-50 border border-gray-300 rounded-full flex items-center justify-center transition-all backdrop-blur-sm`}
                           >
-                            <AudioWaveform className={`${isMobile ? 'w-5 h-5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
+                            <AudioWaveform className={`${isMobile ? 'w-3.5 h-3.5' : 'w-4 h-4'} text-gray-600`} stroke-width="2.5" />
                           </button>
                         </div>
                       </>
