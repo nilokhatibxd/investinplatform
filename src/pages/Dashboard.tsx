@@ -2292,7 +2292,7 @@ const Dashboard = () => {
               />
               
               {/* Right Sidebar */}
-              <div className="fixed right-0 top-0 h-full w-[440px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-out">
+              <div className="fixed right-0 top-0 h-full w-full md:w-[440px] bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-out">
                 {/* Header */}
                 <div className="flex items-center justify-between px-7 py-6">
                   <div>
@@ -2403,33 +2403,33 @@ const Dashboard = () => {
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-3">
                       <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Upcoming</p>
-                      <button className="text-xs text-gray-600 hover:text-gray-900 font-medium">View all tasks →</button>
+                      <button className="text-xs text-gray-600 hover:text-gray-900 font-medium">View all →</button>
                     </div>
                     
-                    {/* Masonry Grid - Pre-operational tasks */}
+                    {/* Lebanese Business Setup Requirements */}
                     <div className="grid grid-cols-2 gap-3">
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <FileText className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">VAT Registration</p>
-                        <p className="text-xs text-gray-500">Before opening</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">MoPH License</p>
+                        <p className="text-xs text-gray-500">Medical practice permit</p>
                       </button>
                       
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <Shield className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">Final Permits</p>
-                        <p className="text-xs text-gray-500">Municipality approval</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">Order of Dentists</p>
+                        <p className="text-xs text-gray-500">Professional registration</p>
                       </button>
                       
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <Users className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">Staff Onboarding</p>
-                        <p className="text-xs text-gray-500">NSSF registration</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">NSSF Registration</p>
+                        <p className="text-xs text-gray-500">Social security setup</p>
                       </button>
                       
                       <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
                         <Building2 className="w-5 h-5 text-gray-600 mb-3" />
-                        <p className="text-sm font-medium text-gray-900 mb-1">Signage Approval</p>
-                        <p className="text-xs text-gray-500">Municipality review</p>
+                        <p className="text-sm font-medium text-gray-900 mb-1">MOF Tax Number</p>
+                        <p className="text-xs text-gray-500">TIN registration</p>
                       </button>
                     </div>
                   </div>
@@ -2486,34 +2486,33 @@ const Dashboard = () => {
                     </div>
                   </div>
                   
-                  {/* Quick Access - Pre-operational tools */}
+                  {/* Quick Access - Redesigned */}
                   <div className="mb-6">
                     <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Quick Access</p>
                     
-                    <div className="flex gap-3 overflow-x-auto scrollbar-none pb-2">
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <FileCheck className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Permits</p>
+                    <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1">
+                      <button className="flex-shrink-0 flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all group">
+                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                          <FileCheck className="w-4 h-4 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 pr-2">Permits</span>
+                        <ArrowUp className="w-3 h-3 text-gray-400 rotate-45 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </button>
                       
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <Shield className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Compliance</p>
+                      <button className="flex-shrink-0 flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all group">
+                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                          <Shield className="w-4 h-4 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 pr-2">Legal</span>
+                        <ArrowUp className="w-3 h-3 text-gray-400 rotate-45 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </button>
                       
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <FileText className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Documents</p>
-                      </button>
-                      
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <Building2 className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Property</p>
-                      </button>
-                      
-                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
-                        <Paperclip className="w-5 h-5 text-gray-600 mb-2" />
-                        <p className="text-xs text-gray-700 font-medium">Contracts</p>
+                      <button className="flex-shrink-0 flex items-center gap-3 px-4 py-3 bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all group">
+                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                          <FileText className="w-4 h-4 text-gray-700" />
+                        </div>
+                        <span className="text-sm font-medium text-gray-700 pr-2">Docs</span>
+                        <ArrowUp className="w-3 h-3 text-gray-400 rotate-45 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                       </button>
                     </div>
                   </div>
