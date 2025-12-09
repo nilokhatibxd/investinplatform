@@ -92,12 +92,31 @@ const Dashboard = () => {
     ]
   };
 
-  const suggestionCards = currentScenario === 2 ? [
-    "Show me my business registration status",
-    "What permits do I still need to obtain?",
-    "Track my application progress",
-    "Schedule an appointment with an advisor"
-  ] : suggestionCardsByAgent[selectedAgent] || suggestionCardsByAgent['PRO'];
+  // Scenario 2: Mid-registration suggestions by agent
+  const scenario2SuggestionsByAgent: Record<string, string[]> = {
+    'PRO': [
+      "What's the status of my commercial registration?",
+      "Show me pending permits for my dental clinic",
+      "When can I expect my business license approval?",
+      "What documents are still missing from my application?"
+    ],
+    'HR': [
+      "Help me register my employees with NSSF",
+      "What are the labor law requirements for dental staff?",
+      "Show me the work permit status for foreign specialists",
+      "How do I set up end-of-service provisions?"
+    ],
+    'TAX': [
+      "When do I need to register for VAT?",
+      "Show me the tax filing deadlines for new businesses",
+      "What expenses can I deduct before opening?",
+      "Help me understand my quarterly tax obligations"
+    ]
+  };
+
+  const suggestionCards = currentScenario === 2 
+    ? (scenario2SuggestionsByAgent[selectedAgent] || scenario2SuggestionsByAgent['PRO'])
+    : (suggestionCardsByAgent[selectedAgent] || suggestionCardsByAgent['PRO']);
 
   // Check if mobile on mount and resize
   useEffect(() => {
