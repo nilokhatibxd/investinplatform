@@ -380,7 +380,7 @@ const Dashboard = () => {
       )}
 
       {/* Desktop Header for Scenarios 1 and 2 */}
-      {!isMobile && (currentScenario === 1 || currentScenario === 2) && (
+      {!isMobile && !isSplitScreen && (currentScenario === 1 || currentScenario === 2) && (
         <>
           {/* Fade gradient overlay for desktop */}
           <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/90 to-transparent pointer-events-none"></div>
@@ -620,7 +620,7 @@ const Dashboard = () => {
       )}
 
       {/* ChatGPT-style Sidebar */}
-      {showBusinessSidebar && (
+      {showBusinessSidebar && !isSplitScreen && (
         <div className={`fixed left-0 top-0 ${isMobile ? 'w-72' : 'w-64'} h-full bg-gray-100 text-gray-900 z-40 flex flex-col ${
           isMobile ? 'shadow-2xl transform transition-transform' : ''
         }`}>
@@ -779,8 +779,8 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage or Split Screen */}
-      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
-        <div className={`${(currentScenario === 1 || currentScenario === 2) ? 'flex-1 flex flex-col overflow-hidden' : ''} ${isSplitScreen ? 'w-full' : 'w-full max-w-3xl mx-auto'} ${isMobile ? 'px-4' : 'px-8'}`}>
+      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar && !isSplitScreen ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
+        <div className={`${(currentScenario === 1 || currentScenario === 2) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col overflow-hidden' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'}`}>
           
           {(currentScenario === 1 || currentScenario === 2) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
@@ -1533,7 +1533,7 @@ const Dashboard = () => {
           if (!canvasMessage) return null;
           
           return (
-            <div className="flex-1 bg-gray-50 overflow-y-auto border-l border-gray-200">
+            <div className="w-3/5 bg-gray-50 overflow-y-auto border-l border-gray-200">
               <div className="p-6">
                 <div className="max-w-4xl mx-auto">
                   <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
