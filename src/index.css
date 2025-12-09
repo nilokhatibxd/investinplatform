@@ -51,6 +51,30 @@
   animation: fadeInUp 0.6s ease-out forwards;
 }
 
+/* Scroll-triggered animations */
+.scroll-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-fade-in-delay {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+}
+
+.scroll-fade-in-delay.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

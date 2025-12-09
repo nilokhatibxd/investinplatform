@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   MapPin, 
   DollarSign, 
@@ -13,6 +13,36 @@ interface DentalClinicReportProps {
   variant?: 'desktop' | 'mobile' | 'split-screen';
   currency?: 'LBP' | 'USD';
 }
+
+// Custom hook for scroll animations
+const useScrollAnimation = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return { ref, isVisible };
+};
 
 const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desktop', currency = 'LBP' }) => {
   // Currency formatting
@@ -34,6 +64,17 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
   const ctaPadding = isMobile ? 'p-4' : variant === 'split-screen' ? 'p-5' : 'p-6';
   const statTextSize = isMobile ? 'text-lg' : 'text-2xl';
   const mapHeight = isMobile ? 'h-48' : isSplitScreen ? 'h-48' : 'h-64';
+  
+  // Animation hooks for each section
+  const summaryAnim = useScrollAnimation();
+  const mapAnim = useScrollAnimation();
+  const populationAnim = useScrollAnimation();
+  const healthAnim = useScrollAnimation();
+  const propertyAnim = useScrollAnimation();
+  const investmentAnim = useScrollAnimation();
+  const tradeNamesAnim = useScrollAnimation();
+  const timelineAnim = useScrollAnimation();
+  const governmentAnim = useScrollAnimation();
 
   return (
     <div className={containerClass}>
@@ -46,7 +87,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       </div>
 
       {/* Summary */}
-      <div className={sectionSpacing}>
+      <div ref={summaryAnim.ref} className={`${sectionSpacing} scroll-fade-in ${summaryAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Summary</h2>
         <div className="bg-blue-50 border-l-4 border-blue-500 p-4">
           <p className={`${isMobile ? 'text-xs' : 'text-sm'} text-gray-800 leading-relaxed`}>
@@ -57,7 +98,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       </div>
 
       {/* Location Map */}
-      <div className={sectionSpacing}>
+      <div ref={mapAnim.ref} className={`${sectionSpacing} scroll-fade-in ${mapAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Location & Competition</h2>
         <div className={`bg-gray-100 rounded-lg ${mapHeight} relative flex items-center justify-center border border-gray-200`}>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -83,7 +124,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       </div>
 
       {/* Local Population Data */}
-      <div className={sectionSpacing}>
+      <div ref={populationAnim.ref} className={`${sectionSpacing} scroll-fade-in ${populationAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Local Population Data</h2>
         <div className={`grid grid-cols-2 gap-${isMobile ? '2' : '3'}`}>
           <div className={`bg-white border border-gray-200 rounded-lg ${cardPadding}`}>
@@ -110,7 +151,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       </div>
 
       {/* Property CTA */}
-      <div className={`bg-indigo-50 border border-indigo-200 rounded-lg ${ctaPadding} ${sectionSpacing}`}>
+      <div ref={propertyAnim.ref} className={`bg-indigo-50 border border-indigo-200 rounded-lg ${ctaPadding} ${sectionSpacing} scroll-fade-in ${propertyAnim.isVisible ? 'visible' : ''}`}>
         <div className={`flex items-start justify-between gap-${isMobile ? '2' : '3'}`}>
           <div className={`flex items-start gap-${isMobile ? '2' : '3'} flex-1`}>
             <div className={`${isMobile ? 'w-6 h-6' : 'w-8 h-8'} bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0`}>
@@ -124,13 +165,13 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
             </div>
           </div>
           <button className={`text-xs font-medium text-indigo-600 hover:text-indigo-700 bg-white px-${isMobile ? '2' : '3'} py-1 rounded border border-indigo-200 hover:bg-indigo-50 transition-colors flex-shrink-0`}>
-            Schedule Viewings →
+            View All →
           </button>
         </div>
       </div>
 
       {/* Population Health Profile */}
-      <div className={sectionSpacing}>
+      <div ref={healthAnim.ref} className={`${sectionSpacing} scroll-fade-in ${healthAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">Population Health Profile</h2>
         <div className={`grid grid-cols-2 gap-${isMobile ? '2' : '3'}`}>
           <div className={`bg-white border border-gray-200 rounded-lg ${cardPadding} hover:shadow-sm transition-shadow`}>
@@ -172,7 +213,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       <div className="border-t border-gray-200 mb-8"></div>
 
       {/* Investment Analysis */}
-      <div className={sectionSpacing}>
+      <div ref={investmentAnim.ref} className={`${sectionSpacing} scroll-fade-in ${investmentAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">Investment Analysis</h2>
         
         <p className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-gray-900 mb-3`}>
@@ -220,7 +261,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
               </div>
             </div>
             <button className={`text-xs font-medium text-green-600 hover:text-green-700 bg-white px-${isMobile ? '2' : '3'} py-1 rounded border border-green-200 hover:bg-green-50 transition-colors flex-shrink-0`}>
-              Check Eligibility →
+              View All Incentives →
             </button>
           </div>
         </div>
@@ -229,7 +270,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       <div className="border-t border-gray-200 mb-8"></div>
 
       {/* Trade Name Suggestions */}
-      <div className={sectionSpacing}>
+      <div ref={tradeNamesAnim.ref} className={`${sectionSpacing} scroll-fade-in ${tradeNamesAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
           Available Trade Names
         </h2>
@@ -256,7 +297,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       <div className="border-t border-gray-200 mb-8"></div>
 
       {/* Realistic Licensing Process */}
-      <div className={sectionSpacing}>
+      <div ref={timelineAnim.ref} className={`${sectionSpacing} scroll-fade-in ${timelineAnim.isVisible ? 'visible' : ''}`}>
         <h2 className="text-sm font-semibold text-gray-700 mb-4 uppercase tracking-wide">
           {isMobile ? 'Licensing Timeline' : 'Dental Clinic Licensing Process'}
         </h2>
@@ -422,7 +463,7 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
       </div>
 
       {/* Action Buttons */}
-      <div className="space-y-2 mb-8">
+      <div ref={governmentAnim.ref} className={`space-y-2 mb-8 scroll-fade-in ${governmentAnim.isVisible ? 'visible' : ''}`}>
         <button className="w-full bg-gray-900 text-white py-3 rounded-full text-sm font-medium">
           Start Your Clinic in Hamra
         </button>
