@@ -2310,60 +2310,67 @@ const Dashboard = () => {
                 {/* Content - Bento Grid Style */}
                 <div className="overflow-y-auto h-full pb-20 px-6">
                   
+                  {/* Wallet & Business Setup - Top Priority */}
+                  <div className="grid grid-cols-2 gap-3 mb-6">
+                    <button className="bg-gray-50 rounded-2xl p-5 text-left hover:bg-gray-100 transition-all group">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-xs text-gray-500 font-medium">Wallet Balance</p>
+                        <ArrowUp className="w-4 h-4 text-gray-400 rotate-45 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                      <p className="text-2xl font-light text-gray-900 mb-3">
+                        {selectedCurrency === 'USD' 
+                          ? `$${(walletBalance / 89500).toFixed(0)}`
+                          : `${(walletBalance / 1000000).toFixed(1)}M LBP`
+                        }
+                      </p>
+                      <div className="w-full py-2 bg-white rounded-lg text-center">
+                        <span className="text-xs font-medium text-gray-700">Add Funds</span>
+                      </div>
+                    </button>
+                    
+                    <button className="bg-white border border-gray-200 rounded-2xl p-5 hover:border-gray-300 hover:shadow-sm transition-all text-left group">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-xs text-gray-500 font-medium">Business Setup</p>
+                        <ArrowUp className="w-4 h-4 text-gray-400 rotate-45 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      </div>
+                      <div className="flex items-baseline gap-2 mb-2">
+                        <p className="text-2xl font-light text-gray-900">75%</p>
+                        <p className="text-xs text-gray-400">complete</p>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-1.5 mb-2">
+                        <div className="bg-gray-900 h-1.5 rounded-full" style={{ width: '75%' }}></div>
+                      </div>
+                      <p className="text-xs text-gray-500">Est. launch: Jan 20, 2025</p>
+                    </button>
+                  </div>
+                  
                   {/* Today Section */}
                   <div className="mb-6">
                     <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Today</p>
                     
-                    {/* Focus Card */}
-                    <button className="w-full bg-gray-900 text-white rounded-2xl p-6 mb-3 text-left hover:bg-gray-800 transition-all group">
+                    {/* Focus Card - Now White */}
+                    <button className="w-full bg-white border border-gray-200 rounded-2xl p-6 mb-3 text-left hover:border-gray-300 hover:shadow-md transition-all group">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <p className="text-lg font-light mb-1">Complete permit applications</p>
-                          <p className="text-sm text-gray-400">3 pending submissions</p>
+                          <p className="text-lg font-medium text-gray-900 mb-1">Complete permit applications</p>
+                          <p className="text-sm text-gray-500">3 pending submissions</p>
                         </div>
                         <ArrowUp className="w-5 h-5 text-gray-400 rotate-45 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                       </div>
                       <div className="flex items-center gap-2 mt-4">
-                        <div className="px-3 py-1 bg-white/10 rounded-full">
-                          <span className="text-xs">2:00 PM</span>
+                        <div className="px-3 py-1 bg-gray-100 rounded-full">
+                          <span className="text-xs text-gray-600">2:00 PM</span>
                         </div>
-                        <div className="px-3 py-1 bg-white/10 rounded-full">
+                        <div className="px-3 py-1 bg-gray-900 text-white rounded-full">
                           <span className="text-xs">High Priority</span>
                         </div>
                       </div>
                     </button>
-                    
-                    {/* Balance Card */}
-                    <div className="grid grid-cols-2 gap-3">
-                      <div className="bg-gray-50 rounded-2xl p-5">
-                        <p className="text-xs text-gray-500 mb-2">Balance</p>
-                        <p className="text-xl font-light text-gray-900">
-                          {selectedCurrency === 'USD' 
-                            ? `$${(walletBalance / 89500).toFixed(0)}`
-                            : `${(walletBalance / 1000000).toFixed(1)}M`
-                          }
-                        </p>
-                        <button className="w-full mt-3 py-2 bg-white hover:bg-gray-100 rounded-lg text-xs font-medium text-gray-700 transition-all">
-                          Add Funds
-                        </button>
-                      </div>
-                      
-                      <button className="bg-white border border-gray-200 rounded-2xl p-5 hover:border-gray-300 hover:shadow-sm transition-all text-left">
-                        <p className="text-xs text-gray-500 mb-2">Progress</p>
-                        <div className="flex items-baseline gap-2">
-                          <p className="text-xl font-light text-gray-900">75%</p>
-                          <p className="text-xs text-gray-400">setup</p>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-1.5 mt-3">
-                          <div className="bg-gray-900 h-1.5 rounded-full" style={{ width: '75%' }}></div>
-                        </div>
-                      </button>
-                    </div>
                   </div>
                   
-                  {/* This Week Section */}
+                  {/* Up Next Section */}
                   <div className="mb-6">
-                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">This Week</p>
+                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Up Next</p>
                     
                     <div className="space-y-3">
                       <button className="w-full bg-white border border-gray-100 rounded-xl p-4 hover:border-gray-200 hover:shadow-sm transition-all text-left group">
@@ -2394,7 +2401,10 @@ const Dashboard = () => {
                   
                   {/* Upcoming Section */}
                   <div className="mb-6">
-                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Upcoming</p>
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-xs font-medium text-gray-400 uppercase tracking-wider">Upcoming</p>
+                      <button className="text-xs text-gray-600 hover:text-gray-900 font-medium">View all tasks →</button>
+                    </div>
                     
                     {/* Masonry Grid */}
                     <div className="grid grid-cols-2 gap-3">
@@ -2410,67 +2420,100 @@ const Dashboard = () => {
                         <p className="text-xs text-gray-500">Feb 1, 2025</p>
                       </button>
                       
-                      <button className="col-span-2 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all text-left">
+                      <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
+                        <Receipt className="w-5 h-5 text-gray-600 mb-3" />
+                        <p className="text-sm font-medium text-gray-900 mb-1">Q1 Reports</p>
+                        <p className="text-xs text-gray-500">Mar 15, 2025</p>
+                      </button>
+                      
+                      <button className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all text-left">
+                        <Building2 className="w-5 h-5 text-gray-600 mb-3" />
+                        <p className="text-sm font-medium text-gray-900 mb-1">Lease Review</p>
+                        <p className="text-xs text-gray-500">Apr 1, 2025</p>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Transaction History */}
+                  <div className="mb-6">
+                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Transaction History</p>
+                    
+                    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+                      <button className="w-full p-4 hover:bg-gray-50 transition-colors text-left border-b border-gray-100">
                         <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-medium text-gray-900">Annual audit preparation</p>
-                            <p className="text-xs text-gray-500 mt-1">March 2025 • Full documentation review</p>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                              <ArrowUp className="w-4 h-4 text-white -rotate-45" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Permit Application Fee</p>
+                              <p className="text-xs text-gray-500">Today • 2:15 PM</p>
+                            </div>
                           </div>
-                          <ArrowUp className="w-4 h-4 text-gray-400 rotate-45" />
+                          <p className="text-sm font-medium text-gray-900">-$60.00</p>
+                        </div>
+                      </button>
+                      
+                      <button className="w-full p-4 hover:bg-gray-50 transition-colors text-left border-b border-gray-100">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                              <ArrowUp className="w-4 h-4 text-gray-600 rotate-135" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Wallet Top Up</p>
+                              <p className="text-xs text-gray-500">Yesterday • 9:00 AM</p>
+                            </div>
+                          </div>
+                          <p className="text-sm font-medium text-green-600">+$500.00</p>
+                        </div>
+                      </button>
+                      
+                      <button className="w-full p-4 hover:bg-gray-50 transition-colors text-left">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center">
+                              <ArrowUp className="w-4 h-4 text-white -rotate-45" />
+                            </div>
+                            <div>
+                              <p className="text-sm font-medium text-gray-900">Document Processing</p>
+                              <p className="text-xs text-gray-500">Dec 8 • 3:30 PM</p>
+                            </div>
+                          </div>
+                          <p className="text-sm font-medium text-gray-900">-$25.00</p>
                         </div>
                       </button>
                     </div>
                   </div>
                   
-                  {/* Activity Feed */}
-                  <div className="mb-6">
-                    <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Recent</p>
-                    
-                    <div className="bg-gray-50 rounded-xl p-4 space-y-3">
-                      <div className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5"></div>
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-700">Payment processed</p>
-                          <p className="text-xs text-gray-400">$60.00 • 2 hours ago</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5"></div>
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-700">Documents verified</p>
-                          <p className="text-xs text-gray-400">12 files • This morning</p>
-                        </div>
-                      </div>
-                      
-                      <div className="flex items-start gap-3">
-                        <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-1.5"></div>
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-700">Application submitted</p>
-                          <p className="text-xs text-gray-400">Municipality • Yesterday</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Quick Access */}
+                  {/* Quick Access - Horizontal Slider */}
                   <div className="mb-6">
                     <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">Quick Access</p>
                     
-                    <div className="grid grid-cols-3 gap-2">
-                      <button className="aspect-square bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all flex flex-col items-center justify-center gap-2">
-                        <FileText className="w-5 h-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Docs</span>
+                    <div className="flex gap-3 overflow-x-auto scrollbar-none pb-2">
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <Users className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">People</p>
                       </button>
                       
-                      <button className="aspect-square bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all flex flex-col items-center justify-center gap-2">
-                        <Receipt className="w-5 h-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Invoices</span>
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <Shield className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Licensing</p>
                       </button>
                       
-                      <button className="aspect-square bg-white border border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-sm transition-all flex flex-col items-center justify-center gap-2">
-                        <Users className="w-5 h-5 text-gray-600" />
-                        <span className="text-xs text-gray-600">Team</span>
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <Receipt className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Tax</p>
+                      </button>
+                      
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <Building2 className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Real Estate</p>
+                      </button>
+                      
+                      <button className="flex-shrink-0 w-28 bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 hover:shadow-sm transition-all">
+                        <FileText className="w-5 h-5 text-gray-600 mb-2" />
+                        <p className="text-xs text-gray-700 font-medium">Documents</p>
                       </button>
                     </div>
                   </div>
