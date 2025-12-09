@@ -300,7 +300,7 @@ const Dashboard = () => {
             
             {/* Right Icons */}
             <div className="flex items-center gap-2">
-              {(currentScenario === 1 || currentScenario === 2) ? (
+              {(currentScenario === 1) ? (
                 // Scenarios 1 & 2: Only show Login button
                 <button 
                   onClick={() => setIsLoggedIn(true)}
@@ -380,7 +380,7 @@ const Dashboard = () => {
       )}
 
       {/* Desktop Header for Scenarios 1 and 2 */}
-      {!isMobile && !isSplitScreen && (currentScenario === 1 || currentScenario === 2) && (
+      {!isMobile && !isSplitScreen && (currentScenario === 1) && (
         <>
           {/* Fade gradient overlay for desktop */}
           <div className="fixed top-0 left-0 right-0 z-40 h-32 bg-gradient-to-b from-white via-white/90 to-transparent pointer-events-none"></div>
@@ -670,11 +670,11 @@ const Dashboard = () => {
                 </div>
               </button>
               
-              {/* Scenario 2: Same as Scenario 1 */}
+              {/* Scenario 2: Renewable Energy */}
               <button
                 onClick={() => {
                   setCurrentScenario(2);
-                  setChatMessages([{role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}]);
+                  setChatMessages([{role: 'user', content: "Solar energy project in the Bekaa Valley"}, {role: 'assistant', content: "Renewable energy is a priority sector. The Bekaa Valley has excellent solar potential."}]);
                 }}
                 className={`w-full text-left p-3 rounded-lg transition-colors ${
                   currentScenario === 2 
@@ -684,15 +684,15 @@ const Dashboard = () => {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-900 truncate flex-1">Scenario 2</span>
-                  <span className="text-xs text-gray-400 ml-2">1:45 PM</span>
+                  <span className="text-xs text-gray-400 ml-2">Yesterday</span>
                 </div>
               </button>
               
-              {/* Scenario 3: Import/Export */}
+              {/* Scenario 3: Tourism & Hotels */}
               <button
                 onClick={() => {
                   setCurrentScenario(3);
-                  setChatMessages([{role: 'user', content: "I need to import electronics from China"}, {role: 'assistant', content: "I'll guide you through the import process and customs requirements for electronics."}]);
+                  setChatMessages([{role: 'user', content: "Building a boutique hotel in Byblos"}, {role: 'assistant', content: "Byblos is perfect for boutique hotels! Its historic charm attracts tourists year-round."}]);
                 }}
                 className={`w-full text-left p-3 rounded-lg transition-colors ${
                   currentScenario === 3 
@@ -702,60 +702,6 @@ const Dashboard = () => {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-900 truncate flex-1">Scenario 3</span>
-                  <span className="text-xs text-gray-400 ml-2">11:20 AM</span>
-                </div>
-              </button>
-              
-              {/* Scenario 4: Manufacturing */}
-              <button
-                onClick={() => {
-                  setCurrentScenario(4);
-                  setChatMessages([{role: 'user', content: "Setting up a textile manufacturing facility"}, {role: 'assistant', content: "Manufacturing in Lebanon offers great opportunities. Let's explore the industrial zones and incentives."}]);
-                }}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
-                  currentScenario === 4 
-                    ? 'bg-white border border-gray-300' 
-                    : 'hover:bg-gray-50'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 4</span>
-                  <span className="text-xs text-gray-400 ml-2">Yesterday</span>
-                </div>
-              </button>
-              
-              {/* Scenario 5: Renewable Energy */}
-              <button
-                onClick={() => {
-                  setCurrentScenario(5);
-                  setChatMessages([{role: 'user', content: "Solar energy project in the Bekaa Valley"}, {role: 'assistant', content: "Renewable energy is a priority sector. The Bekaa Valley has excellent solar potential."}]);
-                }}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
-                  currentScenario === 5 
-                    ? 'bg-white border border-gray-300' 
-                    : 'hover:bg-gray-50'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 5</span>
-                  <span className="text-xs text-gray-400 ml-2">Yesterday</span>
-                </div>
-              </button>
-              
-              {/* Scenario 6: Tourism & Hotels */}
-              <button
-                onClick={() => {
-                  setCurrentScenario(6);
-                  setChatMessages([{role: 'user', content: "Building a boutique hotel in Byblos"}, {role: 'assistant', content: "Byblos is perfect for boutique hotels! Its historic charm attracts tourists year-round."}]);
-                }}
-                className={`w-full text-left p-3 rounded-lg transition-colors ${
-                  currentScenario === 6 
-                    ? 'bg-white border border-gray-300' 
-                    : 'hover:bg-gray-50'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-900 truncate flex-1">Scenario 6</span>
                   <span className="text-xs text-gray-400 ml-2">2 days ago</span>
                 </div>
               </button>
@@ -779,10 +725,10 @@ const Dashboard = () => {
       )}
 
       {/* Main Content - ChatGPT Style Center Stage or Split Screen */}
-      <div className={`${(currentScenario === 1 || currentScenario === 2) ? (!isMobile && showBusinessSidebar && !isSplitScreen ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
-        <div className={`${(currentScenario === 1 || currentScenario === 2) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col overflow-hidden' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'}`}>
+      <div className={`${(currentScenario === 1) ? (!isMobile && showBusinessSidebar && !isSplitScreen ? 'pl-64' : '') + (isSplitScreen && !isMobile ? ' flex bg-white overflow-hidden' : ' flex flex-col bg-white overflow-hidden') : (!isMobile ? 'pl-80 flex items-center justify-center' : 'flex items-center justify-center')} h-screen`}>
+        <div className={`${(currentScenario === 1) ? (isSplitScreen ? 'w-2/5' : 'flex-1') + ' flex flex-col overflow-hidden' : ''} ${!isSplitScreen ? 'w-full max-w-3xl mx-auto' : ''} ${isMobile ? 'px-4' : 'px-8'}`}>
           
-          {(currentScenario === 1 || currentScenario === 2) ? (
+          {(currentScenario === 1) ? (
             // Scenarios 1 & 2: Pre-Investment Chat Interface
             <>
               {/* Header for split screen */}
@@ -997,7 +943,7 @@ const Dashboard = () => {
           )}
 
           {/* Bottom Section - Welcome, Suggestions, Input */}
-          <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1 || currentScenario === 2) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
+          <div className={`opacity-0 animate-fadeInUp ${(currentScenario === 1) ? `pb-4` : (isMobile ? 'fixed bottom-0 left-0 right-0 bg-white' : '')}`} style={{ animationDelay: '0.1s' }}>
             <div className="max-w-3xl mx-auto px-4">
               {/* Welcome Message */}
               {chatMessages.length === 1 && (
@@ -1014,7 +960,7 @@ const Dashboard = () => {
               )}
               
               {/* Suggestion Cards */}
-              {(currentScenario === 1 || currentScenario === 2) && chatMessages.length === 1 && (
+              {(currentScenario === 1) && chatMessages.length === 1 && (
                 <div className="mb-10">
                   <div className="flex items-center gap-2">
                     {/* Left Arrow - Desktop only */}
@@ -1173,7 +1119,7 @@ const Dashboard = () => {
                       </div>
                       
                       {/* Vault Icon - Hidden in Scenarios 1 and 2 */}
-                      {currentScenario > 2 && (
+                      {currentScenario > 1 && (
                         <div className="group relative">
                           <button 
                             onClick={() => setShowVault(true)}
