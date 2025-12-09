@@ -11,9 +11,18 @@ import {
 
 interface DentalClinicReportProps {
   variant?: 'desktop' | 'mobile' | 'split-screen';
+  currency?: 'LBP' | 'USD';
 }
 
-const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desktop' }) => {
+const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desktop', currency = 'LBP' }) => {
+  // Currency formatting
+  const formatCurrency = (amount: number) => {
+    if (currency === 'LBP') {
+      return `L£${(amount * 89500).toLocaleString()}`; // Using approximate rate
+    }
+    return `$${amount.toLocaleString()}`;
+  };
+  
   // Determine styling based on variant
   const isMobile = variant === 'mobile';
   const isSplitScreen = variant === 'split-screen';
@@ -172,7 +181,9 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
         <div className={`grid grid-cols-3 gap-${isMobile ? '2' : '3'} mb-4`}>
           <div className={`bg-white border border-gray-200 rounded-lg ${cardPadding} text-center hover:shadow-sm transition-shadow`}>
             <DollarSign className={`${isMobile ? 'w-4 h-4' : 'w-6 h-6'} text-gray-400 mx-auto mb-${isMobile ? '1' : '2'}`} />
-            <p className={`${isMobile ? 'text-sm' : 'text-lg'} font-light`}>$100-150K</p>
+            <p className={`${isMobile ? 'text-sm' : 'text-lg'} font-light`}>
+              {currency === 'LBP' ? 'L£8.9-13.4B' : '$100-150K'}
+            </p>
             <p className="text-xs text-gray-600">{isMobile ? 'Capital' : 'Initial capital'}</p>
           </div>
           <div className={`bg-white border border-gray-200 rounded-lg ${cardPadding} text-center hover:shadow-sm transition-shadow`}>
@@ -182,7 +193,11 @@ const DentalClinicReport: React.FC<DentalClinicReportProps> = ({ variant = 'desk
           </div>
           <div className={`bg-white border border-gray-200 rounded-lg ${cardPadding} text-center hover:shadow-sm transition-shadow`}>
             <Home className={`${isMobile ? 'w-4 h-4' : 'w-6 h-6'} text-gray-400 mx-auto mb-${isMobile ? '1' : '2'}`} />
-            <p className={`${isMobile ? 'text-sm' : 'text-lg'} font-light`}>{isMobile ? '$800-1.8K' : '$800-1,800'}</p>
+            <p className={`${isMobile ? 'text-sm' : 'text-lg'} font-light`}>
+              {currency === 'LBP' 
+                ? (isMobile ? 'L£72-161M' : 'L£72-161M')
+                : (isMobile ? '$800-1.8K' : '$800-1,800')}
+            </p>
             <p className="text-xs text-gray-600">{isMobile ? 'Rent' : 'Monthly rent'}</p>
           </div>
         </div>

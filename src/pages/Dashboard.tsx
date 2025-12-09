@@ -49,6 +49,7 @@ const Dashboard = () => {
   // Scenario management
   const [currentScenario, setCurrentScenario] = useState(1); // 1 = Pre-Investment, 3-4 = Logged in scenarios
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState<'LBP' | 'USD'>('LBP');
   const [chatMessages, setChatMessages] = useState<Array<{role: 'assistant' | 'user' | 'canvas' | 'thinking'; content: any}>>([
     {role: 'assistant', content: "Welcome.\nLet's explore what you can build today."}
   ]);
@@ -429,6 +430,30 @@ const Dashboard = () => {
           
           {/* Right side controls */}
           <div className="flex items-center gap-4">
+            {/* Currency Switcher */}
+            <div className="flex items-center bg-gray-100 rounded-full p-1">
+              <button 
+                onClick={() => setSelectedCurrency('LBP')}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  selectedCurrency === 'LBP' 
+                    ? 'bg-white text-gray-900 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                LBP
+              </button>
+              <button 
+                onClick={() => setSelectedCurrency('USD')}
+                className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+                  selectedCurrency === 'USD' 
+                    ? 'bg-white text-gray-900 shadow-sm' 
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                USD
+              </button>
+            </div>
+            
             {/* What's New Icon */}
             <div className="relative group">
               <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
@@ -542,6 +567,30 @@ const Dashboard = () => {
       {/* Floating RSS Feeds and Notifications - Desktop Only - Only for logged in scenarios */}
       {!isMobile && currentScenario >= 2 && (
       <div className="fixed top-6 right-6 z-40 flex items-center gap-4">
+        {/* Currency Switcher */}
+        <div className="flex items-center bg-white/90 backdrop-blur-xl rounded-full p-1 border border-gray-200/50">
+          <button 
+            onClick={() => setSelectedCurrency('LBP')}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+              selectedCurrency === 'LBP' 
+                ? 'bg-gray-900 text-white' 
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            LBP
+          </button>
+          <button 
+            onClick={() => setSelectedCurrency('USD')}
+            className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
+              selectedCurrency === 'USD' 
+                ? 'bg-gray-900 text-white' 
+                : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            USD
+          </button>
+        </div>
+        
         {/* RSS Feeds */}
         <div className="relative group">
           <button className="w-14 h-14 bg-white rounded-full border border-gray-200/20 flex items-center justify-center hover:bg-white transition-all shadow-sm">
@@ -814,7 +863,7 @@ const Dashboard = () => {
                               </button>
                             </div>
                             <div className="p-4 overflow-y-auto">
-                              <DentalClinicReport variant="mobile" />
+                              <DentalClinicReport variant="mobile" currency={selectedCurrency} />
                             </div>
                           </div>
                         </div>
@@ -851,7 +900,7 @@ const Dashboard = () => {
                             </div>
                           </div>
                           <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
-                            <DentalClinicReport variant="desktop" />
+                            <DentalClinicReport variant="desktop" currency={selectedCurrency} />
                           </div>
                         </div>
                         
@@ -1536,7 +1585,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="p-6 overflow-y-auto" style={{maxHeight: 'calc(100vh - 200px)'}}>
-                      <DentalClinicReport variant="split-screen" />
+                      <DentalClinicReport variant="split-screen" currency={selectedCurrency} />
                     </div>
                   </div>
                 </div>
