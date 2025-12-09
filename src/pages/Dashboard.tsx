@@ -874,7 +874,7 @@ const Dashboard = () => {
                 alt="Invest in Lebanon" 
                 className="h-10 w-auto"
               />
-              {currentScenario !== 1 && (
+              {currentScenario !== 1 && !isMobile && (
                 <div className="relative group">
                   <button className="flex items-center gap-1.5 text-sm font-medium text-gray-700">
                     <span>All Locations</span>
@@ -887,7 +887,7 @@ const Dashboard = () => {
             {/* Right Icons */}
             <div className="flex items-center gap-2">
               {(currentScenario === 1) ? (
-                // Scenarios 1 & 2: Only show Login button
+                // Scenario 1: Only show Login button
                 <button 
                   onClick={() => setIsLoggedIn(true)}
                   className="px-4 py-2 bg-gray-100 text-gray-900 rounded-full text-sm font-medium"
@@ -897,32 +897,23 @@ const Dashboard = () => {
               ) : (
                 <>
                   {/* Search */}
-                  <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center">
-                    <Search className="w-5 h-5 text-gray-600" />
+                  <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                    <Search className="w-4 h-4 text-gray-600" />
                   </button>
                   
                   {/* Notifications */}
-                  <button className="w-11 h-11 rounded-full bg-gray-100 flex items-center justify-center relative">
-                    <Bell className="w-5 h-5 text-gray-600" />
-                    <div className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full"></div>
-                  </button>
-                  
-                  {/* Profile */}
-                  <button className="w-11 h-11 rounded-full overflow-hidden border-2 border-gray-200">
-                    <img 
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
-                      alt="Profile" 
-                      className="w-full h-full object-cover"
-                    />
+                  <button className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center relative">
+                    <Bell className="w-4 h-4 text-gray-600" />
+                    <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
                   </button>
                   
                   {/* Grid Menu */}
                   <button
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    className="w-11 h-11 bg-white rounded-full flex items-center justify-center ml-1"
+                    className="w-10 h-10 bg-white rounded-full flex items-center justify-center"
                   >
                     {isMobileMenuOpen ? (
-                      <X className="w-5 h-5 text-gray-900" />
+                      <X className="w-4 h-4 text-gray-900" />
                     ) : (
                       <div className="grid grid-cols-3 gap-0.5">
                         <div className="w-1 h-1 bg-gray-600 rounded-full"></div>
@@ -1855,7 +1846,7 @@ const Dashboard = () => {
               {currentScenario === 2 && chatMessages.some(msg => msg.role === 'alert') && !chatMessages.some(msg => msg.role === 'canvas') && (
                 <div className="mb-10">
                     <div className="border border-gray-200 rounded-lg p-3 bg-white hover:border-gray-300 transition-all duration-300 ease-in-out transform shadow-sm">
-                      <div className="flex items-center justify-between gap-4">
+                      <div className={`${isMobile ? 'flex-col space-y-3' : 'flex items-center justify-between gap-4'}`}>
                         <div className="flex items-center gap-3">
                           {/* Purple pending icon */}
                           <div className="w-8 h-8 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
@@ -1969,8 +1960,8 @@ const Dashboard = () => {
               )}
 
               {/* Main Input Row */}
-              <div className="p-4 relative">
-                <div className="relative overflow-hidden" style={{ maxHeight: '60px' }}>
+              <div className={`${isMobile ? 'p-3' : 'p-4'} relative`}>
+                <div className="relative overflow-hidden" style={{ maxHeight: isMobile ? '50px' : '60px' }}>
                   <textarea
                     placeholder="Message..."
                     value={currentScenario === 1 ? inputValue : query}
@@ -1991,10 +1982,10 @@ const Dashboard = () => {
                         setSelectedBusinessId(newBusiness.id);
                       }
                     }}
-                    className="w-full h-10 bg-transparent text-gray-900 placeholder-gray-500 text-base leading-relaxed resize-none focus:outline-none overflow-y-auto"
+                    className={`w-full bg-transparent text-gray-900 placeholder-gray-500 ${isMobile ? 'text-sm h-9' : 'text-base h-10'} leading-relaxed resize-none focus:outline-none overflow-y-auto`}
                     style={{
-                      maxHeight: '60px',
-                      minHeight: '40px'
+                      maxHeight: isMobile ? '50px' : '60px',
+                      minHeight: isMobile ? '36px' : '40px'
                     }}
                     onInput={(e) => {
                       const target = e.target as HTMLTextAreaElement;
@@ -2008,7 +1999,7 @@ const Dashboard = () => {
               </div>
 
               {/* Bottom Controls Row */}
-              <div className="px-4 pb-4 pt-2 border-t border-gray-200">
+              <div className={`${isMobile ? 'px-3 pb-3 pt-1' : 'px-4 pb-4 pt-2'} border-t border-gray-200`}>
                 <div className="flex items-center justify-between">
                   
                   {/* Left Side - Recording State or Normal State */}
@@ -2309,6 +2300,53 @@ const Dashboard = () => {
                 
                 {/* Content - Bento Grid Style */}
                 <div className="overflow-y-auto h-full pb-20 px-6">
+                  
+                  {/* Profile & Currency on Mobile */}
+                  {isMobile && (
+                    <div className="mb-6">
+                      {/* Profile Section */}
+                      <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
+                        <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-gray-200">
+                          <img 
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
+                            alt="Profile" 
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">Ahmed Al-Rashid</p>
+                          <p className="text-xs text-gray-500">Managing Director</p>
+                        </div>
+                      </div>
+                      
+                      {/* Currency Switcher */}
+                      <div className="mt-4 mb-4">
+                        <p className="text-xs text-gray-500 mb-2">Currency</p>
+                        <div className="flex items-center bg-gray-100 rounded-lg p-1">
+                          <button 
+                            onClick={() => setSelectedCurrency('LBP')}
+                            className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${
+                              selectedCurrency === 'LBP' 
+                                ? 'bg-white text-gray-900 shadow-sm' 
+                                : 'text-gray-600'
+                            }`}
+                          >
+                            LBP
+                          </button>
+                          <button 
+                            onClick={() => setSelectedCurrency('USD')}
+                            className={`flex-1 py-2 rounded-md text-sm font-medium transition-all ${
+                              selectedCurrency === 'USD' 
+                                ? 'bg-white text-gray-900 shadow-sm' 
+                                : 'text-gray-600'
+                            }`}
+                          >
+                            USD
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* Wallet & Business Setup - Top Priority */}
                   <div className="grid grid-cols-2 gap-3 mb-6">
