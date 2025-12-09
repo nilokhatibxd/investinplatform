@@ -783,8 +783,9 @@ const Dashboard = () => {
             // Scenarios 1 & 2: Pre-Investment Chat Interface
             <>
               {/* Chat Messages - ChatGPT Style */}
-              <div className="flex-1 overflow-y-auto scrollbar-none">
-                <div className="space-y-6 pt-20 pb-10">
+              <div className="flex-1 overflow-y-auto scrollbar-none flex flex-col">
+                <div className="flex-1 flex flex-col justify-end">
+                  <div className="space-y-6 pt-20 pb-10">
                 {chatMessages.filter((_, index) => index > 0).map((message, index) => (
                   <div key={index} className="group">
                     {message.role === 'user' ? (
@@ -892,6 +893,7 @@ const Dashboard = () => {
                   </div>
                 ))}
                 <div ref={messagesEndRef} />
+                  </div>
                 </div>
               </div>
             </>
